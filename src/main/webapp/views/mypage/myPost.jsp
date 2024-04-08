@@ -10,4 +10,6 @@
 <main>
 <p>Mypage 입니다.</p>
 </main>
-<%@ include file="/inc/footer.jsp" %>
+<%-- <%@ include file="/inc/footer.jsp" %> --%>
+</body>
+</html>
