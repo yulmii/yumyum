@@ -3,9 +3,9 @@ package com.yum.member.dto;
 public class MemberDTO {
 	
 	private String userId;
-	private String nickname;
 	private String userName;
-	private String password;
+	private String nickname;
+	private String pwd;
 	private String email;
 	private String joinDate;
 	private boolean admin;
@@ -22,14 +22,6 @@ public class MemberDTO {
 		this.userId = userId;
 	}
 
-	public String getNickname() {
-		return nickname;
-	}
-
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
-	}
-
 	public String getUserName() {
 		return userName;
 	}
@@ -38,12 +30,20 @@ public class MemberDTO {
 		this.userName = userName;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getNickname() {
+		return nickname;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	public String getPwd() {
+		return pwd;
+	}
+
+	public void setPwd(String pwd) {
+		this.pwd = pwd;
 	}
 
 	public String getEmail() {
@@ -72,8 +72,8 @@ public class MemberDTO {
 
 	@Override
 	public String toString() {
-		return "MemberDTO [userId=" + userId + ", nickname=" + nickname + ", userName=" + userName + ", password="
-				+ password + ", email=" + email + ", joinDate=" + joinDate + ", admin=" + admin + "]";
+		return "MemberDTO [userId=" + userId + ", userName=" + userName + ", nickname=" + nickname + ", pwd=" + pwd
+				+ ", email=" + email + ", joinDate=" + joinDate + ", admin=" + admin + "]";
 	}
 
 }
