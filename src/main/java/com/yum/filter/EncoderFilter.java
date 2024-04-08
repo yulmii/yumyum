@@ -36,7 +36,7 @@ public class EncoderFilter implements Filter {
 		//경로 확인용 코드
 		// 애플리케이션의 컨텍스트 이름
 //		String context = ((HttpServletRequest)request).getContextPath();
-//		String pathInfo = ((HttpServletRequest)request).getRequestURI();
+
 		
 		/** ↑ request(요청)관련 작업**/
 		chain.doFilter(request, response); //
