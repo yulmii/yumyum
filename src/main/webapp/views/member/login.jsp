@@ -8,6 +8,6 @@
 
 </script>
 <main>
-
+<p>안녕하세요.</p>
 </main>
 <%@ include file="/inc/footer.jsp" %>
