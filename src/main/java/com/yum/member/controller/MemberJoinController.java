@@ -51,7 +51,7 @@ public class MemberJoinController extends HttpServlet {
         
         // View 보내기
         RequestDispatcher requestDispatcher =
-           request.getRequestDispatcher("/views/main/main.jsp");
+           request.getRequestDispatcher("/views/member/login.jsp");
         requestDispatcher.forward(request, response);
      }
 
