@@ -29,26 +29,20 @@ public class EncoderFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		//여기서 실제 필터링
+		if(request.getCharacterEncoding()==null) {
+			request.setCharacterEncoding("utf-8");
+		}
 		
-		request.setCharacterEncoding("utf-8");
-
 		//경로 확인용 코드
 		// 애플리케이션의 컨텍스트 이름
-		String context = ((HttpServletRequest)request).getContextPath();
-		String pathInfo = ((HttpServletRequest)request).getRequestURI();
-		
-//		String msg = "Context 정보 : " + context + "\n URI 정보 : " + pathInfo;
-		
-		//요청에 따른 필터 시작 (처리하기 직전)
-//		long begin = System.currentTimeMillis();
+//		String context = ((HttpServletRequest)request).getContextPath();
+
 		
 		/** ↑ request(요청)관련 작업**/
 		chain.doFilter(request, response); //
 		/** ↓ response(응답)관련 작업 **/
 
 //		response.setContentType("text/html;charset=utf-8"); 이건 servlet에서 내보내기 잘 안하니까 안써도 됨
-		//응답에 따른 필터 처리 (처리한 후)
-//		long end = System.currentTimeMillis();
 		
 	}
 
