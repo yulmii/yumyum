@@ -20,7 +20,7 @@ import com.yum.member.dto.MemberDTO;
 public class MemberJoinController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-//	private MemberDAO memberDAO = new MemberDAO();
+	private MemberDAO memberDAO = new MemberDAO();
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -34,13 +34,12 @@ public class MemberJoinController extends HttpServlet {
 	 */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // TODO Auto-generated method stub
-        // 모델 (BoardDAO의 메서드에게 전달할 데이터를 하나의 객체로 )
+        // 모델 (MemberDAO의 메서드에게 전달할 데이터를 하나의 객체로 )
         MemberDTO member = new MemberDTO();
         
-        // DAO (DB의 테이블에 접속하여 쿼리를 실행할 수 있는 메서드 보유 객체 생성) 
-//        this.memberDAO = new MemberDAO();
-        // 게시물 목록을 얻는 쿼리 실행 (결과값을 ArrayList<BoardModel> 로 반환 받음)
-        
+        // 아이디/닉네임 중복을 확인하는 쿼리 실행 (결과값을 boolean으로 반환 받음)
+        boolean dupId = this.memberDAO.checkId(request.getParameter("id"));
+        boolean dupNick = this.memberDAO.checkId(request.getParameter("nickname"));
         
         request.setAttribute("productList", member);
         // 페이지 번호들을 문자열로 반환하는 메서드 호출
