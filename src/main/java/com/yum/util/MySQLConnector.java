@@ -9,9 +9,7 @@ import java.sql.Statement;
 
 public class MySQLConnector {
 	
-	protected Connection conn = null;
-	protected PreparedStatement pstmt = null;
-	protected ResultSet rs = null;
+	private Connection conn = null;
 
 	private final String DB_DRIVER = "com.mysql.cj.jdbc.Driver";
 	private final String DB_URL = "jdbc:mysql://localhost:3306/";
