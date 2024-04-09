@@ -39,6 +39,31 @@ public class MemberDAO extends MySQLConnector {
 	}
 	
 	/**
+	 * 1. 회원가입 시 닉네임 중복 확인 (회원테이블에서 select)
+	 * @param String
+	 * @return boolean
+	 */
+	public boolean checkNick(String nick) {
+		try {
+			String query = "SELECT nickname FROM member WHERE nickname = ?";
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, nick);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				return true; // 중복 아이디 존재
+			}
+		} catch (SQLException e) {
+			System.err.println("checkId() ERR : " + e.getMessage());
+		} finally {
+			close(rs, pstmt, conn);
+		}
+		
+		return false; // 중복 아이디 없음
+	}
+	
+	/**
 	 * 2. 회원가입 시 회원 등록 (회원테이블에 insert)
 	 * @param MemberDTO
 	 * @return

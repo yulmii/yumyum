@@ -8,7 +8,12 @@
 
 </script>
 <main>
-
+<form name="frmLogin" method="post" action="<c:url value='/modify.do' />">
+		아이디: <input type="text" name="user_id"><br>
+		비밀번호: <input type="text" name="user_pw"><br>
+		<input type="submit" value="로그인">
+		<input type="reset" value="다시 입력">
+	</form>
 </main>
 <%-- <%@ include file="/inc/footer.jsp" %> --%>
 </body>
