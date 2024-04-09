@@ -10,8 +10,8 @@
 <title>${ title }</title>
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -19,7 +19,7 @@
 .header {
     width: 1200px;
     margin: 0 auto; /* 가운데 정렬을 위한 margin 설정 */
-    background-color: #f0f0f0;
+    
 }
 
 
@@ -52,6 +52,37 @@
     margin: 0 40px;
     font-size: 30px;
 }
+.h-search-box {
+    position: absolute; 
+    top: 15%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+}
+
+
+
+.h-search-input {
+    padding: 10px; /* 내부 여백 */
+    font-size: 16px;
+    border: 1px solid #ccc; /* 테두리 스타일 */
+    border-radius: 5px; /* 테두리 모서리 둥글게 만듦 */
+}
+
+.h-search-button {
+    padding: 10px 20px; /* 버튼 내부 여백 */
+    font-size: 16px;
+    background-color: #007bff; /* 배경색 */
+    color: #fff; /* 글자색 */
+    border: none; /* 테두리 없음 */
+    border-radius: 5px; /* 모서리 둥글게 */
+    cursor: pointer; /* 커서 스타일 변경 */
+    transition: background-color 0.3s; /* 배경색 전환 효과 */
+}
+
+.h-search-button:hover {
+    background-color: #0056b3; /* 마우스 호버 시 배경색 변경 */
+}
+
 
 </style>
 </head>
@@ -69,6 +100,13 @@
 			<a class="h-recipebox" id="recipebox" name="recipebox" href="#">로그아웃</a>
 		</div>
 	</div>	
+	<div class="h-search-box">
+	    <form class="h-search-form" action="#" method="get">
+	        <input type="text" class="h-search-input" name="search" placeholder="검색어를 입력하세요">
+	        <button type="submit" class="h-search-button">검색</button>
+	    </form>
+	</div>
+
 	<div class="h-middle-menu">
 		<table>
 			<tr>
