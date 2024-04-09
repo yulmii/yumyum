@@ -7,10 +7,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${ title }</title>
+<link href="../../resources/css/style.css" rel="stylesheet">
+<script src="../../resources/js/common.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<link href="../resources/css/style.css" rel="stylesheet">
-<script src="../resources/js/common.js"></script>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
 <%@ include file="/inc/header.jsp" %>
