@@ -62,7 +62,7 @@ public class MemberDTO {
 		this.joinDate = joinDate;
 	}
 
-	public String isAdmin() {
+	public String getAdmin() {
 		return admin;
 	}
 
