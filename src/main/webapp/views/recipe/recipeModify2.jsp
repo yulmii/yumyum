@@ -43,6 +43,13 @@
 				<tr>
 					<th>제목</th>
 					<td><input type="text" id="title" name="title" class="re-input" value="${ recipe.title }"></td>
+					<th>음식 이미지</th>
+					<td>
+						<input type="file" id="thumbnailModify" name="thumbnailModify" class="re-input">
+						<input type="hidden" name="thumbnail" value="${ recipe.thumbnail }">
+					</td>
+				</tr>
+				<tr>
 					<th>카테고리</th>
 					<td>
 						<select id="category" name="category">
@@ -52,29 +59,22 @@
 							<option value="양식" ${recipe.category eq '양식' ? 'selected' : ''}>양식</option>
 						</select>
 					</td>
+					<td colspan="2" rowspan="4" class="re-center" style="width: 500px; height: 300px;" id="preview">
+						<img src="/upload/recipe/${ recipe.thumbnail }" style="height: 300px;">
+					</td>
 				</tr>
 				<tr>
 					<th>조리시간</th>
 					<td><input type="number" min="0" name="cookHour" id="cookHour" value="${ recipe.cookHour }">&nbsp;
 						시간 &nbsp; <input type="number" min="0" max="60" name="cookMinute"
 						id="cookMinute" value="${ recipe.cookMinute }">&nbsp;분</td>
+				</tr>
+				<tr>
 					<th>재료</th>
 					<td><input type="text" id="ingredient" name="ingredient" value="${ recipe.ingredient }" class="re-input"></td>
 				</tr>
 				<tr>
-					<th>음식 이미지</th>
-					<td colspan="3">
-						<input type="file" id="thumbnailModify" name="thumbnailModify" class="re-input">
-						<input type="hidden" name="thumbnail" value="${ recipe.thumbnail }">
-					</td>
-				</tr>
-				<tr>
-					<td colspan="4" class="re-center" style="width: 500px; height: 300px;" id="preview">
-						<img src="/upload/recipe/${ recipe.thumbnail }" style="height: 300px;">
-					</td>
-				</tr>
-				<tr>
-					<th colspan="4">내용</th>
+					<th colspan="2">내용</th>
 				</tr>
 				<tr>
 					<td colspan="4"><textarea id="summernote" name="content">${ recipe.content }</textarea></td>
@@ -113,7 +113,7 @@
                 let img = $("<img>");
                 // 미리보기 이미지 설정
                 img.attr("src", event.target.result);
-                img.css({"height": "300px"});
+                img.css({"height": "100px"});
 
                 // 미리보기 영역 초기화
                 let preview = $("#preview");

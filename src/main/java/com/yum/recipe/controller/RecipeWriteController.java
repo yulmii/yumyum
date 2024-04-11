@@ -73,7 +73,7 @@ public class RecipeWriteController extends HttpServlet {
 	            }else {
 	            	if (fieldName.equals("thumbnail")) {
 	            		thumbnail = fileUpload(request,item);
-	            		thumbnail = thumbnail.replace("\\", "\\\\");
+//	            		thumbnail = thumbnail.replace("\\", "/");
 	            	}
 	            }
 	        }
@@ -88,31 +88,29 @@ public class RecipeWriteController extends HttpServlet {
 	}
 	
 	private String fileUpload(HttpServletRequest request, FileItem thumbnailItem) throws IOException, ServletException {
-		// DAO 객체 생성
-	    RecipeDAO dao = new RecipeDAO();
-
 
 	    // 파일 업로드 및 정보 저장
-	    String thumbnail = "";
-	    int maxBoardIdx = dao.maxBoardIdx();
-	    UUID uuid = UUID.randomUUID();
-	    System.out.println("uuid : " + uuid);
+//	    String filePath = "";
+	    String fileName = "";
+	    UUID uuid = UUID.randomUUID(); //파일이름 난수발생
 	    try {
 	        // "thumbnail" 파일 업로드 처리
 	        if (thumbnailItem != null) {
 	            String exp = FilenameUtils.getExtension(thumbnailItem.getName());
-	            String fileName = "recipethumb-" + uuid + "." + exp;
+//	            String fileName = "recipethumb-" + uuid + "." + exp;
+	            fileName = "recipethumb-" + uuid + "." + exp;
 	            File uploadFile = new File("C:/yum_img/recipe/" + fileName);
 	            thumbnailItem.write(uploadFile);
-	            thumbnail = uploadFile.getAbsolutePath();
-	            System.out.println(thumbnail);
+//	            filePath = uploadFile.getAbsolutePath();
+//	            System.out.println(filePath);
 	        }
 	    } catch (Exception e) {
 	        System.out.println("FILE UPLOAD FAIL!!!" + e.getMessage());
 	        e.printStackTrace();
 	    }
 	    
-	    return thumbnail;
+//	    return filePath;
+	    return fileName;
 	}
 
 }

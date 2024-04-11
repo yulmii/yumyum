@@ -168,23 +168,21 @@
 			<br><br>
 			<a class="f-btn-open-modal">이용약관</a> &nbsp;&nbsp;&nbsp;
 			<a class="f-btn-open-modal2">개인정보 방침</a>
-			<br><br>
 			<hr>
-			<div class="f-num">
-			<br><br><br>
-				<h3>고객센터</h3>
-				<br>
-				
-				<h3>02 - 000 - 0000</h3>
-			</div>
-			<div class="f-sangho">
-				<br>
-				<p> 상호 : 4Lee</p>
-				<p> 사업자등록번호 : 000-00-00000</p>
-				<p> 특허 제 : 00-00000000호</p>
-				<p> 주소 : 서울특별시 강서구 화곡동 1063-12 대한상공회의소 서울기술교육센터</p> 
-				<p> 팀장 : 이유림 </p>
-				<p> 문의 : yumyum@yumyum.com</p>
+			<div class="f-content">
+				<div class="f-num">
+					<h3>고객센터</h3>
+					<br>
+					<h3>02 - 000 - 0000</h3>
+				</div>
+				<div class="f-sangho">
+					<p> 상호 : 4Lee</p>
+					<p> 사업자등록번호 : 000-00-00000</p>
+					<p> 특허 제 : 00-00000000호</p>
+					<p> 주소 : 서울특별시 강서구 화곡동 1063-12 대한상공회의소 서울기술교육센터</p> 
+					<p> 팀장 : 이유림 </p>
+					<p> 문의 : yumyum@yumyum.com</p>
+				</div>
 			</div>
 		</div>
 
