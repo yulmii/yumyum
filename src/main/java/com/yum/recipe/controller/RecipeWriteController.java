@@ -3,6 +3,7 @@ package com.yum.recipe.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -36,84 +37,71 @@ public class RecipeWriteController extends HttpServlet {
 		// DAO 객체 생성
 	    RecipeDAO dao = new RecipeDAO();
 	    // 파일 업로드 처리
-	    String thumbnail = fileUpload(request);
 	    
 	    //파라미터
-	    String cookHour = request.getParameter("cookHour");
-	    System.out.println(cookHour);
-	    String cookMinute = request.getParameter("cookMinute");
-	    cookHour = (cookHour == null || cookHour.isEmpty()) ? "0" : cookHour;
-	    cookMinute = (cookMinute == null || cookMinute.isEmpty()) ? "0" : cookMinute;
-	    
+	    String thumbnail = "";
 	    // RecipeDTO 객체 생성 및 정보 설정
+	    RecipeDTO recipe = new RecipeDTO();
 	    DiskFileItemFactory factory = new DiskFileItemFactory();
 	    ServletFileUpload upload = new ServletFileUpload(factory);
+//		recipe.setUserId((String)session.getAttribute("_userId"));
+	    recipe.setUserId("aaa"); // 사용자 아이디 하드코딩
 	 // 파일 업로드 및 파라미터 처리
 	    try {
 	        List<FileItem> items = upload.parseRequest(request);
 	        for (FileItem item : items) {
+	        	String fieldName = item.getFieldName();
 	            if (item.isFormField()) { // 파일이 아닌 경우
 	                // 파일이 아닌 파라미터 처리
-	                String fieldName = item.getFieldName();
-	                String fieldValue = item.getString("UTF-8"); // 파라미터 값 가져오기
-	                // 여기서 필요한 파라미터 처리를 수행하면 됩니다.
-	                // 예를 들어, 필요한 파라미터를 DTO 객체에 설정할 수 있습니다.
-	                if (fieldName.equals("cookHour")) {
-	                    // cookHour 파라미터 처리
+	                String value = item.getString("UTF-8"); // 파라미터 값 가져오기
+	                System.out.println("1 : " +value);
+	                if (fieldName.equals("category")) {
+	                	recipe.setCategory(value);
+	                } else if (fieldName.equals("title")) {
+	                	recipe.setTitle(value);
+	                } else if (fieldName.equals("content")) {
+	                	recipe.setContent(value);
+	                } else if (fieldName.equals("cookHour")) {
+	                	value = (value == null || value.isEmpty()) ? "0" : value;
+	                	recipe.setCookHour(Integer.parseInt(value));
 	                } else if (fieldName.equals("cookMinute")) {
-	                    // cookMinute 파라미터 처리
-	                } else if (fieldName.equals("category")) {
-	                    // category 파라미터 처리
-	                }
-	                // 필요한 파라미터들을 RecipeDTO 객체에 설정하십시오.
+	                	value = (value == null || value.isEmpty()) ? "0" : value;
+	                	recipe.setCookMinute(Integer.parseInt(value));
+	                } else if (fieldName.equals("ingredient")) {
+	                	recipe.setIngredient(value);
+	                } 
+	            }else {
+	            	if (fieldName.equals("thumbnail")) {
+	            		thumbnail = fileUpload(request,item);
+	            		thumbnail = thumbnail.replace("\\", "\\\\");
+	            	}
 	            }
 	        }
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
 	    
-	    RecipeDTO recipe = new RecipeDTO();
-//		recipe.setUserId((String)session.getAttribute("_userId"));
-	    recipe.setUserId("aaa"); // 사용자 아이디 하드코딩
-	    recipe.setCategory(request.getParameter("category"));
-	    recipe.setTitle(request.getParameter("title"));
-	    recipe.setContent(request.getParameter("content"));
-	    recipe.setCookHour(Integer.parseInt(cookHour));
-	    recipe.setCookMinute(Integer.parseInt(cookMinute));
-	    recipe.setIngredient(request.getParameter("ingredent"));
 	    recipe.setThumbnail(thumbnail);
 	    System.out.println(recipe.toString());
-	    dao = new RecipeDAO();
 	    dao.recipeWrite(recipe);
 
 	}
 	
-	private String fileUpload(HttpServletRequest request) throws IOException, ServletException {
+	private String fileUpload(HttpServletRequest request, FileItem thumbnailItem) throws IOException, ServletException {
 		// DAO 객체 생성
 	    RecipeDAO dao = new RecipeDAO();
 
-	    // 파일 업로드를 위한 설정
-	    DiskFileItemFactory factory = new DiskFileItemFactory();
-	    ServletFileUpload upload = new ServletFileUpload(factory);
 
 	    // 파일 업로드 및 정보 저장
 	    String thumbnail = "";
 	    int maxBoardIdx = dao.maxBoardIdx();
+	    UUID uuid = UUID.randomUUID();
+	    System.out.println("uuid : " + uuid);
 	    try {
-	        // "thumbnail" 파라미터 가져오기
-	        FileItem thumbnailItem = null;
-	        List<FileItem> items = upload.parseRequest(request);
-	        for (FileItem item : items) {
-	            if (!item.isFormField() && item.getFieldName().equals("thumbnail")) { // 파일이면서 파라미터 이름이 "thumbnail"인 경우
-	                thumbnailItem = item;
-	                break; // thumbnail을 찾았으므로 루프 종료
-	            }
-	        }
-
 	        // "thumbnail" 파일 업로드 처리
 	        if (thumbnailItem != null) {
 	            String exp = FilenameUtils.getExtension(thumbnailItem.getName());
-	            String fileName = "recipethumb" + String.valueOf(maxBoardIdx + 1) + "." + exp;
+	            String fileName = "recipethumb-" + uuid + "." + exp;
 	            File uploadFile = new File("C:/yum_img/recipe/" + fileName);
 	            thumbnailItem.write(uploadFile);
 	            thumbnail = uploadFile.getAbsolutePath();

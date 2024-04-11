@@ -73,7 +73,7 @@
 					<th colspan="4">내용</th>
 				</tr>
 				<tr>
-					<td colspan="4"><textarea id="summernote">메렁</textarea></td>
+					<td colspan="4"><textarea id="summernote" name="content">메렁</textarea></td>
 				</tr>
 				<tr>
 					<td colspan="4" class="re-right"><input type="submit" value="등록하기"></td>
