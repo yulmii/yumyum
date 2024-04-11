@@ -65,37 +65,39 @@
 }
 
 /* footer.jsp  */
-.modal {
-	position: absolute;
-	display: none;
-	justify-content: center;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-color: rgba(0, 0, 0, 0.4);
+.f-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
 }
 
-.modal2 {
-	position: absolute;
-	display: none;
-	justify-content: center;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-color: rgba(0, 0, 0, 0.4);
+.f-modal2 {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
 }
 
-.modal_body h2 {
+.f-modal_body h2 {
 	text-align: center;
 }
 
-.modal_body2 h2 {
+.f-modal_body2 h2 {
 	text-align: center;
 }
 
-.modal_body {
+.f-modal_body {
 	position: absolute;
 	/*모달을 화면가운데 놓기위함. */
 	top: 50%;
@@ -117,8 +119,7 @@
 	overflow-y: auto;
 	-ms-overflow-style: none;
 }
-
-.modal_body2 {
+.f-modal_body2 {
 	position: absolute;
 	/*모달을 화면가운데 놓기위함. */
 	top: 50%;
@@ -140,30 +141,25 @@
 	overflow-y: auto;
 	-ms-overflow-style: none;
 }
-
-.modal-header {
+.f-modal-header {
 	position: fixed;
 	top: 0;
 	width: 95%;
 	z-index: 100;
 }
-
-.modal-header2 {
+.f-modal-header2 {
 	position: fixed;
 	top: 0;
 	width: 95%;
 	z-index: 100;
 }
-
-.modal_body::-webkit-scrollbar {
+.f-modal_body::-webkit-scrollbar {
 	display: none;
 }
-
-.modal_body2::-webkit-scrollbar {
+.f-modal_body2::-webkit-scrollbar {
 	display: none;
 }
-
-.close {
+.f-close {
 	position: absolute;
 	top: 0;
 	right: 0;
@@ -173,7 +169,7 @@
 	font-size: 35px;
 }
 
-.close2 {
+.f-close2 {
 	position: absolute;
 	top: 0;
 	right: 0;
@@ -183,13 +179,13 @@
 	font-size: 35px;
 }
 
-.close:hover, .close:focus {
+.f-close:hover, .f-close:focus {
 	color: black;
 	text-decoration: none;
 	cursor: pointer;
 }
 
-.close2:hover, .close2:focus {
+.f-close2:hover, .f-close2:focus {
 	color: black;
 	text-decoration: none;
 	cursor: pointer;
@@ -200,7 +196,7 @@
 	height: 400px;
 	background-color: #f0f0f0;
 }
-.f-modal{
+.f-modal-btn{
 	text-align: center;
 	margin:0 auto;
 }
