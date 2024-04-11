@@ -1,64 +1,41 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="/inc/top.jsp"%>
+<%@ include file="/inc/adheader.jsp"%>
 <style>
-.ad-main {
-	width: 1200px;
-	height: 100%;
-}
-
-.ad-menu {
-	margin-left: 30%;
-	float: left;
-	width: 20%;
-	background-color: #f4f4f4;
-	padding: 30px;
-	height: 100%;
-}
-
-.ad-content {
-	margin-left: 60%;
-	margin-bottom: 50px;
-	/* 	float: right; */
-	width: 60%;
-	padding: 20px;
-	height: 100%;
-}
-
-.ad-menu-link {
-	display: block;
-	margin-bottom: 10px;
-	color: #333;
-	text-decoration: none;
-}
-
-.ad-menu-link:hover {
-	background-color: #ccc;
-}
-
-.ad-menu-h2 {
-	margin-top: 0;
-}
+@import
+	url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);
 </style>
-<script type="text/javascript">
-	
-</script>
 <main>
-	<form action="${contextPath }/admin/member/modify.do" method="post" onsubmit="modifyMember();">
+	<form action="${contextPath }/admin/member/modify.do" method="post"
+		onsubmit="modifyMember();">
 		<input type="hidden" id="pwCheckTF" value="false" /> 
 		<input type="hidden" name="userId" value="${ member.userId }">
 		<div class="ad-main">
-		<div class="ad-menu">
-			<h2 class="ad-menu-h2">메뉴</h2>
-			<a href="${contextPath }/admin/main.do"  class="ad-menu-link">전체 보기</a> 
-			<a href="${contextPath }/admin/member/list.do"  class="ad-menu-link">회원 관리</a> 
-			<a href="${contextPath }/admin/recipe/list.do" class="ad-menu-link">게시글 관리</a> 
-			<a href="${contextPath }/admin/note/list.do" class="ad-menu-link">공지사항 관리</a>
-		</div>
-			<div class="ad-content">
-				<h2>' ${ member.userName } ' 회원 정보 수정</h2>
+			<div class="ad-side-meun">
+				<ul class="ad-side-meun-bar">
+					<h2 class="ad-menu-h2">
+						<a class="ad-home-meun" href="<c:url value="/admin/main.do" />">관리자</a>
+					</h2>
+					<li><a href="<c:url value="/admin/member/list.do"/> " class="ad-menu-link">회원 관리</a></li>
+					<li><a href="<c:url value="/admin/recipe/list.do"/>" class="ad-menu-link">게시글 관리</a></li>
+					<li><a href="<c:url value="/admin/note/list.do"/>" class="ad-menu-link">공지사항 관리</a></li>
+
+					<br>
+					<br>
+					<h2 class="ad-menu-h2">
+						<a class="ad-home-meun" href="<c:url value="/main.do" />">Yumyum</a>
+					</h2>
+					<li><a href="<c:url value="/recipe/list.do?category=hansik"/> ">한식</a></li>
+					<li><a href="<c:url value="/recipe/list.do?category=jungsik"/>">중식</a></li>
+					<li><a href="<c:url value="/recipe/list.do?category=ilsik"/>">일식</a></li>
+					<li><a href="<c:url value="/recipe/list.do?category=yangsik"/>">양식</a></li>
+					<li><a href="<c:url value="/note/list.do" />">공지 사항</a></li>
+				</ul>
+			</div>
+			<div class="ad-modify-content">
+				<h1 class="ad-board-title">' ${ member.userName } ' 회원 정보 수정</h1>
 				<table>
-					<caption>${ member.userName }회원님의정보를 수정합니다.</caption>
+					<caption>${ member.userName }회원님의정보를수정합니다.</caption>
 					<colgroup>
 						<col width="120" />
 						<col width="480" />
@@ -67,8 +44,7 @@
 					<tbody>
 						<tr>
 							<td>아이디</td>
-							<td colspan="2"><span><c:out
-										value="${ member.userId }" /></span></td>
+							<td colspan="2"><span><c:out value="${ member.userId }" /></span></td>
 						</tr>
 
 						<tr>
@@ -91,39 +67,32 @@
 						</tr>
 						<tr>
 							<td>별명</td>
-							<td colspan="2">
-								<input type="text" name="nickname"
-								id="nickname" value="${ member.nickname }" required />
-							</td>
+							<td colspan="2"><input type="text" name="nickname"
+								id="nickname" value="${ member.nickname }" required /></td>
 						</tr>
 
 						<tr>
 							<td>이메일</td>
-							<td colspan="2">
-								<input type="email" name="email" id="email"
-								style="width: 300px;" value="${ member.email }" required="required" />
-							</td>
+							<td colspan="2"><input type="email" name="email" id="email"
+								style="width: 300px;" value="${ member.email }"
+								required="required" /></td>
 						</tr>
 
 						<tr>
 							<td>관리자</td>
-							<td colspan="2">
-								<input type="radio" name="admin" id="T" value="T" 
-								<c:if test="${ member.admin == 'T' }"> checked </c:if> />
-								<label for="T">관리자 권한 O</label> 
-								
-								<input type="radio" name="admin" id="F" value="F" 
-								<c:if test="${ member.admin == 'F' }"> checked </c:if> />
-								<label for="F">관리자 권한 X</label>
-							</td>
+							<td colspan="2"><input type="radio" name="admin" id="T"
+								value="T" <c:if test="${ member.admin == 'T' }"> checked </c:if> />
+								<label for="T">관리자 권한 O</label> <input type="radio" name="admin"
+								id="F" value="F"
+								<c:if test="${ member.admin == 'F' }"> checked </c:if> /> <label
+								for="F">관리자 권한 X</label></td>
 						</tr>
 
 						<tr>
-							<td id="buttonBox" colspan="3">
-								<input type="submit" id="join" value="정보수정" disabled /> 
-								<input type="reset" id="reset" value="새로작성" />
-								<input type="button" id="delete" value="삭제" onclick="deleteMember();" />
-							</td>
+							<td id="buttonBox" colspan="3"><input type="submit"
+								id="join" value="정보수정" disabled /> <input type="reset"
+								id="reset" value="새로작성" /> <input type="button" id="delete"
+								value="회원 정보 삭제" onclick="deleteMember();" /></td>
 						</tr>
 					</tbody>
 				</table>
@@ -159,13 +128,12 @@
 		}
 	}
 	function deleteMember() {
-        if (confirm("정말로 삭제하시겠습니까?")) {
-            var userId = "${member.userId}";
-            location.href = "${contextPath}/admin/member/delete.do?id=" + userId;
-        }
-    }
-	
+		if (confirm("정말로 삭제하시겠습니까?")) {
+			var userId = "${member.userId}";
+			location.href = "${contextPath}/admin/member/delete.do?id="+ userId;
+		}
+	}
 </script>
-<%@ include file="/inc/footer.jsp"%>
+
 </body>
 </html>

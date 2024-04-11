@@ -1,0 +1,156 @@
+@charset "UTF-8";
+
+
+.ad-side-meun {
+	position: fixed; /* 측면 메뉴를 고정합니다 */
+	top: 0; /* 페이지 상단에 정렬합니다 */
+	left: 0; /* 페이지 왼쪽에 정렬합니다 */
+	bottom: 0; /* 페이지 하단까지 확장합니다 */
+	width: 300px;
+	/*   background: #0a0a0a; */
+	overflow: auto; /* 내용이 높이를 초과할 경우 스크롤을 활성화합니다 */
+}
+
+.ad-main {
+	margin-left: 300px; /* 고정된 측면 메뉴를 수용하기 위해 본문 내용을 조정합니다 */
+}
+
+.ad-menu-h2 {
+	color: #f9f9f9;
+	padding: 10px;
+	margin: 10px;
+}
+
+.ad-side-meun-bar {
+	list-style-type: none;
+	padding: 0px;
+	margin: 0px;
+	width: 300px;
+	background: #0a0a0a;
+	height: 100%;
+	overflow: auto;
+	position: fixed;
+}
+
+.ad-side-meun-bar li a {
+	text-decoration: none;
+	padding: 30px;
+	display: block;
+	color: #fff;
+	font-weight: bold;
+}
+.ad-home-meun {
+	text-decoration: none;
+	padding: 20px;
+	display: block;
+	color: #fff;
+	font-weight: bold;
+}
+
+.ad-side-meun-bar li a:hover {
+	background: #333;
+	color: #fff;
+}
+
+.ad-side-meun-bar li a.home {
+	background: #333;
+	color: #fff;
+}
+
+.ad-tbl-content-main td a {
+	text-decoration: none;
+	padding: 6px;
+	display: block;
+	color: #fff;
+	font-weight: bold;
+}
+.ad-tbl-content-list td a {
+	text-decoration: none;
+	padding: 6px;
+	display: block;
+	color: #fff;
+	font-weight: bold;
+}
+
+
+.ad-board-title {
+	font-size: 30px;
+	color: #fff;
+	text-transform: uppercase;
+	font-weight: 300;
+	text-align: center;
+	margin-bottom: 15px;
+}
+
+ table {
+	width: 100%;
+	table-layout: fixed;
+}
+
+.ad-tbl-header {
+	background-color: rgba(255, 255, 255, 0.3);
+}
+
+
+.ad-tbl-content-main {
+	height: 180px;
+	overflow-x: auto;
+	margin-top: 0px;
+	border: 1px solid rgba(255, 255, 255, 0.3);
+}
+.ad-tbl-content-list {
+	height: 700px;
+	overflow-x: auto;
+	margin-top: 0px;
+	border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+th {
+	padding: 20px 15px;
+	text-align: left;
+	font-weight: 500;
+	font-size: 12px;
+	color: #fff;
+	text-transform: uppercase;
+}
+
+td {
+	padding: 15px;
+	text-align: left;
+	vertical-align: middle;
+	font-weight: 300;
+	font-size: 12px;
+	color: #fff;
+	border-bottom: solid 1px rgba(255, 255, 255, 0.1);
+}
+
+
+@import
+	url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);
+
+body{
+	background: -webkit-linear-gradient(left, #25c481, #25b7c4);
+	background: linear-gradient(to right, #25c481, #25b7c4);
+	font-family: 'Roboto', sans-serif;
+}
+
+.ad-main-table {
+	margin: 50px;
+	
+}
+.ad-modify-content{
+	margin-left: 200px;
+	margin-top: 150px;
+}
+
+::-webkit-scrollbar {
+	width: 6px;
+}
+
+::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+::-webkit-scrollbar-thumb {
+	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
