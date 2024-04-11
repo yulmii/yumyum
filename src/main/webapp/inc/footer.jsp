@@ -1,31 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<style>
-.modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    justify-content: center;
-    align-items: center;
-}
-
-.modal2 {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    justify-content: center;
-    align-items: center;
-}
-</style>
 
 <footer>
 	<div class="f">
@@ -33,7 +8,7 @@
 			<div class="f-modal_body">
 				<div class="f-modal-header">
 					<h2>이용약관</h2>
-					<span class="f-close" id="f-closeModalBtn">&times;</span>
+					<span class="f-close" id="closeModalBtn">&times;</span>
 				</div>
 				<p>
 				<div class="f-modal-body">
@@ -191,8 +166,8 @@
 		</div>
 		<div class=f-modal-btn>
 			<br><br>
-			<a class="btn-open-modal">이용약관</a> &nbsp;&nbsp;&nbsp;
-			<a class="btn-open-modal2">개인정보 방침</a>
+			<a class="f-btn-open-modal">이용약관</a> &nbsp;&nbsp;&nbsp;
+			<a class="f-btn-open-modal2">개인정보 방침</a>
 			<br><br>
 			<hr>
 			<div class="f-num">
@@ -252,7 +227,7 @@
 	
 	const modal2 = document.querySelector('.f-modal2');
 	const btnOpenModal2 = document.querySelector('.f-btn-open-modal2'); // Corrected the variable name
-	const modalContent2 = document.querySelector('.modal_body2');
+	const modalContent2 = document.querySelector('.f-modal_body2');
 	let lastScrollPosition2 = 0; // 사용자가 읽은 마지막 스크롤 위치를 저장하는 변수
 	
 	btnOpenModal2.addEventListener("click", () => {

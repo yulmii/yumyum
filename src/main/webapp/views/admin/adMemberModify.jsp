@@ -48,14 +48,13 @@
 		<input type="hidden" id="pwCheckTF" value="false" /> 
 		<input type="hidden" name="userId" value="${ member.userId }">
 		<div class="ad-main">
-			<div class="ad-menu">
-				<h2 class="ad-menu-h2">메뉴</h2>
-				<a href="${contextPath }/admin/main.do"  class="ad-menu-link">전체 보기</a> 
-				<a href="${contextPath }/admin/member/list.do"  class="ad-menu-link">회원 관리</a> 
-				<a href="${contextPath }/admin/recipe/list.do" class="ad-menu-link">게시글 관리</a> 
-				<a href="${contextPath }/note/list.do" class="ad-menu-link">공지사항 관리</a>
-			</div>
-
+		<div class="ad-menu">
+			<h2 class="ad-menu-h2">메뉴</h2>
+			<a href="${contextPath }/admin/main.do"  class="ad-menu-link">전체 보기</a> 
+			<a href="${contextPath }/admin/member/list.do"  class="ad-menu-link">회원 관리</a> 
+			<a href="${contextPath }/admin/recipe/list.do" class="ad-menu-link">게시글 관리</a> 
+			<a href="${contextPath }/admin/note/list.do" class="ad-menu-link">공지사항 관리</a>
+		</div>
 			<div class="ad-content">
 				<h2>' ${ member.userName } ' 회원 정보 수정</h2>
 				<table>
