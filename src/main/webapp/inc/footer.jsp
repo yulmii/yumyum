@@ -1,15 +1,43 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
+<style>
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal2 {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+</style>
+
 <footer>
 	<div class="f">
-		<div class="modal">
-			<div class="modal_body">
-				<div class="modal-header">
+		<div class="f-modal">
+			<div class="f-modal_body">
+				<div class="f-modal-header">
 					<h2>이용약관</h2>
-					<span class="close" id="closeModalBtn">&times;</span>
+					<span class="f-close" id="f-closeModalBtn">&times;</span>
 				</div>
 				<p>
-				<div class="modal-body">
+				<div class="f-modal-body">
+					<br><br>
 					제1조 목적<br> <br> 본 이용약관은 “4Lee”(이하 "4Lee")의 서비스의 이용조건과 운영에
 					관한 제반 사항 규정을 목적으로 합니다.<br> <br> 제2조 용어의 정의<br> <br>
 					본 약관에서 사용되는 주요한 용어의 정의는 다음과 같습니다.<br> <br> ① 회원 : 사이트의
@@ -111,15 +139,17 @@
 
 			</div>
 		</div>
-		<div class="modal2">
-			<div class="modal_body2">
-				<div class="modal-header2">
+		
+		<div class="f-modal2">
+			<div class="f-modal_body2">
+				<div class="f-modal-header2"><br>
 					<h2>개인정보 방침</h2>
-					<span class="close2" id="closeModalBtn2">&times;</span>
+					<span class="f-close2" id="f-closeModalBtn2">&times;</span>
 				</div>
 
 				<p>
-				<div class="modal-body2">
+				<div class="f-modal-body2">
+				<br><hr><br>
 					②정보주체께서는 '4Lee'의 서비스(또는 4Lee)를 이용하시면서 발생한 모든 
 					개인정보 보호 관련 문의, 불만 처리, 피해구제 등에 관한 사항을 개인정보 보호 
 					책임자 및 담당 부서로 문의하실 수 있습니다.'4Lee'은(는) 정보주체의 
@@ -159,7 +189,7 @@
 				</div>
 			</div>
 		</div>
-		<div class=f-modal>
+		<div class=f-modal-btn>
 			<br><br>
 			<a class="btn-open-modal">이용약관</a> &nbsp;&nbsp;&nbsp;
 			<a class="btn-open-modal2">개인정보 방침</a>
@@ -186,79 +216,79 @@
 	</div>
 </footer>
 <script>
-    const modal1 = document.querySelector('.modal');
-    const btnOpenModal1 = document.querySelector('.btn-open-modal');
-    const modalContent1 = document.querySelector('.modal_body');
-    let lastScrollPosition1 = 0; // 사용자가 읽은 마지막 스크롤 위치를 저장하는 변수
-
-    btnOpenModal1.addEventListener("click", () => {
-        modal1.style.display = "flex";
-        document.body.classList.add('modal-open');
-        // 모달이 열릴 때 저장된 마지막 스크롤 위치로 스크롤
-        modalContent1.scrollTop = lastScrollPosition1;
-    });
-
-    // ESC 키를 눌렀을 때 모달을 닫음
-    window.addEventListener("keydown", (event) => {
-        if (event.key === "Escape") {
-            modal1.style.display = "none";
-            // 모달이 닫힐 때 body 요소의 'modal-open' 클래스 제거하여 스크롤을 다시 허용
-            document.body.classList.remove('modal-open');
-            // 사용자가 읽은 마지막 스크롤 위치를 저장
-            lastScrollPosition1 = modalContent1.scrollTop;
-        }
-    });
-    
-    closeModalBtn.addEventListener('click', () => {
-        modal1.style.display = 'none';
-    });
-
-    // 모달이 닫힐 때 스크롤 위치를 최상단으로 이동
-    modal1.addEventListener('transitionend', () => {
-        if (modal1.style.display !== "flex") {
-            modalContent1.scrollTop = 0;
-        }
-    });
-
-    const modal2 = document.querySelector('.modal2');
-    const btnOpenModal2 = document.querySelector('.btn-open-modal2'); // Corrected the variable name
-    const modalContent2 = document.querySelector('.modal_body2');
-    let lastScrollPosition2 = 0; // 사용자가 읽은 마지막 스크롤 위치를 저장하는 변수
-
-    btnOpenModal2.addEventListener("click", () => { // Added event listener for the privacy policy button
-        modal2.style.display = "flex";
-        document.body.classList.add('modal-open');
-        // 모달이 열릴 때 저장된 마지막 스크롤 위치로 스크롤
-        modalContent2.scrollTop = lastScrollPosition2;
-    });
-
-    // ESC 키를 눌렀을 때 모달을 닫음
-    window.addEventListener("keydown", (event) => {
-        if (event.key === "Escape") {
-            modal2.style.display = "none";
-            // 모달이 닫힐 때 body 요소의 'modal-open' 클래스 제거하여 스크롤을 다시 허용
-            document.body.classList.remove('modal-open');
-            // 사용자가 읽은 마지막 스크롤 위치를 저장
-            lastScrollPosition2 = modalContent2.scrollTop;
-        }
-    });
-    
-
-
-    const closeModalBtn2 = document.getElementById('closeModalBtn2'); // 변수 이름을 closeModalBtn2로 변경
-
-    closeModalBtn2.addEventListener('click', () => { // 이벤트 리스너를 closeModalBtn2로 변경
-        modal2.style.display = 'none';
-        document.body.classList.remove('modal-open');
-        lastScrollPosition2 = modalContent2.scrollTop;
-    });
-
-
-
-    // 모달이 닫힐 때 스크롤 위치를 최상단으로 이동
-    modal2.addEventListener('transitionend', () => {
-        if (modal2.style.display !== "flex") {
-            modalContent2.scrollTop = 0;
-        }
-    });
+	const modal1 = document.querySelector('.f-modal');
+	const btnOpenModal1 = document.querySelector('.f-btn-open-modal');
+	const modalContent1 = document.querySelector('.f-modal_body');
+	let lastScrollPosition1 = 0; // 사용자가 읽은 마지막 스크롤 위치를 저장하는 변수
+	
+	btnOpenModal1.addEventListener("click", () => {
+	    modal1.style.display = "flex";
+	    document.body.classList.add('modal-open');
+	    // 모달이 열릴 때 저장된 마지막 스크롤 위치로 스크롤
+	    modalContent1.scrollTop = lastScrollPosition1;
+	});
+	
+	// ESC 키를 눌렀을 때 모달을 닫음
+	window.addEventListener("keydown", (event) => {
+	    if (event.key === "Escape") {
+	        modal1.style.display = "none";
+	        // 모달이 닫힐 때 body 요소의 'modal-open' 클래스 제거하여 스크롤을 다시 허용
+	        document.body.classList.remove('modal-open');
+	        // 사용자가 읽은 마지막 스크롤 위치를 저장
+	        lastScrollPosition1 = modalContent1.scrollTop;
+	    }
+	});
+	
+	closeModalBtn.addEventListener('click', () => {
+	    modal1.style.display = 'none';
+	});
+	
+	// 모달이 닫힐 때 스크롤 위치를 최상단으로 이동
+	modal1.addEventListener('transitionend', () => {
+	    if (modal1.style.display !== "flex") {
+	        modalContent1.scrollTop = 0;
+	    }
+	});
+	
+	const modal2 = document.querySelector('.f-modal2');
+	const btnOpenModal2 = document.querySelector('.f-btn-open-modal2'); // Corrected the variable name
+	const modalContent2 = document.querySelector('.modal_body2');
+	let lastScrollPosition2 = 0; // 사용자가 읽은 마지막 스크롤 위치를 저장하는 변수
+	
+	btnOpenModal2.addEventListener("click", () => {
+	    modal2.style.display = "flex";
+	    document.body.classList.add('modal-open');
+	    // 모달이 열릴 때 저장된 마지막 스크롤 위치로 스크롤
+	    modalContent2.scrollTop = lastScrollPosition2;
+	});
+	
+	// ESC 키를 눌렀을 때 모달을 닫음
+	window.addEventListener("keydown", (event) => {
+	    if (event.key === "Escape") {
+	        modal2.style.display = "none";
+	        // 모달이 닫힐 때 body 요소의 'modal-open' 클래스 제거하여 스크롤을 다시 허용
+	        document.body.classList.remove('modal-open');
+	        // 사용자가 읽은 마지막 스크롤 위치를 저장
+	        lastScrollPosition2 = modalContent2.scrollTop;
+	    }
+	});
+	
+	
+	
+	const closeModalBtn2 = document.getElementById('f-closeModalBtn2'); // 변수 이름을 closeModalBtn2로 변경
+	
+	closeModalBtn2.addEventListener('click', () => { // 이벤트 리스너를 closeModalBtn2로 변경
+	    modal2.style.display = 'none';
+	    document.body.classList.remove('modal-open');
+	    lastScrollPosition2 = modalContent2.scrollTop;
+	});
+	
+	
+	
+	// 모달이 닫힐 때 스크롤 위치를 최상단으로 이동
+	modal2.addEventListener('transitionend', () => {
+	    if (modal2.style.display !== "flex") {
+	        modalContent2.scrollTop = 0;
+	    }
+	});
 </script>

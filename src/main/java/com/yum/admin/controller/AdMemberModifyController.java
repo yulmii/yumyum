@@ -40,13 +40,19 @@ public class AdMemberModifyController extends HttpServlet {
         member.setNickname(request.getParameter("nickname"));
         member.setPwd(request.getParameter("pwd"));
         member.setEmail(request.getParameter("email"));
-        member.setJoinDate(request.getParameter("joinDate"));
-        member.setAdmin(false);
+
+        // 관리자 권한 설정
+        String adminValue = request.getParameter("admin");
+        member.setAdmin(adminValue);
 
         AdminDAO adminDAO = new AdminDAO();
         adminDAO.memberModify(member);
 
         response.sendRedirect(contextPath + "/admin/main.do");
     }
+
+
+
+
 }
 

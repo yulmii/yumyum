@@ -41,7 +41,7 @@ public class AdminDAO extends MySQLConnector {
 				member.setPwd(rs.getString("pwd"));
 				member.setEmail(rs.getString("email"));
 				member.setJoinDate(rs.getString("joinDate"));
-				member.setAdmin(rs.getBoolean("admin"));
+				member.setAdmin(rs.getString("admin"));
 				
 				membersList.add(member);
 				System.out.println(member);
@@ -157,14 +157,14 @@ public class AdminDAO extends MySQLConnector {
 				member.setPwd(rs.getString("pwd"));
 				member.setEmail(rs.getString("email"));
 				member.setJoinDate(rs.getString("joinDate"));
-				member.setAdmin(rs.getBoolean("admin"));
+				member.setAdmin(rs.getString("admin"));
 				System.out.println("회원수정 페이지 조회 성공");
 			}
 
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());
 		} finally {
-			close(rs, pstmt, conn);
+			close(rs, pstmt, null);
 		}
 		
 		return member;
@@ -176,29 +176,100 @@ public class AdminDAO extends MySQLConnector {
 	 * @return
 	 */
 	public void memberModify(MemberDTO member) {
-		try {
-			String query = "update member set userName=?, nickname=?, pwd=?, email=?, admin=? where userId=?";
-			
-			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, member.getUserName());
-			pstmt.setString(2, member.getNickname());
-			pstmt.setString(3, member.getPwd());
-			pstmt.setString(4, member.getEmail());
-			pstmt.setBoolean(5, false);
-			pstmt.setString(6, member.getUserId());
+	    try {
+	        String query = "UPDATE member SET userName=?, nickname=?, pwd=?, email=?, admin=? WHERE userId=?";
+	        
+	        pstmt = conn.prepareStatement(query);
+	        pstmt.setString(1, member.getUserName());
+	        pstmt.setString(2, member.getNickname());
+	        pstmt.setString(3, member.getPwd());
+	        pstmt.setString(4, member.getEmail());
+	        pstmt.setString(5, member.getAdmin());
+	        pstmt.setString(6, member.getUserId());
 
-			int result = pstmt.executeUpdate();
-			
-			if(result > 0) {
-				System.out.println("회원 수정 성공");
-			}
+	        int result = pstmt.executeUpdate();
+	        
+	        if(result > 0) {
+	            System.out.println("회원 수정 성공");
+	        }
 
-		} catch (SQLException e) {
-			System.err.println(e.getMessage());
-		} finally {
-			close(null, pstmt, conn);
-		}
+	    } catch (SQLException e) {
+	        System.err.println(e.getMessage());
+	    } finally {
+	        close(null, pstmt, conn);
+	    }
 	}
+	
+	
+	/**
+	 * 관리자 페이지 회원탈퇴 시 탈퇴회원 등록
+	 * @param member 탈퇴할 회원의 정보를 담은 MemberDTO 객체
+	 */
+	public void addOutAdUser(MemberDTO member) {
+	    try {
+	        String query = "INSERT INTO out_member (userId, userName, nickname, pwd, email, joinDate) VALUES (?, ?, ?, ?, ?, ?)";
+	        pstmt = conn.prepareStatement(query);
+	        pstmt.setString(1, member.getUserId());
+	        pstmt.setString(2, member.getUserName());
+	        pstmt.setString(3, member.getNickname());
+	        pstmt.setString(4, member.getPwd());
+	        pstmt.setString(5, member.getEmail());
+	        pstmt.setString(6, member.getJoinDate());
+	        
+	        pstmt.executeUpdate();
+
+	    } catch (SQLException e) {
+	        System.err.println(e.getMessage());
+	    } finally {
+	        close(null, pstmt, null);
+	    }
+	}
+
+	/**
+	 * 관리자 회원 탈퇴 레시피 삭제
+	 * @param String
+	 * @return
+	 */
+	public void deleteRecipeRecords(String userId) {
+	    try {
+	        String query = "DELETE FROM recipe_board WHERE userId=?";
+	        pstmt = conn.prepareStatement(query);
+	        pstmt.setString(1, userId);
+	        pstmt.executeUpdate();
+	    } catch (SQLException e) {
+	        System.err.println(e.getMessage());
+	    } finally {
+	        close(null, pstmt, null);
+	    }
+	}
+
+	/**
+	 * 관리자 페이지 회원탈퇴 시 회원 삭제
+	 * @param id 삭제할 회원의 아이디
+	 * @param deletedMember 삭제할 회원의 정보를 담은 MemberDTO 객체
+	 */
+	public void deleteAdUser(String id, MemberDTO deletedMember) {
+	    try {
+	        // member 테이블에서 회원 삭제
+	        String queryDeleteMember = "DELETE FROM member WHERE userId=?";
+	        pstmt = conn.prepareStatement(queryDeleteMember);
+	        pstmt.setString(1, id);
+	        pstmt.executeUpdate();
+
+	        // recipe_board 테이블에서 해당 회원의 레시피 삭제
+	        String queryDeleteRecipe = "DELETE FROM recipe_board WHERE userId=?";
+	        pstmt = conn.prepareStatement(queryDeleteRecipe);
+	        pstmt.setString(1, id);
+	        pstmt.executeUpdate();
+	        
+	    } catch (SQLException e) {
+	        System.err.println(e.getMessage());
+	    } finally {
+	        close(null, pstmt, null);
+	    }
+	}
+
+
 	
 	/**
 	 * 관리자 레시피 삭제
@@ -206,7 +277,6 @@ public class AdminDAO extends MySQLConnector {
 	 * @return
 	 */
 	public void delRecipe(String id) {
-		RecipeDTO recipe = new RecipeDTO();
 		
 		try {
 			String query = "delete from recipe_board where boardIdx=?";
