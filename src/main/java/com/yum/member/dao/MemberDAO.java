@@ -154,7 +154,7 @@ public class MemberDAO extends MySQLConnector {
 				member.setPwd(rs.getString("pwd"));
 				member.setEmail(rs.getString("email"));
 				member.setJoinDate(rs.getString("joinDate"));
-				member.setAdmin(rs.getBoolean("admin"));
+				member.setAdmin(rs.getString("admin"));
 			}
 		} catch (SQLException e) {
 			System.err.println("loginUser() ERR : " + e.getMessage());
@@ -167,6 +167,10 @@ public class MemberDAO extends MySQLConnector {
 //	5. 관리자 로그인 (회원테이블에서 select, admin = true 시)
 //	6. 마이페이지 - 회원정보 수정 (회원테이블 update)
 //	7. 마이페이지 - 내 글 확인 (레시피테이블 select id=특정값)
+	public MemberDTO recipeSearch(String id, String pw) {
+		MemberDTO member = new MemberDTO();
+		return member;
+	}
 //	8. 마이페이지 - 보관함 확인 (보관함테이블 select id=특정값)
 	
 }
