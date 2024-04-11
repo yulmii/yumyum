@@ -15,7 +15,6 @@ public class AdminDAO extends MySQLConnector {
 		getConnection();
 	}
 
-	
 	/**
 	 * 관리자 메인 페이지 회원 관리 게시판 (5개 까지 출력)
 	 * @param String
