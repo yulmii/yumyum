@@ -8,7 +8,7 @@ public class MemberDTO {
 	private String pwd;
 	private String email;
 	private String joinDate;
-	private boolean admin;
+	private String admin;
 	
 	public MemberDTO() {
 		// TODO Auto-generated constructor stub
@@ -62,11 +62,11 @@ public class MemberDTO {
 		this.joinDate = joinDate;
 	}
 
-	public boolean isAdmin() {
+	public String isAdmin() {
 		return admin;
 	}
 
-	public void setAdmin(boolean admin) {
+	public void setAdmin(String admin) {
 		this.admin = admin;
 	}
 
