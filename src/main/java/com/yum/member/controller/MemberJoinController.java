@@ -35,13 +35,19 @@ public class MemberJoinController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // TODO Auto-generated method stub
         // 모델 (MemberDAO의 메서드에게 전달할 데이터를 하나의 객체로 )
+    	
         MemberDTO member = new MemberDTO();
         
         // 아이디/닉네임 중복을 확인하는 쿼리 실행 (결과값을 boolean으로 반환 받음)
-        boolean dupId = this.memberDAO.checkId(request.getParameter("id"));
-        boolean dupNick = this.memberDAO.checkId(request.getParameter("nickname"));
-        
-        request.setAttribute("productList", member);
+        boolean dupId = this.memberDAO.checkId(request.getParameter("user_id"));
+        if (!dupId) member.setUserId(request.getParameter("user_id"));
+        boolean dupNick = this.memberDAO.checkNick(request.getParameter("nickname"));
+        if (!dupNick) member.setNickname(request.getParameter("nickname"));
+        member.setEmail(request.getParameter("email"));
+        member.setPwd(request.getParameter("pwd"));
+        member.setUserName(request.getParameter("name"));
+        this.memberDAO.joinUser(member);
+        request.setAttribute("member", member);
         // 페이지 번호들을 문자열로 반환하는 메서드 호출
         /* 반환 결과의 예
          *        1  2  3  4  5  6  7  8  9  10  >  >>

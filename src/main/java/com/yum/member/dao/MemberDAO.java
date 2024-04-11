@@ -137,8 +137,8 @@ public class MemberDAO extends MySQLConnector {
 	 * @param String
 	 * @return MemberDTO
 	 */
-	public MemberDTO loginUser(String id, String pw) {
-		MemberDTO member = new MemberDTO();
+	public boolean loginUser(String id, String pw) {
+		boolean result = false;
 		try {
 			String query = "SELECT * FROM member WHERE userId = ?, pwd = ?";
 			pstmt = conn.prepareStatement(query);
@@ -147,21 +147,13 @@ public class MemberDAO extends MySQLConnector {
 			
 			rs = pstmt.executeQuery();
 			
-			if(rs.next()) {
-				member.setUserId(rs.getString("userId"));
-				member.setUserName(rs.getString("userName"));
-				member.setNickname(rs.getString("nickName"));
-				member.setPwd(rs.getString("pwd"));
-				member.setEmail(rs.getString("email"));
-				member.setJoinDate(rs.getString("joinDate"));
-				member.setAdmin(rs.getString("admin"));
-			}
+			result = rs.next();
 		} catch (SQLException e) {
 			System.err.println("loginUser() ERR : " + e.getMessage());
 		} finally {
 			close(rs, pstmt, conn);
 		}
-		return member;
+		return result;
 	}
 
 //	5. 관리자 로그인 (회원테이블에서 select, admin = true 시)

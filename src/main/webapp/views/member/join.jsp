@@ -10,7 +10,7 @@
 <main>
 	<form name="frmJoin" method="post" action="<c:url value='/join.do' />">
 		아이디: <input type="text" name="user_id"><br>
-		비밀번호: <input type="text" name="user_pw"><br>
+		비밀번호: <input type="text" name="pwd"><br>
 		닉네임: <input type="text" name="nickname"><br>
 		이름: <input type="text" name="name"><br>
 		이메일: <input type="text" name="email"><br>
