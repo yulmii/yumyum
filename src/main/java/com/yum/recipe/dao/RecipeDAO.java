@@ -1,8 +1,5 @@
 package com.yum.recipe.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.yum.recipe.dto.RecipeDTO;
@@ -15,7 +12,6 @@ public class RecipeDAO extends MySQLConnector {
 
 	/**
 	 * 마지막 보드 인데스 조회
-	 * 
 	 * @return
 	 */
 	public int maxBoardIdx() {
@@ -43,15 +39,14 @@ public class RecipeDAO extends MySQLConnector {
 
 	/**
 	 * 레시피 등록
-	 * 
-	 * @return
+	 * @param RecipeDTO
 	 */
 	public void recipeWrite(RecipeDTO recipe) {
 		conn = null;
 		pstmt = null;
 		try {
 			conn = getConnection();
-			String query = "INSERT INTO (userId, category, title, content, cookHour, cookMinute, ingredent, thumbnail) valuse(?,?,?,?,?,?,?,?)";
+			String query = "INSERT INTO recipe_board (userId, category, title, content, cookHour, cookMinute, ingredient, thumbnail) values(?,?,?,?,?,?,?,?)";
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, recipe.getUserId());
 			pstmt.setString(2, recipe.getCategory());
@@ -62,8 +57,9 @@ public class RecipeDAO extends MySQLConnector {
 			pstmt.setString(7, recipe.getIngredient());
 			pstmt.setString(8, recipe.getThumbnail());
 			System.out.println(pstmt.toString());
+			pstmt.executeUpdate();
 		} catch (SQLException e) {
-			System.err.println("maxBoardIdx() ERR : " + e.getMessage());
+			System.err.println("recipeWrite() ERR : " + e.getMessage());
 		} finally {
 			close(null, pstmt, conn);
 		}
