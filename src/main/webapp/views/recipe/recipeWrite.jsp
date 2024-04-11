@@ -1,6 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="/inc/top.jsp"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${ title }</title>
+<link href='<c:url value="/resources/css/style.css" />' rel="stylesheet">
+<script src='<c:url value="/resources/js/common.js" />'></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <style type="text/css">
 .re-container {
 	width: 1150px;
@@ -16,19 +26,13 @@
 	vertical-align: middle;
 }
 </style>
-<!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
- -->
-<link
-	href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
-	rel="stylesheet">
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<link
-	href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css"
-	rel="stylesheet">
-<script
-	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<script src='<c:url value="/resources/js/summernote-lite.js" />'></script>
+<script src='<c:url value="/resources/js/summernote-ko-KR.js" />'></script>
+
+<link rel="stylesheet" href='<c:url value="/resources/css/summernote-lite.css" />'>
+</head>
+<body>
+<%@ include file="/inc/header.jsp"%>
 <main>
 	<div class="re-container">
 		<form action='<c:url value="/recipe/write.do" />' method="post"  enctype="multipart/form-data">
