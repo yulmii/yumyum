@@ -39,10 +39,8 @@ public class MemberJoinController extends HttpServlet {
         MemberDTO member = new MemberDTO();
         
         // 아이디/닉네임 중복을 확인하는 쿼리 실행 (결과값을 boolean으로 반환 받음)
-        boolean dupId = this.memberDAO.checkId(request.getParameter("user_id"));
-        if (!dupId) member.setUserId(request.getParameter("user_id"));
-        boolean dupNick = this.memberDAO.checkNick(request.getParameter("nickname"));
-        if (!dupNick) member.setNickname(request.getParameter("nickname"));
+        member.setUserId(request.getParameter("user_id"));
+        member.setNickname(request.getParameter("nickname"));
         member.setEmail(request.getParameter("email"));
         member.setPwd(request.getParameter("pwd"));
         member.setUserName(request.getParameter("name"));
