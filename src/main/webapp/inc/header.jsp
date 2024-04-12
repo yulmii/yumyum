@@ -22,10 +22,10 @@
 	<div class="h-middle-menu">
 		<table>
 			<tr>
-				<td><a href="<c:url value="/recipe/list.do?category=hansik"/>">한식</a></td>
-				<td><a href="<c:url value="/recipe/list.do?category=jungsik"/>">중식</a></td>
-				<td><a href="<c:url value="/recipe/list.do?category=ilsik"/>">일식</a></td>
-				<td><a href="<c:url value="/recipe/list.do?category=yangsik"/>">양식</a></td>
+				<td><a href="<c:url value="/recipe/list.do?category=한식"/>">한식</a></td>
+				<td><a href="<c:url value="/recipe/list.do?category=중식"/>">중식</a></td>
+				<td><a href="<c:url value="/recipe/list.do?category=일식"/>">일식</a></td>
+				<td><a href="<c:url value="/recipe/list.do?category=양식"/>">양식</a></td>
 				<td><a href="<c:url value="/note/list.do" />">공지 사항</a></td>
 		</table>
 	</div>
