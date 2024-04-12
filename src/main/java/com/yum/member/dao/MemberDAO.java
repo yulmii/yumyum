@@ -1,8 +1,12 @@
 package com.yum.member.dao;
 
+import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.yum.member.dto.MemberDTO;
+import com.yum.recipe.dto.RecipeDTO;
 import com.yum.util.MySQLConnector;
 
 public class MemberDAO extends MySQLConnector {
@@ -159,10 +163,65 @@ public class MemberDAO extends MySQLConnector {
 //	5. 관리자 로그인 (회원테이블에서 select, admin = true 시)
 //	6. 마이페이지 - 회원정보 수정 (회원테이블 update)
 //	7. 마이페이지 - 내 글 확인 (레시피테이블 select id=특정값)
-	public MemberDTO recipeSearch(String id, String pw) {
-		MemberDTO member = new MemberDTO();
-		return member;
+	public List<RecipeDTO> recipeSearch(String id) {
+		List<RecipeDTO> recipeList = null; 	// 리턴용 레시피 리스트
+		RecipeDTO recipe = new RecipeDTO();
+		try {
+			String query = "select boardIdx, title, hit, createDate from recipe_board where userId=? order by boardIdx desc";
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, id);
+			// 조회 실행
+			rs = pstmt.executeQuery();
+			
+			// LIST 객체에 저장하기 위한 객체 생성
+			recipeList = new ArrayList<RecipeDTO>();
+
+			while(rs.next()) {
+				recipe = new RecipeDTO();	// 각 레코드를 하나의 객체로
+				recipe.setBoardIdx(rs.getInt("boardIdx"));
+				recipe.setTitle(rs.getString("title"));
+				recipe.setHit(rs.getInt("hit"));
+				recipe.setCreateDate(rs.getString("createDate"));
+				recipeList.add(recipe);	// ArrayList에 추가
+			}	// while() END
+		} catch (Exception e) {		// SQLException
+			e.printStackTrace();		// System.out.println(e.getMessage())
+		} finally {
+			// 사용한 객체 종료
+			close(rs, pstmt, conn);
+		}
+		return recipeList;
 	}
-//	8. 마이페이지 - 보관함 확인 (보관함테이블 select id=특정값)
 	
+//	8. 마이페이지 - 보관함 확인 (보관함테이블 select)
+	public List<RecipeDTO> myBoxSearch() {
+		List<RecipeDTO> recipeList = null; 	// 리턴용 레시피 리스트
+		RecipeDTO recipe = new RecipeDTO();
+		try {
+			String query = "select r.boardIdx, m.nickname, r.title, r.hit, r.createDate from recipe_board r, storage_box s, member m where r.boardIdx=s.boardIdx and s.userId=m.userId order by r.boardIdx desc";
+//			(select m.nickname from storage_box s, member m where s.userId=m.userId);
+			pstmt = conn.prepareStatement(query);
+			// 조회 실행
+			rs = pstmt.executeQuery();
+			
+			// LIST 객체에 저장하기 위한 객체 생성
+			recipeList = new ArrayList<RecipeDTO>();
+
+			while(rs.next()) {
+				recipe = new RecipeDTO();	// 각 레코드를 하나의 객체로
+				recipe.setBoardIdx(rs.getInt("r.boardIdx"));
+				recipe.setNickname(rs.getString("m.nickname"));
+				recipe.setTitle(rs.getString("r.title"));
+				recipe.setHit(rs.getInt("r.hit"));
+				recipe.setCreateDate(rs.getString("r.createDate"));
+				recipeList.add(recipe);	// ArrayList에 추가
+			}	// while() END
+		} catch (Exception e) {		// SQLException
+			e.printStackTrace();		// System.out.println(e.getMessage())
+		} finally {
+			// 사용한 객체 종료
+			close(rs, pstmt, conn);
+		}
+		return recipeList;
+	}
 }
