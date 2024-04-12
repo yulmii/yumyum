@@ -27,7 +27,7 @@ public class RecipeWriteController extends HttpServlet {
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
-		RequestDispatcher rd = request.getRequestDispatcher("/views/recipe/recipeWrite.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/views/recipe/recipeWrite2.jsp");
 //		request.setAttribute("order", order);
 		rd.forward(request, response);
 	}

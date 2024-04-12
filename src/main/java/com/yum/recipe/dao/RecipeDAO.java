@@ -1,7 +1,10 @@
 package com.yum.recipe.dao;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.yum.note.dto.NoteDTO;
 import com.yum.recipe.dto.RecipeDTO;
 import com.yum.util.MySQLConnector;
 
@@ -67,7 +70,82 @@ public class RecipeDAO extends MySQLConnector {
 
 	/**
 	 * 레시피 상세 조회
-	 * @param int
+	 * @param RecipeDTO
+	 * @return
+	 */
+	public List<RecipeDTO> recipeList(RecipeDTO dto) {
+		List<RecipeDTO> recipeList = new ArrayList<RecipeDTO>();;
+		RecipeDTO recipe = null;
+		conn = null;
+		pstmt = null;
+		rs = null;
+		try {
+			conn = getConnection();
+			String query = "SELECT A.boardIdx, A.userId, A.category, A.title, A.content, A.createDate, A.updateDate, A.hit, A.like, B.Nickname, A.cookHour, A.cookMinute, A.ingredient, A.thumbnail  FROM recipe_board A INNER JOIN member B ON A.userId = B.userId ORDER BY boardIdx DESC";
+			pstmt = conn.prepareStatement(query);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				recipe = new RecipeDTO();
+				recipe.setBoardIdx(rs.getInt(1));
+				recipe.setUserId(rs.getString(2));
+				recipe.setCategory(rs.getString(3));
+				recipe.setTitle(rs.getString(4));
+				recipe.setContent(rs.getString(5));
+				recipe.setCreateDate(rs.getString(6));
+				recipe.setUpdateDate(rs.getString(7));
+				recipe.setHit(rs.getInt(8));
+				recipe.setLike(rs.getInt(9));
+				recipe.setNickname(rs.getString(10));
+				recipe.setCookHour(rs.getInt(11));
+				recipe.setCookMinute(rs.getInt(12));
+				recipe.setIngredient(rs.getString(13));
+				recipe.setThumbnail(rs.getString(14));
+				
+				recipeList.add(recipe);
+			}
+			
+		} catch (SQLException e) {
+			System.err.println("recipeList() ERR : " + e.getMessage());
+		} finally {
+			close(rs, pstmt, conn);
+		}
+		return recipeList;
+	}
+	
+	/**
+	 * 레시피 전체 카운트 조회
+	 * @return
+	 */
+	public int noteTotalCount() {
+		conn = null;
+		pstmt = null;
+		rs = null;
+		int totalCount = 0;
+		try {
+			conn = getConnection();
+			String query = "select count(boardIdx) as count from recipe_board";
+			pstmt = conn.prepareStatement(query);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				totalCount = rs.getInt("count");
+			}
+			
+			if(totalCount < 1) {
+				return 1;
+			}
+
+		} catch(Exception e) {
+			System.err.println("recipeList() ERR : " + e.getMessage());
+		} finally {
+			close(rs, pstmt, conn);
+		}
+		
+		return totalCount;
+	}
+	
+	/**
+	 * 레시피 상세 조회
+	 * @param RecipeDTO
 	 * @return
 	 */
 	public RecipeDTO recipeDetail(RecipeDTO dto) {
@@ -134,7 +212,50 @@ public class RecipeDAO extends MySQLConnector {
 			close(null, pstmt, conn);
 		}
 	}
+	
+	/**
+	 * 레시피 조회수 증가 수정 처리
+	 * @param RecipeDTO
+	 */
+	public void updateHit(RecipeDTO recipe) {
+		conn = null;
+		pstmt = null;
+		try {
+			conn = getConnection();
+			String query="UPDATE recipe_board SET hit=hit+1 WHERE boardIdx=?";
+			this.pstmt = this.conn.prepareStatement(query);
+			this.pstmt.setInt(1, recipe.getBoardIdx());
+			this.pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.err.println("updateHit() ERR : " + e.getMessage());
+		} finally {
+			close(null, pstmt, conn);
+		}
+	}
 
+	/**
+	 * 레시피 조회수 증가 수정 처리
+	 * @param RecipeDTO
+	 */
+	public void updateLike(RecipeDTO recipe) {
+		conn = null;
+		pstmt = null;
+		try {
+			conn = getConnection();
+			String query="UPDATE recipe_board SET like=like+? WHERE boardIdx=?";
+			this.pstmt = this.conn.prepareStatement(query);
+			this.pstmt.setInt(1, recipe.getLike());
+			this.pstmt.setInt(2, recipe.getBoardIdx());
+			this.pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.err.println("updateLike() ERR : " + e.getMessage());
+		} finally {
+			close(null, pstmt, conn);
+		}
+	}
+
+	
+	
 //   예시
 //   /**
 //    * 아이디 중복 조회

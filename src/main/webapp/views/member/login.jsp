@@ -1,9 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/inc/top.jsp" %>
-<style type="text/css">
-
-</style>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${ title }</title>
+<link href='<c:url value="/resources/css/style.css" />' rel="stylesheet">
+<script src='<c:url value="/resources/js/common.js" />'></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
+<body>
 
 <main>
 	아이디: <input type="text" id="_id"><br>
