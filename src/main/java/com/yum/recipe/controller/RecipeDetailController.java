@@ -23,7 +23,7 @@ public class RecipeDetailController extends HttpServlet {
 		dto.setBoardIdx(n);
 		
 		RecipeDTO recipe = dao.recipeDetail(dto);
-		RequestDispatcher rd = request.getRequestDispatcher("/views/recipe/recipeModify.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/views/recipe/recipeDetail2.jsp");
 		request.setAttribute("recipe", recipe);
 		rd.forward(request, response);
 	}

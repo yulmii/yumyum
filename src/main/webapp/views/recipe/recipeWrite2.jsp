@@ -31,7 +31,7 @@
 	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 <main>
 	<div class="re-container">
-		<form action='<c:url value="/recipe/modify.do" />' method="post"  enctype="multipart/form-data">
+		<form action='<c:url value="/recipe/write.do" />' onsubmit="sendForm()" method="post" enctype="multipart/form-data">
 			<h1>레시피 수정</h1>
 			<table style="margin: 0 auto; width:1000px;">
 				<colgroup>
@@ -43,44 +43,46 @@
 				<tr>
 					<th>음식 이미지</th>
 					<td>
-						<input type="file" id="thumbnailModify" name="thumbnailModify" class="re-input">
-						<input type="hidden" name="thumbnail" value="${ recipe.thumbnail }">
+						<input type="file" id="thumbnail" name="thumbnail" class="re-input">
 					</td>
 					<th>제목</th>
-					<td><input type="text" id="title" name="title" class="re-input" value="${ recipe.title }"></td>
+					<td><input type="text" id="title" name="title" class="re-input"></td>
 				</tr>
 				<tr>
 					<td colspan="2" rowspan="3" class="re-center" style="height: 200px;" id="preview">
-						<img src="/upload/recipe/${ recipe.thumbnail }" style="height: 200px;">
 					</td>
 					<th>카테고리</th>
 					<td>
 						<select id="category" name="category">
-							<option value="한식" ${recipe.category eq '한식' ? 'selected' : ''}>한식</option>
-							<option value="중식" ${recipe.category eq '중식' ? 'selected' : ''}>중식</option>
-							<option value="일식" ${recipe.category eq '일식' ? 'selected' : ''}>일식</option>
-							<option value="양식" ${recipe.category eq '양식' ? 'selected' : ''}>양식</option>
+							<option value="한식">한식</option>
+							<option value="중식">중식</option>
+							<option value="일식">일식</option>
+							<option value="양식">양식</option>
 						</select>
 					</td>
 				</tr>
 				<tr>
 					<th>조리시간</th>
-					<td><input type="number" min="0" name="cookHour" id="cookHour" value="${ recipe.cookHour }">&nbsp;
-						시간 &nbsp; <input type="number" min="0" max="60" name="cookMinute"
-						id="cookMinute" value="${ recipe.cookMinute }">&nbsp;분</td>
+					<td>
+						<input type="number" min="0" name="cookHour" id="cookHour">&nbsp;시간 &nbsp; 
+						<input type="number" min="0" max="60" name="cookMinute"id="cookMinute">&nbsp;분
+					</td>
 				</tr>
 				<tr>
 					<th>재료</th>
-					<td><input type="text" id="ingredient" name="ingredient" value="${ recipe.ingredient }" class="re-input"></td>
+					<td><input type="text" id="ingredient" name="ingredient" class="re-input"></td>
 				</tr>
 				<tr>
 					<th colspan="2">내용</th>
 				</tr>
 				<tr>
-					<td colspan="4"><textarea id="summernote" name="content">${ recipe.content }</textarea></td>
+					<td colspan="4">
+						<textarea id="summernote"></textarea>
+						<input type="hidden" name="content" id="content">
+					</td>
 				</tr>
 				<tr>
-					<td colspan="4" class="re-right"><input type="submit" value="수정하기"></td>
+					<td colspan="4" class="re-right"><input type="submit" value="등록하기"></td>
 				</tr>
 			</table>
 		</form>
@@ -100,6 +102,12 @@
     
     });
    
+
+    function sendForm(){
+    	$("#content").val($('#summernote').summernote('code'));
+    }
+    
+    
  // 파일 입력 요소의 변경 이벤트를 처리하는 함수
     function imageChange(event) {
         // 파일 선택 여부 확인
@@ -128,7 +136,7 @@
     }
 
  // 파일 입력 요소의 변경 이벤트에 대한 리스너 설정
-    $('#thumbnailModify').on('change', imageChange);
+    $('#thumbnail').on('change', imageChange);
    </script>
 </body>
 </html>
