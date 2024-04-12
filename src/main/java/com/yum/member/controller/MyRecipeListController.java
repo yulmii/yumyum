@@ -23,9 +23,9 @@ public class MyRecipeListController extends HttpServlet {
 	private MemberDAO memberDAO = new MemberDAO();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		HttpSession session = request.getSession(false);
-//		String id = (String) session.getAttribute("_id");
-		String id = "aaa";
+		HttpSession session = request.getSession(false);
+		String id = (String) session.getAttribute("_userId");
+//		String id = "aaa";
 //		7. 마이페이지 - 내 글 확인 (레시피테이블 select id=특정값)
 		List<RecipeDTO> recipeList = new ArrayList<RecipeDTO>();
 		
