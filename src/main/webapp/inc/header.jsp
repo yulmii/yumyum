@@ -6,9 +6,8 @@
 			<a href="<c:url value="/main.do" />"> Yumyum</a>
 		</div>
 		<div class="h-top-menu-right">
-			<a class="h-mypage" id="mypage" name="mypage" href="#">마이 페이지</a> &nbsp;&nbsp;
-			<a class="h-recipebox" id="recipebox" name="recipebox" href="#">레시피 보관함</a>&nbsp;&nbsp;
-			<a class="h-recipebox" id="recipebox" name="recipebox" href="#">로그아웃</a>&nbsp;&nbsp;
+			<a class="h-mypage" id="mypage" name="mypage" href="<c:url value="/mypage/modify.do" />">마이 페이지</a> &nbsp;&nbsp;
+			<a class="h-recipebox" id="logout" name="logout" href="<c:url value="/logout.do" />">로그아웃</a>&nbsp;&nbsp;
 			<a class="h-adminpage" id="adminpage" neme="adminpage" href="<c:url value="/admin/main.do" />">관리자 페이지</a>&nbsp;&nbsp;
 		</div>
 	</div>	

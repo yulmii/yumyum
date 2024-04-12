@@ -1,0 +1,62 @@
+CREATE TABLE member (
+    userId VARCHAR(50) PRIMARY KEY COMMENT '유저 아이디',
+    userName VARCHAR(50) NOT NULL COMMENT '유저 이름',
+    nickname VARCHAR(50) UNIQUE NOT NULL COMMENT '닉네임',
+    pwd VARCHAR(50) NOT NULL COMMENT '비밀번호',
+    email VARCHAR(50) NOT NULL COMMENT '이메일',
+    joinDate DATETIME NOT NULL  DEFAULT (current_Timestamp) COMMENT '가입일자',
+    admin CHAR(1) DEFAULT 'F' COMMENT '관리자여부'    
+);
+
+CREATE TABLE recipe_board (
+	boardIdx INT AUTO_INCREMENT PRIMARY KEY COMMENT '레시피 인덱스',
+    userId VARCHAR(50) NOT NULL COMMENT '유저 아이디',
+    category VARCHAR(20) NOT NULL COMMENT '카테고리',
+    title VARCHAR(255) NOT NULL COMMENT '제목',
+    content LONGTEXT NOT NULL COMMENT '내용',
+    createDate DATETIME NOT NULL DEFAULT (current_Timestamp) COMMENT '작성일자',
+    updateDate DATETIME NOT NULL DEFAULT (current_Timestamp) COMMENT '수정일자',
+	hit INT NOT NULL DEFAULT 0 COMMENT '조회수',
+	`like` INT NOT NULL DEFAULT 0 COMMENT '좋아요',
+	cookHour INT NOT NULL DEFAULT 0 COMMENT '요리시간(시간)',
+	cookMinute INT NOT NULL DEFAULT 0 COMMENT '요리시간(분)',
+    ingredient VARCHAR(100) NOT NULL COMMENT '재료',
+   	thumbnail VARCHAR(255) NOT NULL COMMENT '썸네일',
+   	FOREIGN KEY (userId) REFERENCES member(userId)
+);
+
+create table storage_box (
+	boxIdx INT AUTO_INCREMENT PRIMARY KEY COMMENT '보관함 인덱스',
+    userId VARCHAR(50) NOT NULL  COMMENT '유저 아이디',
+	boardIdx INT NOT NULL COMMENT '레시피 인덱스',
+	FOREIGN KEY (userId) REFERENCES member(userId),
+	FOREIGN KEY (boardIdx) REFERENCES recipe_board(boardIdx)
+);
+
+CREATE TABLE note_board (
+	noteIdx INT AUTO_INCREMENT PRIMARY KEY COMMENT '공지 인덱스',
+    title VARCHAR(255) NOT NULL COMMENT '제목',
+    content LONGTEXT NOT NULL COMMENT '내용',
+    createDate DATETIME NOT NULL DEFAULT (current_Timestamp) COMMENT '작성일자',
+    writer VARCHAR(100) NOT NULL COMMENT '작성자'
+);
+
+CREATE TABLE out_member (
+    userId VARCHAR(50) PRIMARY KEY COMMENT '유저 아이디',
+    userName VARCHAR(50) NOT NULL COMMENT '유저 이름',
+    nickname VARCHAR(50) UNIQUE NOT NULL COMMENT '닉네임',
+    pwd VARCHAR(50) NOT NULL COMMENT '비밀번호',
+    email VARCHAR(50) NOT NULL COMMENT '이메일',
+    joinDate DATETIME NOT NULL COMMENT '가입일자',
+    outDate DATETIME NOT NULL DEFAULT (current_Timestamp) COMMENT '탈퇴일자'
+);
+
+create table image(
+    imgIdx int PRIMARY KEY AUTO_INCREMENT COMMENT '이미지 인덱스',
+    fileName VARCHAR(255) NOT NULL COMMENT '파일 이름',
+    filePath VARCHAR(255) NOT NULL COMMENT '파일 경로',
+    boardId int NOT NULL COMMENT '게시글 번호',
+    boardName VARCHAR(50) NOT NULL COMMENT '게시판 이름',
+    createDate DATETIME NOT NULL DEFAULT (current_Timestamp) COMMENT '생성일자'
+);
+

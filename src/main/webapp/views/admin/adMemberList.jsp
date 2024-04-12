@@ -9,7 +9,9 @@
 
 <main class="ad-main-all">
 	<div class="ad-main">
+	
 		<%@ include file="/inc/adpage_side_bar.jsp"%>
+		
 		<section class="ad-main-table">
 			<!--for demo wrap-->
 			<h1 class="ad-board-title">회원관리</h1>
@@ -45,8 +47,8 @@
 				</table>
 			</div>
 
-			
 		</section>
+			
 	</div>
 </main>
 
@@ -54,6 +56,8 @@
 </body>
 </html>
 <script>
+
+
 	$(window).on(
 			"load resize ",
 			function() {
