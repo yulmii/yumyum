@@ -46,11 +46,6 @@ public class MemberJoinController extends HttpServlet {
         member.setUserName(request.getParameter("name"));
         this.memberDAO.joinUser(member);
         request.setAttribute("member", member);
-        // 페이지 번호들을 문자열로 반환하는 메서드 호출
-        /* 반환 결과의 예
-         *        1  2  3  4  5  6  7  8  9  10  >  >>
-         * << 1  2  3  4  5  6  7  8  9  10  >  >>
-        */
         
         // View 보내기
         RequestDispatcher requestDispatcher =
