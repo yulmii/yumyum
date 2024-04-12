@@ -18,6 +18,7 @@ public class AdRecipeDeleteController extends HttpServlet {
 
 		String boardIdx = request.getParameter("boardIdx");
 
+
 		if (boardIdx == null || boardIdx.isEmpty()) {
 			response.sendRedirect(request.getContextPath() + "/admin/main.do");
 			return;

@@ -17,6 +17,7 @@
 }
 </style>
 <main>
+<<<<<<< HEAD
 	<div class="re-container">
 <%-- <div class="re-right">등록일자 : ${recipe.createDate} 수정일자 : ${recipe.updateDate} 조회수 : ${recipe.hit}</div> --%>
 		<div class="re-right">조회수 : ${recipe.hit}</div>
@@ -65,6 +66,9 @@
 			</table>
 	</div>
 
+=======
+	
+>>>>>>> c0b4b1e2de65eac01fba708c59a23f595a4aaade
 </main>
 <%@ include file="/inc/footer.jsp" %>
 </body>

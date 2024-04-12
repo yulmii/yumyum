@@ -5,6 +5,18 @@
 @import
 	url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);
 
+.ad-borard-title-more {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+}
+.ad-board-more {
+    text-decoration: none;
+    padding: 2px;
+    color: #fff;
+    font-weight: bold;
+}
 </style>
 
 
@@ -19,17 +31,21 @@
 
 				<br><br>
 				<h2 class="ad-menu-h2"><a class="ad-home-meun" href="<c:url value="/main.do" />"> Yumyum</a></h2>
-				<li><a href="<c:url value="/recipe/list.do?category=hansik"/> ">한식</a></li>
-				<li><a href="<c:url value="/recipe/list.do?category=jungsik"/>">중식</a></li>
-				<li><a href="<c:url value="/recipe/list.do?category=ilsik"/>">일식</a></li>
-				<li><a href="<c:url value="/recipe/list.do?category=yangsik"/>">양식</a></li>
+				<li><a href="<c:url value="/recipe/list.do?category=한식"/> ">한식</a></li>
+				<li><a href="<c:url value="/recipe/list.do?category=중식"/>">중식</a></li>
+				<li><a href="<c:url value="/recipe/list.do?category=일식"/>">일식</a></li>
+				<li><a href="<c:url value="/recipe/list.do?category=양식"/>">양식</a></li>
 				<li><a href="<c:url value="/note/list.do" />">공지 사항</a></li>
 			</ul>
 		</div>
 		<section class="ad-main-table">
 			<!--for demo wrap-->
-			<h1 class="ad-board-title">회원관리</h1>
+			<div class="ad-borard-title-more">
+				<h1 class="ad-board-title">회원관리</h1>
+				<a href="<c:url value="/admin/member/list.do" />" class="ad-board-more"> 더 보기</a>
+			</div>
 			<div class="ad-tbl-header">
+			
 				<table cellpadding="0" cellspacing="0" border="0" >
 					<thead>
 						<tr>
@@ -59,8 +75,10 @@
 					</tbody>
 				</table>
 			</div>
-
-			<h1 class="ad-board-title">레시피 관리</h1>
+			<div class="ad-borard-title-more">
+				<h1 class="ad-board-title">레시피 관리</h1>
+				<a href="<c:url value="/admin/recipe/list.do" />" class="ad-board-more"> 더 보기</a>
+			</div>
 			<div class="ad-tbl-header">
 				<table cellpadding="0" cellspacing="0" border="0">
 					<thead>
@@ -88,14 +106,17 @@
 									<td>${recipe.title}</td>
 									<td>${recipe.hit}</td>
 									<td>${recipe.like}</td>
-									<td><a href='<c:url value="/admin/recipe/delete.do?boardIdx=${recipe.boardIdx}" /> '>삭제</a></td>
+									<td><a href='<c:url value="/admin/recipe/delete.do?boardIdx=${recipe.boardIdx}" /> ' onclick="return confirm('정말로 삭제하시겠습니까?');">삭제</a></td>
 								</tr>
 							</c:if>
 						</c:forEach>
 					</tbody>
 				</table>
 			</div>
-			<h1 class="ad-board-title">공지사항 관리</h1>
+			<div class="ad-borard-title-more">
+				<h1 class="ad-board-title">공지사항 관리</h1>
+				<a href="<c:url value="/admin/note/list.do" />" class="ad-board-more"> 더 보기</a>
+			</div>
 			<div class="ad-tbl-header">
 				<table cellpadding="0" cellspacing="0" border="0">
 					<thead>
