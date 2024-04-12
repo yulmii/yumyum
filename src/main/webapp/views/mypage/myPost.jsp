@@ -10,7 +10,7 @@
 <main>
 <!-- 뭐가 보여야 하는가 -->
 <!-- "나"의 아이디에 대한 작성 글 리스트 및 페이지 내비게이터 -->
-	<table align="center" width="750px" summary="나의 글 목록">
+	<table align="center" width="750px" summary="나의 레시피 목록">
 		<colgroup>
 			<col width="8%" />
 			<col width="50%" />
