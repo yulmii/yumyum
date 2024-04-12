@@ -102,4 +102,74 @@ public class NoteDAO extends MySQLConnector {
 		
 		return note;
 	}
+	
+	
+	/**
+	 * 공지사항 작성
+	 * 
+	 */
+	public int noteWrite(NoteDTO note) {
+		try {
+			String query = "insert into note_board (title, writer, content) values(?,?,?)";
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, note.getTitle());
+			pstmt.setString(2, note.getWriter());
+			pstmt.setString(3, note.getContent());
+			int result = pstmt.executeUpdate();
+			
+			if(result == 1) {
+				query = "select noteIdx from note_board order by noteIdx desc limit 0,1";
+				pstmt = conn.prepareStatement(query);
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()) {
+					return rs.getInt("noteIdx");
+				}
+			}
+		} catch(Exception e) {
+			System.err.println("noteWrite ======> " + e.getMessage());
+		} finally {
+			close(rs, pstmt, conn);
+		}
+		
+		return -1;
+	}
+	
+	/**
+	 * 공지사항 수정
+	 * 
+	 */
+	public void noteModify(NoteDTO note) {
+		try {
+			String query = "update note_board set title=?, writer=?, content=? where noteIdx=?";
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, note.getTitle());
+			pstmt.setString(2, note.getWriter());
+			pstmt.setString(3, note.getContent());
+			pstmt.setInt(4, note.getNoteIdx());
+			pstmt.executeUpdate();
+
+		} catch(Exception e) {
+			System.err.println("noteModify ======> " + e.getMessage());
+		} finally {
+			close(null, pstmt, conn);
+		}
+	}
+	
+	/**
+	 * 공지사항 삭제
+	 * 
+	 */
+	public void noteDelete(int no) {
+		try {
+			String query = "delete from note_board where noteIdx=?";
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, no);
+			pstmt.executeUpdate();
+
+		} catch(Exception e) {
+			System.err.println("noteModify ======> " + e.getMessage());
+			close(null, pstmt, conn);
+		} 
+	}
 }
