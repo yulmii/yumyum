@@ -23,7 +23,11 @@ public class MemberDAO extends MySQLConnector {
 	 * @return boolean
 	 */
 	public boolean checkId(String id) {
+		conn = null;
+		pstmt = null;
+		rs = null;
 		try {
+			conn = getConnection();
 			String query = "SELECT userId FROM member WHERE userId = ?";
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, id);
@@ -48,7 +52,11 @@ public class MemberDAO extends MySQLConnector {
 	 * @return boolean
 	 */
 	public boolean checkNick(String nick) {
+		conn = null;
+		pstmt = null;
+		rs = null;
 		try {
+			conn = getConnection();
 			String query = "SELECT nickname FROM member WHERE nickname = ?";
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, nick);
@@ -59,7 +67,7 @@ public class MemberDAO extends MySQLConnector {
 				return true; // 중복 아이디 존재
 			}
 		} catch (SQLException e) {
-			System.err.println("checkId() ERR : " + e.getMessage());
+			System.err.println("checkNick() ERR : " + e.getMessage());
 		} finally {
 			close(rs, pstmt, conn);
 		}
@@ -73,7 +81,10 @@ public class MemberDAO extends MySQLConnector {
 	 * @return
 	 */
 	public void joinUser(MemberDTO member) {
+		conn = null;
+		pstmt = null;
 		try {
+			conn = getConnection();
 			String query = "INSERT INTO member (userId, userName, nickname, pwd, email) VALUES (?, ?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, member.getUserId());
@@ -97,7 +108,10 @@ public class MemberDAO extends MySQLConnector {
 	 * @return
 	 */
 	public void deleteUser(String id) {
+		conn = null;
+		pstmt = null;
 		try {
+			conn = getConnection();
 			String query = "DELETE FROM member WHERE userId=?";
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, id);
@@ -152,7 +166,6 @@ public class MemberDAO extends MySQLConnector {
 		try {
 			conn = getConnection();
 			String query = "SELECT * FROM member WHERE userId = ? and pwd = ?";
-			System.out.println("bb");
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, member.getUserId());
 			pstmt.setString(2, member.getPwd());

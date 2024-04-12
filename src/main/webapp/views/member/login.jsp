@@ -12,7 +12,6 @@
 	<input type="reset" value="다시 입력">
 	<input type="button" value="회원가입" onclick="location.href='<c:url value="/views/member/join.jsp" />'">
 </main>
-<%@ include file="/inc/footer.jsp" %>
 <script type="text/javascript">
 function login(){
 	var _id = $("#_id").val();

@@ -94,7 +94,6 @@
 	 }
 	 
 	 function pageMove(no){
-		 console.log(no);
 		 location.href = `<c:url value="/note/detail.do?no=${ '${no}' }"/>`;
 	 }
 </script>
