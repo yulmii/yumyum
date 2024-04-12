@@ -131,7 +131,7 @@ a{
 	      
 	        <div class="ma-titleBox">
 	          <h2>한식</h2>
-	          <p class="ma-moreBut"><a href="<c:url value="/recipe/list.do?category=hansik"/> ">모두보기</a></p>
+	          <p class="ma-moreBut"><a href="<c:url value="/recipe/list.do?category=한식"/> ">모두보기</a></p>
 	        </div>
 	        <div class="ma-imgWrapper">
 	          <div class="ma-arrow-box">
@@ -166,7 +166,7 @@ a{
 	      <div class="ma-ctgWrapper">
 	        <div class="ma-titleBox">
 	          <h2>중식</h2>
-	          <p class="ma-moreBut"><a href="<c:url value="/recipe/list.do?category=jungsik"/> ">모두보기</a></p>
+	          <p class="ma-moreBut"><a href="<c:url value="/recipe/list.do?category=중식"/> ">모두보기</a></p>
 	        </div>
 	        <div class="ma-imgWrapper">
 	          <div class="ma-arrow-box">
@@ -201,7 +201,7 @@ a{
 	      <div class="ma-ctgWrapper">
 	        <div class="ma-titleBox">
 	          <h2>일식</h2>
-	          <p class="ma-moreBut"><a href="<c:url value="/recipe/list.do?category=ilsik"/> ">모두보기</a></p>
+	          <p class="ma-moreBut"><a href="<c:url value="/recipe/list.do?category=일식"/> ">모두보기</a></p>
 	        </div>
 	        <div class="ma-imgWrapper">
 	          <div class="ma-arrow-box">
@@ -236,7 +236,7 @@ a{
 	      <div class="ma-ctgWrapper">
 	        <div class="ma-titleBox">
 	          <h2>양식</h2>
-	          <p class="ma-moreBut"><a href="<c:url value="/recipe/list.do?category=yangsik"/> ">모두보기</a></p>
+	          <p class="ma-moreBut"><a href="<c:url value="/recipe/list.do?category=양식"/> ">모두보기</a></p>
 	        </div>
 	        <div class="ma-imgWrapper">
 	          <div class="ma-arrow-box">
