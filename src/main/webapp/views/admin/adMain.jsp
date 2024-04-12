@@ -5,18 +5,18 @@
 @import
 	url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);
 
-.ad-borard-title-more {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    text-align: center;
-}
-.ad-board-more {
-    text-decoration: none;
-    padding: 2px;
-    color: #fff;
-    font-weight: bold;
-}
+/* .ad-borard-title-more { */
+/*     display: flex; */
+/*     justify-content: space-between; */
+/*     align-items: center; */
+/*     text-align: center; */
+/* } */
+/* .ad-board-more { */
+/*     text-decoration: none; */
+/*     padding: 2px; */
+/*     color:  rgb(0, 0, 0); */
+/*     font-weight: bold; */
+/* } */
 </style>
 
 
