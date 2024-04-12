@@ -16,7 +16,7 @@ public class AdminDAO extends MySQLConnector {
 	}
 
 	/**
-	 * 관리자 메인 페이지 회원 관리 게시판 (5개 까지 출력)
+	 * 관리자 메인 페이지 회원 관리 게시판 (3개 까지 출력)
 	 * @param String
 	 * @return
 	 */
@@ -54,7 +54,7 @@ public class AdminDAO extends MySQLConnector {
 	
 	
 	/**
-	 * 관리자 메인 페이지 레시피 관리 게시판 (5개 까지 출력)
+	 * 관리자 메인 페이지 레시피 관리 게시판 (3개 까지 출력)
 	 * @param String
 	 * @return
 	 */
@@ -97,7 +97,7 @@ public class AdminDAO extends MySQLConnector {
 	}
 	
 	/**
-	 * 관리자 메인 페이지 공지사항 관리 게시판 (5개 까지 출력)
+	 * 관리자 메인 페이지 공지사항 관리 게시판 (3개 까지 출력)
 	 * @param String
 	 * @return
 	 */

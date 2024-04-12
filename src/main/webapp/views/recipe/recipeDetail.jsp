@@ -8,6 +8,6 @@
 
 </script>
 <main>
-
+	
 </main>
 <%@ include file="/inc/footer.jsp" %></html>
