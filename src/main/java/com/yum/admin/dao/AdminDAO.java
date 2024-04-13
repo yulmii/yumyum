@@ -80,7 +80,7 @@ public class AdminDAO extends MySQLConnector {
 				recipe.setUpdateDate(rs.getString("updateDate"));
 				recipe.setHit(rs.getInt("hit"));
 				recipe.setLike(rs.getInt("like"));
-//				recipe.setNickname(rs.getString("nickname"));
+				recipe.setWriter(rs.getString("writer"));
 				recipe.setCookHour(rs.getInt("cookHour"));
 				recipe.setCookMinute(rs.getInt("cookMinute"));
 				recipe.setIngredient(rs.getString("ingredient"));

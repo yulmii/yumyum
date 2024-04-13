@@ -229,7 +229,7 @@ public class MemberDAO extends MySQLConnector {
 		RecipeDTO recipe = new RecipeDTO();
 		try {
 			conn = getConnection();
-			String query = "select r.boardIdx, m.nickname, r.title, r.hit, r.createDate from recipe_board r, storage_box s, member m where r.boardIdx=s.boardIdx and s.userId=m.userId order by r.boardIdx desc";
+			String query = "select r.boardIdx, r.writer, r.title, r.hit, r.createDate from recipe_board r, storage_box s where r.boardIdx=s.boardIdx and s.userId order by r.boardIdx desc";
 //			(select m.nickname from storage_box s, member m where s.userId=m.userId);
 			pstmt = conn.prepareStatement(query);
 			// 조회 실행
@@ -241,7 +241,7 @@ public class MemberDAO extends MySQLConnector {
 			while(rs.next()) {
 				recipe = new RecipeDTO();	// 각 레코드를 하나의 객체로
 				recipe.setBoardIdx(rs.getInt("r.boardIdx"));
-				recipe.setNickname(rs.getString("m.nickname"));
+				recipe.setWriter(rs.getString("r.writer"));
 				recipe.setTitle(rs.getString("r.title"));
 				recipe.setHit(rs.getInt("r.hit"));
 				recipe.setCreateDate(rs.getString("r.createDate"));

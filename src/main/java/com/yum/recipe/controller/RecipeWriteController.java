@@ -40,12 +40,17 @@ public class RecipeWriteController extends HttpServlet {
 	    
 	    //파라미터
 	    String thumbnail = "";
+	    String title = "";
+	    FileItem thumbnailItem = null;
+	    
 	    // RecipeDTO 객체 생성 및 정보 설정
 	    RecipeDTO recipe = new RecipeDTO();
 	    DiskFileItemFactory factory = new DiskFileItemFactory();
 	    ServletFileUpload upload = new ServletFileUpload(factory);
-//		recipe.setUserId((String)session.getAttribute("_userId"));
-	    recipe.setUserId("aaa"); // 사용자 아이디 하드코딩
+
+	    String userId = (String)session.getAttribute("_userId");
+	    recipe.setUserId(userId);
+	    recipe.setWriter(dao.getNickname(userId));
 	 // 파일 업로드 및 파라미터 처리
 	    try {
 	        List<FileItem> items = upload.parseRequest(request);
@@ -59,6 +64,7 @@ public class RecipeWriteController extends HttpServlet {
 	                	recipe.setCategory(value);
 	                } else if (fieldName.equals("title")) {
 	                	recipe.setTitle(value);
+	                	title = value;
 	                } else if (fieldName.equals("content")) {
 	                	recipe.setContent(value);
 	                } else if (fieldName.equals("cookHour")) {
@@ -72,34 +78,40 @@ public class RecipeWriteController extends HttpServlet {
 	                } 
 	            }else {
 	            	if (fieldName.equals("thumbnail")) {
-	            		thumbnail = fileUpload(request,item);
-//	            		thumbnail = thumbnail.replace("\\", "/");
+	            		thumbnailItem = item;
 	            	}
 	            }
 	        }
+	        thumbnail = fileUpload(title, thumbnailItem);
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
 	    
+	    
 	    recipe.setThumbnail(thumbnail);
 	    System.out.println(recipe.toString());
 	    dao.recipeWrite(recipe);
+	    
+	    RequestDispatcher rd = request.getRequestDispatcher("/views/recipe/recipeDetail2.jsp");
+		request.setAttribute("recipe", recipe);
+		rd.forward(request, response);	    
 
 	}
 	
-	private String fileUpload(HttpServletRequest request, FileItem thumbnailItem) throws IOException, ServletException {
+	private String fileUpload(String title, FileItem thumbnailItem) throws IOException, ServletException {
 
 	    // 파일 업로드 및 정보 저장
 //	    String filePath = "";
 	    String fileName = "";
+	    String fileDir = "C:/yum_img/recipe/";
 	    UUID uuid = UUID.randomUUID(); //파일이름 난수발생
 	    try {
 	        // "thumbnail" 파일 업로드 처리
 	        if (thumbnailItem != null) {
 	            String exp = FilenameUtils.getExtension(thumbnailItem.getName());
 //	            String fileName = "recipethumb-" + uuid + "." + exp;
-	            fileName = "recipethumb-" + uuid + "." + exp;
-	            File uploadFile = new File("C:/yum_img/recipe/" + fileName);
+	            fileName = "recipethumb-" + uuid + "-" + title + "." + exp;
+	            File uploadFile = new File(fileDir + fileName);
 	            thumbnailItem.write(uploadFile);
 //	            filePath = uploadFile.getAbsolutePath();
 //	            System.out.println(filePath);

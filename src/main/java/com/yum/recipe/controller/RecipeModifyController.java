@@ -88,6 +88,7 @@ public class RecipeModifyController extends HttpServlet {
 	                } 
 	            }else {
 	            	if (fieldName.equals("thumbnailModify")) {
+	            		System.out.println("변경됬나?" + item);
 	            		thumbnailItem = item;
 	            	}
 	            }

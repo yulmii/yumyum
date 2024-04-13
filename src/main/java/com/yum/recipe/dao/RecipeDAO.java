@@ -41,6 +41,34 @@ public class RecipeDAO extends MySQLConnector {
 	}
 
 	/**
+	 * 유저 닉네임 가져오기
+	 * @param String
+	 * @return
+	 */
+	public String getNickname(String userId) {
+		String writer = "";
+		conn = null;
+		pstmt = null;
+		rs = null;
+		try {
+			conn = getConnection();
+			String query = "SELECT nickname  FROM member WHERE userId=? ";
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				writer = rs.getString(1);
+			}
+			
+		} catch (SQLException e) {
+			System.err.println("getNickname() ERR : " + e.getMessage());
+		} finally {
+			close(rs, pstmt, conn);
+		}
+		return writer;
+	}
+
+	/**
 	 * 레시피 등록
 	 * @param RecipeDTO
 	 */
@@ -49,16 +77,17 @@ public class RecipeDAO extends MySQLConnector {
 		pstmt = null;
 		try {
 			conn = getConnection();
-			String query = "INSERT INTO recipe_board (userId, category, title, content, cookHour, cookMinute, ingredient, thumbnail) values(?,?,?,?,?,?,?,?)";
+			String query = "INSERT INTO recipe_board (userId, writer, category, title, content, cookHour, cookMinute, ingredient, thumbnail) values(?,?,?,?,?,?,?,?)";
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, recipe.getUserId());
-			pstmt.setString(2, recipe.getCategory());
-			pstmt.setString(3, recipe.getTitle());
-			pstmt.setString(4, recipe.getContent());
-			pstmt.setInt(5, recipe.getCookHour());
-			pstmt.setInt(6, recipe.getCookMinute());
-			pstmt.setString(7, recipe.getIngredient());
-			pstmt.setString(8, recipe.getThumbnail());
+			pstmt.setString(2, recipe.getWriter());
+			pstmt.setString(3, recipe.getCategory());
+			pstmt.setString(4, recipe.getTitle());
+			pstmt.setString(5, recipe.getContent());
+			pstmt.setInt(6, recipe.getCookHour());
+			pstmt.setInt(7, recipe.getCookMinute());
+			pstmt.setString(8, recipe.getIngredient());
+			pstmt.setString(9, recipe.getThumbnail());
 			System.out.println(pstmt.toString());
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -69,65 +98,96 @@ public class RecipeDAO extends MySQLConnector {
 	}
 
 	/**
-	 * 레시피 상세 조회
+	 * 레시피 리스트 조회
 	 * @param RecipeDTO
 	 * @return
 	 */
 	public List<RecipeDTO> recipeList(RecipeDTO dto) {
-		List<RecipeDTO> recipeList = new ArrayList<RecipeDTO>();;
-		RecipeDTO recipe = null;
-		conn = null;
-		pstmt = null;
-		rs = null;
-		try {
-			conn = getConnection();
-			String query = "SELECT A.boardIdx, A.userId, A.category, A.title, A.content, A.createDate, A.updateDate, A.hit, A.like, B.Nickname, A.cookHour, A.cookMinute, A.ingredient, A.thumbnail  FROM recipe_board A INNER JOIN member B ON A.userId = B.userId ORDER BY boardIdx DESC";
-			pstmt = conn.prepareStatement(query);
-			rs = pstmt.executeQuery();
-			if (rs.next()) {
-				recipe = new RecipeDTO();
-				recipe.setBoardIdx(rs.getInt(1));
-				recipe.setUserId(rs.getString(2));
-				recipe.setCategory(rs.getString(3));
-				recipe.setTitle(rs.getString(4));
-				recipe.setContent(rs.getString(5));
-				recipe.setCreateDate(rs.getString(6));
-				recipe.setUpdateDate(rs.getString(7));
-				recipe.setHit(rs.getInt(8));
-				recipe.setLike(rs.getInt(9));
-				recipe.setNickname(rs.getString(10));
-				recipe.setCookHour(rs.getInt(11));
-				recipe.setCookMinute(rs.getInt(12));
-				recipe.setIngredient(rs.getString(13));
-				recipe.setThumbnail(rs.getString(14));
-				
-				recipeList.add(recipe);
-			}
-			
-		} catch (SQLException e) {
-			System.err.println("recipeList() ERR : " + e.getMessage());
-		} finally {
-			close(rs, pstmt, conn);
-		}
-		return recipeList;
+	    List<RecipeDTO> recipeList = new ArrayList<>();
+	    String whereSQL;
+	    conn = null;
+	    pstmt = null;
+	    rs = null;
+	    try {
+	        conn = getConnection();
+	        if (dto.getCategory() == null || dto.getCategory().equals("")) {
+	            whereSQL = "WHERE title LIKE CONCAT('%',?,'%') OR writer LIKE CONCAT('%',?,'%') OR ingredient LIKE CONCAT('%',?,'%') ";
+	        } else {
+	            whereSQL = "WHERE category=? ";
+	        }
+	        String first = "SELECT boardIdx, userId, writer, category, title, content, createDate, updateDate, hit, like, cookHour, cookMinute, ingredient, thumbnail  FROM recipe_board ";
+	        String end = "ORDER BY boardIdx DESC";
+	        String query = first + whereSQL + end;
+	        pstmt = conn.prepareStatement(query);
+	        if (dto.getCategory() == null || dto.getCategory().equals("")) {
+	            pstmt.setString(1, dto.getSearchText());
+	            pstmt.setString(2, dto.getSearchText());
+	            pstmt.setString(3, dto.getSearchText());
+	        } else {
+	            pstmt.setString(1, dto.getCategory());
+	        }
+	        rs = pstmt.executeQuery();
+	        while (rs.next()) {
+	            RecipeDTO recipe = new RecipeDTO();
+	            recipe.setBoardIdx(rs.getInt(1));
+	            recipe.setUserId(rs.getString(2));
+	            recipe.setCategory(rs.getString(3));
+	            recipe.setTitle(rs.getString(4));
+	            recipe.setContent(rs.getString(5));
+	            recipe.setCreateDate(rs.getString(6));
+	            recipe.setUpdateDate(rs.getString(7));
+	            recipe.setHit(rs.getInt(8));
+	            recipe.setLike(rs.getInt(9));
+	            recipe.setWriter(rs.getString(10));
+	            recipe.setCookHour(rs.getInt(11));
+	            recipe.setCookMinute(rs.getInt(12));
+	            recipe.setIngredient(rs.getString(13));
+	            recipe.setThumbnail(rs.getString(14));
+
+	            recipeList.add(recipe);
+	        }
+
+	    } catch (SQLException e) {
+	        System.err.println("recipeList() ERR : " + e.getMessage());
+	    } finally {
+	        close(rs, pstmt, conn);
+	    }
+	    return recipeList;
 	}
+
 	
 	/**
-	 * 레시피 전체 카운트 조회
+	 * 레시피 목록 카운트 조회
+	 * @param RecipeDTO
 	 * @return
 	 */
-	public int noteTotalCount() {
+	public int recipeTotalCount(RecipeDTO dto) {
+		int totalCount = 0;
+		String whereSQL = "";
 		conn = null;
 		pstmt = null;
 		rs = null;
-		int totalCount = 0;
 		try {
 			conn = getConnection();
-			String query = "select count(boardIdx) as count from recipe_board";
-			pstmt = conn.prepareStatement(query);
+			if (dto.getCategory() == null || dto.getCategory().equals("")) {
+	            whereSQL = "WHERE title LIKE CONCAT('%',?,'%') OR writer LIKE CONCAT('%',?,'%') OR ingredient LIKE CONCAT('%',?,'%')";
+	        } else {
+	            whereSQL = "WHERE category=?";
+	        }
+	        String first = "SELECT COUNT(boardIdx) FROM recipe_board ";
+	        String query = first + whereSQL;
+	        pstmt = conn.prepareStatement(query);
+	        if (dto.getCategory() == null || dto.getCategory().equals("")) {
+	            pstmt.setString(1, dto.getSearchText());
+	            pstmt.setString(2, dto.getSearchText());
+	            pstmt.setString(3, dto.getSearchText());
+	        } else {
+	            pstmt.setString(1, dto.getCategory());
+	        }
+	        
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
-				totalCount = rs.getInt("count");
+				totalCount = rs.getInt(1);
 			}
 			
 			if(totalCount < 1) {
@@ -135,7 +195,7 @@ public class RecipeDAO extends MySQLConnector {
 			}
 
 		} catch(Exception e) {
-			System.err.println("recipeList() ERR : " + e.getMessage());
+			System.err.println("recipeTotalCount() ERR : " + e.getMessage());
 		} finally {
 			close(rs, pstmt, conn);
 		}
@@ -155,7 +215,7 @@ public class RecipeDAO extends MySQLConnector {
 		rs = null;
 		try {
 			conn = getConnection();
-			String query = "SELECT A.boardIdx, A.userId, A.category, A.title, A.content, A.createDate, A.updateDate, A.hit, A.like, B.Nickname, A.cookHour, A.cookMinute, A.ingredient, A.thumbnail  FROM recipe_board A INNER JOIN member B ON A.userId = B.userId WHERE boardIdx=? ";
+			String query = "SELECT boardIdx, userId, category, title, content, createDate, updateDate, hit, like, writer, cookHour, cookMinute, ingredient, thumbnail  FROM recipe_board WHERE boardIdx=? ";
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, dto.getBoardIdx());
 			rs = pstmt.executeQuery();
@@ -170,7 +230,7 @@ public class RecipeDAO extends MySQLConnector {
 				recipe.setUpdateDate(rs.getString(7));
 				recipe.setHit(rs.getInt(8));
 				recipe.setLike(rs.getInt(9));
-				recipe.setNickname(rs.getString(10));
+				recipe.setWriter(rs.getString(10));
 				recipe.setCookHour(rs.getInt(11));
 				recipe.setCookMinute(rs.getInt(12));
 				recipe.setIngredient(rs.getString(13));

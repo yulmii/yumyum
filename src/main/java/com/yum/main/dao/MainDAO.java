@@ -47,10 +47,10 @@ public class MainDAO extends MySQLConnector {
 	public Map<String, List<RecipeDTO>> selectCtgAll(){
 		Map<String, List<RecipeDTO>> ctg = new HashMap<String, List<RecipeDTO>>();
 		
-		String query1 = "select * from ( select A.*, @rownum := @rownum + 1 as rnum from ( select R.boardIdx as boardIdx, R.title as title, M.nickname as nickname, R.hit as hit, R.thumbnail as thumbnail from recipe_board R inner join member M on R.userId = M.userId where category =  '한식' order by hit desc) A, (SELECT @rownum := 0) r ) ranking where rnum < 11";
-		String query2 = "select * from (select A.*, @rownum := @rownum + 1 as rnum from ( select R.boardIdx as boardIdx, R.title as title, M.nickname as nickname, R.hit as hit, R.thumbnail as thumbnail from recipe_board R inner join member M on R.userId = M.userId where category =  '중식' order by hit desc) A, (SELECT @rownum := 0) r ) ranking where rnum < 11";
-		String query3 = "select * from (select A.*, @rownum := @rownum + 1 as rnum from ( select R.boardIdx as boardIdx, R.title as title, M.nickname as nickname, R.hit as hit, R.thumbnail as thumbnail from recipe_board R inner join member M on R.userId = M.userId where category =  '일식' order by hit desc) A, (SELECT @rownum := 0) r ) ranking where rnum < 11";
-		String query4 = "select * from (select A.*, @rownum := @rownum + 1 as rnum from ( select R.boardIdx as boardIdx, R.title as title, M.nickname as nickname, R.hit as hit, R.thumbnail as thumbnail from recipe_board R inner join member M on R.userId = M.userId where category =  '양식' order by hit desc) A, (SELECT @rownum := 0) r ) ranking where rnum < 11";
+		String query1 = "select * from ( select A.*, @rownum := @rownum + 1 as rnum from ( select boardIdx, title, writer, hit, thumbnail from recipe_board where category =  '한식' order by hit desc) A, (SELECT @rownum := 0) r ) ranking where rnum < 11";
+		String query2 = "select * from (select A.*, @rownum := @rownum + 1 as rnum from ( select boardIdx, title, writer, hit, thumbnail from recipe_board where category =  '중식' order by hit desc) A, (SELECT @rownum := 0) r ) ranking where rnum < 11";
+		String query3 = "select * from (select A.*, @rownum := @rownum + 1 as rnum from ( select boardIdx, title, writer, hit, thumbnail from recipe_board where category =  '일식' order by hit desc) A, (SELECT @rownum := 0) r ) ranking where rnum < 11";
+		String query4 = "select * from (select A.*, @rownum := @rownum + 1 as rnum from ( select boardIdx, title, writer, hit, thumbnail from recipe_board where category =  '양식' order by hit desc) A, (SELECT @rownum := 0) r ) ranking where rnum < 11";
 		
 		ctg.put("hansik", selectCtg(query1));
 		ctg.put("jungsik", selectCtg(query2));
@@ -75,7 +75,7 @@ public class MainDAO extends MySQLConnector {
 				recipe = new RecipeDTO();
 				recipe.setBoardIdx(rs.getInt("boardIdx"));
 				recipe.setTitle(rs.getString("title"));
-				recipe.setNickname(rs.getString("nickname"));
+				recipe.setWriter(rs.getString("writer"));
 				recipe.setHit(rs.getInt("hit"));
 				recipe.setThumbnail(rs.getString("thumbnail"));
 				
