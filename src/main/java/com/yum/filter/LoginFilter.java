@@ -51,7 +51,7 @@ public class LoginFilter implements Filter {
 		if (!path.contains("join") && !path.contains("login")) {
 			System.out.println(path);
 			HttpSession session = req.getSession(false);
-			if (session.getAttribute("_userId") == null) {
+			if (session == null || session.getAttribute("_userId") == null) {
 				resp.sendRedirect(contextPath + "/views/member/login.jsp");
 				return;
 			}
