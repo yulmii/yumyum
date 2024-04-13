@@ -40,7 +40,7 @@
 					<td align="center"><a href="/recipe/detail.do?no=${ recipe.boardIdx }&amp;title=${ recipe.title }"><c:out value="${ recipe.title }" /></a>
 					</td>
 					<!-- 작성자 -->
-					<td align="center"><c:out value="${ recipe.nickname }" />
+					<td align="center"><c:out value="${ recipe.writer }" />
 					</td>
 					<!-- 조회수 -->
 					<td align="center"><c:out value="${ recipe.hit }" /></td>
