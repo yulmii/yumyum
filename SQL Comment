@@ -1,3 +1,7 @@
+create database yumyum;
+
+use yumyum;
+
 CREATE TABLE member (
     userId VARCHAR(50) PRIMARY KEY COMMENT '유저 아이디',
     userName VARCHAR(50) NOT NULL COMMENT '유저 이름',
@@ -5,7 +9,7 @@ CREATE TABLE member (
     pwd VARCHAR(50) NOT NULL COMMENT '비밀번호',
     email VARCHAR(50) NOT NULL COMMENT '이메일',
     joinDate DATETIME NOT NULL  DEFAULT (current_Timestamp) COMMENT '가입일자',
-    admin CHAR(1) DEFAULT 'F' COMMENT '관리자여부'    
+    admin char(1) DEFAULT 'F' COMMENT '관리자여부'    
 );
 
 CREATE TABLE recipe_board (
@@ -19,20 +23,26 @@ CREATE TABLE recipe_board (
     updateDate DATETIME NOT NULL DEFAULT (current_Timestamp) COMMENT '수정일자',
 	hit INT NOT NULL DEFAULT 0 COMMENT '조회수',
 	`like` INT NOT NULL DEFAULT 0 COMMENT '좋아요',
-	cookHour INT NOT NULL DEFAULT 0 COMMENT '요리시간(시간)',
-	cookMinute INT NOT NULL DEFAULT 0 COMMENT '요리시간(분)',
     ingredient VARCHAR(100) NOT NULL COMMENT '재료',
    	thumbnail VARCHAR(255) NOT NULL COMMENT '썸네일',
-   	FOREIGN KEY (userId) REFERENCES member(userId),
+   	FOREIGN KEY (userId) REFERENCES member(userId) ON DELETE CASCADE, 
    	FOREIGN KEY (writer) REFERENCES member(nickname) ON UPDATE CASCADE
+);
+
+CREATE TABLE likes (
+	likeIdx INT AUTO_INCREMENT PRIMARY KEY COMMENT '라이크 인덱스',
+	boardIdx INT COMMENT '레시피 인덱스',
+    userId VARCHAR(50) NOT NULL COMMENT '유저 아이디',
+    FOREIGN KEY (boardIdx) REFERENCES recipe_board(boardIdx) ON DELETE CASCADE,
+   	FOREIGN KEY (userId) REFERENCES member(userId) ON DELETE CASCADE 	
 );
 
 create table storage_box (
 	boxIdx INT AUTO_INCREMENT PRIMARY KEY COMMENT '보관함 인덱스',
     userId VARCHAR(50) NOT NULL  COMMENT '유저 아이디',
 	boardIdx INT NOT NULL COMMENT '레시피 인덱스',
-	FOREIGN KEY (userId) REFERENCES member(userId),
-	FOREIGN KEY (boardIdx) REFERENCES recipe_board(boardIdx)
+	FOREIGN KEY (userId) REFERENCES member(userId) ON DELETE CASCADE,
+	FOREIGN KEY (boardIdx) REFERENCES recipe_board(boardIdx) ON DELETE CASCADE
 );
 
 CREATE TABLE note_board (
@@ -46,19 +56,9 @@ CREATE TABLE note_board (
 CREATE TABLE out_member (
     userId VARCHAR(50) PRIMARY KEY COMMENT '유저 아이디',
     userName VARCHAR(50) NOT NULL COMMENT '유저 이름',
-    nickname VARCHAR(50) NOT NULL COMMENT '닉네임',
+    nickname VARCHAR(50) UNIQUE NOT NULL COMMENT '닉네임',
     pwd VARCHAR(50) NOT NULL COMMENT '비밀번호',
     email VARCHAR(50) NOT NULL COMMENT '이메일',
     joinDate DATETIME NOT NULL COMMENT '가입일자',
     outDate DATETIME NOT NULL DEFAULT (current_Timestamp) COMMENT '탈퇴일자'
 );
-
-create table image(
-    imgIdx int PRIMARY KEY AUTO_INCREMENT COMMENT '이미지 인덱스',
-    fileName VARCHAR(255) NOT NULL COMMENT '파일 이름',
-    filePath VARCHAR(255) NOT NULL COMMENT '파일 경로',
-    boardId int NOT NULL COMMENT '게시글 번호',
-    boardName VARCHAR(50) NOT NULL COMMENT '게시판 이름',
-    createDate DATETIME NOT NULL DEFAULT (current_Timestamp) COMMENT '생성일자'
-);
-
