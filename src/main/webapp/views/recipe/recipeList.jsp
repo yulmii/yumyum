@@ -10,6 +10,7 @@
 
 .contain__inner.search__result_box {
 	/* padding-top: 50px; */
+	
 }
 
 .search__result_box .title__box {
@@ -55,12 +56,13 @@
 }
 
 .recipe__image img {
-/*     object-fit: cover !important; */
-    width: 180px;
+	/*     object-fit: cover !important; */
+	width: 180px;
 	height: 180px;
 }
 
 .recipe__txt h5 {
+	margin: 0;
 	font-weight: 500;
 	color: #313D4B;
 }
@@ -86,10 +88,26 @@ p {
 }
 
 .hide-item {
-	display: none;
 	margin-bottom: 7px;
 }
 
+.re-goRecipeWriteBtn{
+	font-weight: normal;
+	font-size: 13px;
+	line-height: 19px;
+	text-align: center;
+	letter-spacing: -0.7px;
+	
+	color: #FFFFFF;
+	background: #2F83F5;
+	border-radius: 3px;
+	border: none;
+	
+	padding: 11px 20px 10px;
+}
+.re-btnRight{
+	text-align: right;
+}
 </style>
 <script type="text/javascript">
 	
@@ -102,35 +120,58 @@ p {
 			</div>
 		</div>
 		<section class="search__content_wrapper">
-			<div id="recipeListBox" class="search__content__flex_box">
-				<div class="recipe__view_conetnet_1 recipe__txt">
-					<div class="recipe__image">
-						<img name="recipeImage" alt=""
-							src="/upload/recipe/${ recipe.thumbnail }"
-							onclick="recipeDetailBtn('${ recipe.boardIdx }')">
+			<c:choose>
+				<c:when test="${totalCount == 0}">
+					<div id="recipeListEmptyBox" class="hide-item">레시피가 없습니다.</div>
+				</c:when>
+				<c:otherwise>
+					<div id="recipeListBox" class="search__content__flex_box">
+						<c:forEach var="recipe" items="${ recipeList }">
+							<div class="recipe__view_conetnet_1 recipe__txt">
+								<div class="recipe__image">
+									<img name="recipeImage" alt=""
+										src="/upload/recipe/${ recipe.thumbnail }"
+										onclick="location.href='<c:url value="/recipe/detail.do?boardIdx=${ recipe.boardIdx }"/>'" />
+								</div>
+								<h5 class="notranslate">${ recipe.title }</h5>
+								<p class="notranslate">${ recipe.writer }</p>
+							</div>
+						</c:forEach>
 					</div>
-					<h5 class="notranslate">${ recipe.title }</h5>
-					<p class="notranslate">${ recipe.nickname }</p>
-				</div>
-			</div>
-			<nav class="pagination_block text-center">
-	        	<c:out value="${ pagination }" escapeXml="false"/>
-	      	</nav>
-	      	
-			<!-- <nav id="pageNav" class="pagination_block text-center">
+					<div class="pagination_block text-center">
+						<c:out value="${ pagination }" escapeXml="false" />
+					</div>
+					<!-- <nav id="pageNav" class="pagination_block text-center">
 				<ul class="pagination">
 					<li class="active" title="현재 페이지"><a href="#">1</a></li>
 					<li><a href="#" onclick="getList('2')" '="" title="2 페이지로 이동">2</a></li>
 				</ul>
 			</nav> -->
-
-			<div id="recipeListEmptyBox" class="hide-item" style="display: none;">
-				검색된 결과가 없습니다.</div>
+				</c:otherwise>
+			</c:choose>
 		</section>
-
-
+		<div class="re-btnRight">
+			<input type="button" class="re-goRecipeWriteBtn" value="레시피 등록하기" onclick="location.href='<c:url value="/recipe/write.do"/>'" />
+		</div>
 	</div>
 </main>
-<%-- <%@ include file="/inc/footer.jsp"%> --%>
+<%@ include file="/inc/footer.jsp"%>
+<script type="text/javascript">
+	$(document).ready(function(){
+		var _count = <c:out value="${listCount}"/>;	
+		$("#ad-selectInput").val(_count).prop("selected",true);
+	});
+	
+	function paging(num){
+		var _count = <c:out value="${listCount}"/>
+		location.href = `<c:url value="/admin/note/list.do?pageNum=${ '${num }' }&listCount=${ '${_count}' }"/> `;
+	}
+
+	function selectListCount(){
+		var _value = $(".ad-selectInput").val();
+		
+		location.href = `<c:url value="/admin/note/list.do?listCount=${ '${ _value }'}"/>`;
+	}
+</script>
 </body>
 </html>

@@ -27,7 +27,7 @@ public class RecipeWriteController extends HttpServlet {
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
-		RequestDispatcher rd = request.getRequestDispatcher("/views/recipe/recipeWrite2.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/views/recipe/recipeWrite.jsp");
 //		request.setAttribute("order", order);
 		rd.forward(request, response);
 	}
@@ -67,12 +67,6 @@ public class RecipeWriteController extends HttpServlet {
 	                	title = value;
 	                } else if (fieldName.equals("content")) {
 	                	recipe.setContent(value);
-	                } else if (fieldName.equals("cookHour")) {
-	                	value = (value == null || value.isEmpty()) ? "0" : value;
-	                	recipe.setCookHour(Integer.parseInt(value));
-	                } else if (fieldName.equals("cookMinute")) {
-	                	value = (value == null || value.isEmpty()) ? "0" : value;
-	                	recipe.setCookMinute(Integer.parseInt(value));
 	                } else if (fieldName.equals("ingredient")) {
 	                	recipe.setIngredient(value);
 	                } 
@@ -92,22 +86,22 @@ public class RecipeWriteController extends HttpServlet {
 	    System.out.println(recipe.toString());
 	    dao.recipeWrite(recipe);
 	    
-	    RequestDispatcher rd = request.getRequestDispatcher("/views/recipe/recipeDetail2.jsp");
-		request.setAttribute("recipe", recipe);
-		rd.forward(request, response);	    
+	    //자신이 쓴 레시피 인덱스 검색
+	    int boardIdx = dao.searchWriteBoardIdx(recipe);
+	    
+	    response.sendRedirect(request.getContextPath() + "/recipe/detail.do?boardIdx=" + boardIdx);
 
 	}
 	
 	private String fileUpload(String title, FileItem thumbnailItem) throws IOException, ServletException {
 
 	    // 파일 업로드 및 정보 저장
-//	    String filePath = "";
 	    String fileName = "";
 	    String fileDir = "C:/yum_img/recipe/";
 	    UUID uuid = UUID.randomUUID(); //파일이름 난수발생
 	    try {
 	        // "thumbnail" 파일 업로드 처리
-	        if (thumbnailItem != null) {
+	        if (thumbnailItem != null && thumbnailItem.getSize() != 0) {
 	            String exp = FilenameUtils.getExtension(thumbnailItem.getName());
 //	            String fileName = "recipethumb-" + uuid + "." + exp;
 	            fileName = "recipethumb-" + uuid + "-" + title + "." + exp;

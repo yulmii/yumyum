@@ -12,8 +12,6 @@ public class RecipeDTO {
 	private int hit;
 	private int like;
 	private String writer;
-	private int cookHour;
-	private int cookMinute;
 	private String ingredient;
 	private String thumbnail;
 	private String searchText;		//검색어
@@ -108,22 +106,6 @@ public class RecipeDTO {
 		this.writer = writer;
 	}
 
-	public int getCookHour() {
-		return cookHour;
-	}
-
-	public void setCookHour(int cookHour) {
-		this.cookHour = cookHour;
-	}
-
-	public int getCookMinute() {
-		return cookMinute;
-	}
-
-	public void setCookMinute(int cookMinute) {
-		this.cookMinute = cookMinute;
-	}
-
 	public String getIngredient() {
 		return ingredient;
 	}
@@ -200,10 +182,10 @@ public class RecipeDTO {
 	public String toString() {
 		return "RecipeDTO [boardIdx=" + boardIdx + ", userId=" + userId + ", category=" + category + ", title=" + title
 				+ ", content=" + content + ", createDate=" + createDate + ", updateDate=" + updateDate + ", hit=" + hit
-				+ ", like=" + like + ", writer=" + writer + ", cookHour=" + cookHour + ", cookMinute=" + cookMinute
-				+ ", ingredient=" + ingredient + ", thumbnail=" + thumbnail + ", searchText=" + searchText
-				+ ", totalCount=" + totalCount + ", listCount=" + listCount + ", startIndex=" + startIndex
-				+ ", endIndex=" + endIndex + ", pagePerBlock=" + pagePerBlock + ", pageNum=" + pageNum + "]";
+				+ ", like=" + like + ", writer=" + writer + ", ingredient=" + ingredient + ", thumbnail=" + thumbnail
+				+ ", searchText=" + searchText + ", totalCount=" + totalCount + ", listCount=" + listCount
+				+ ", startIndex=" + startIndex + ", endIndex=" + endIndex + ", pagePerBlock=" + pagePerBlock
+				+ ", pageNum=" + pageNum + "]";
 	}
 
 }

@@ -32,6 +32,7 @@
 <main>
 	<div class="re-container">
 		<form action='<c:url value="/recipe/modify.do" />' method="post"  enctype="multipart/form-data">
+			<input type="hidden" name="boardIdx" value="${ recipe.boardIdx }">
 			<h1>레시피 수정</h1>
 			<table style="margin: 0 auto; width:1000px;">
 				<colgroup>
@@ -41,8 +42,18 @@
 					<col width="40%" />
 				</colgroup>			
 				<tr>
+					<th>음식 이미지</th>
+					<td>
+						<input type="file" id="thumbnailModify" name="thumbnailModify" class="re-input">
+						<input type="hidden" name="thumbnail" value="${ recipe.thumbnail }">
+					</td>
 					<th>제목</th>
 					<td><input type="text" id="title" name="title" class="re-input" value="${ recipe.title }"></td>
+				</tr>
+				<tr>
+					<td colspan="2" rowspan="2" class="re-center" style="height: 200px;" id="preview">
+						<img src="/upload/recipe/${ recipe.thumbnail }" style="height: 200px;">
+					</td>
 					<th>카테고리</th>
 					<td>
 						<select id="category" name="category">
@@ -54,27 +65,11 @@
 					</td>
 				</tr>
 				<tr>
-					<th>조리시간</th>
-					<td><input type="number" min="0" name="cookHour" id="cookHour" value="${ recipe.cookHour }">&nbsp;
-						시간 &nbsp; <input type="number" min="0" max="60" name="cookMinute"
-						id="cookMinute" value="${ recipe.cookMinute }">&nbsp;분</td>
 					<th>재료</th>
 					<td><input type="text" id="ingredient" name="ingredient" value="${ recipe.ingredient }" class="re-input"></td>
 				</tr>
 				<tr>
-					<th>음식 이미지</th>
-					<td colspan="3">
-						<input type="file" id="thumbnailModify" name="thumbnailModify" class="re-input">
-						<input type="hidden" name="thumbnail" value="${ recipe.thumbnail }">
-					</td>
-				</tr>
-				<tr>
-					<td colspan="4" class="re-center" style="width: 500px; height: 300px;" id="preview">
-						<img src="/upload/recipe/${ recipe.thumbnail }" style="height: 300px;">
-					</td>
-				</tr>
-				<tr>
-					<th colspan="4">내용</th>
+					<th colspan="2">내용</th>
 				</tr>
 				<tr>
 					<td colspan="4"><textarea id="summernote" name="content">${ recipe.content }</textarea></td>
@@ -113,7 +108,7 @@
                 let img = $("<img>");
                 // 미리보기 이미지 설정
                 img.attr("src", event.target.result);
-                img.css({"height": "300px"});
+                img.css({"height": "200px"});
 
                 // 미리보기 영역 초기화
                 let preview = $("#preview");
