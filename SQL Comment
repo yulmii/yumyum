@@ -11,6 +11,7 @@ CREATE TABLE member (
 CREATE TABLE recipe_board (
 	boardIdx INT AUTO_INCREMENT PRIMARY KEY COMMENT '레시피 인덱스',
     userId VARCHAR(50) NOT NULL COMMENT '유저 아이디',
+    writer VARCHAR(50) NOT NULL COMMENT '작성자',
     category VARCHAR(20) NOT NULL COMMENT '카테고리',
     title VARCHAR(255) NOT NULL COMMENT '제목',
     content LONGTEXT NOT NULL COMMENT '내용',
@@ -22,7 +23,8 @@ CREATE TABLE recipe_board (
 	cookMinute INT NOT NULL DEFAULT 0 COMMENT '요리시간(분)',
     ingredient VARCHAR(100) NOT NULL COMMENT '재료',
    	thumbnail VARCHAR(255) NOT NULL COMMENT '썸네일',
-   	FOREIGN KEY (userId) REFERENCES member(userId)
+   	FOREIGN KEY (userId) REFERENCES member(userId),
+   	FOREIGN KEY (writer) REFERENCES member(nickname) ON UPDATE CASCADE
 );
 
 create table storage_box (
@@ -44,7 +46,7 @@ CREATE TABLE note_board (
 CREATE TABLE out_member (
     userId VARCHAR(50) PRIMARY KEY COMMENT '유저 아이디',
     userName VARCHAR(50) NOT NULL COMMENT '유저 이름',
-    nickname VARCHAR(50) UNIQUE NOT NULL COMMENT '닉네임',
+    nickname VARCHAR(50) NOT NULL COMMENT '닉네임',
     pwd VARCHAR(50) NOT NULL COMMENT '비밀번호',
     email VARCHAR(50) NOT NULL COMMENT '이메일',
     joinDate DATETIME NOT NULL COMMENT '가입일자',
