@@ -101,32 +101,6 @@ public class MemberDAO extends MySQLConnector {
 			close(null, pstmt, conn);
 		}
 	}
-
-	/**
-	 * 회원정보 수정 (회원테이블에 insert)
-	 * @param MemberDTO
-	 * @return
-	 */
-	public void joinUser(MemberDTO member) {
-		conn = null;
-		pstmt = null;
-		try {
-			conn = getConnection();
-			String query = "UPDATE member SET (userName, nickname, pwd, email) VALUES (?, ?, ?, ?)";
-			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, member.getUserName());
-			pstmt.setString(2, member.getNickname());
-			pstmt.setString(3, member.getPwd());
-			pstmt.setString(4, member.getEmail());
-			
-			pstmt.executeUpdate();
-			
-		} catch (SQLException e) {
-			System.err.println("joinUser() ERR : " + e.getMessage());
-		} finally {
-			close(null, pstmt, conn);
-		}
-	}
 	
 	/**
 	 * 3-1. 회원탈퇴 시 회원 삭제 (회원테이블에서 delete)
@@ -210,6 +184,32 @@ public class MemberDAO extends MySQLConnector {
 
 //	5. 관리자 로그인 (회원테이블에서 select, admin = true 시)
 //	6. 마이페이지 - 회원정보 수정 (회원테이블 update)
+	/**
+	 * 회원정보 수정 (회원테이블에 insert)
+	 * @param MemberDTO
+	 * @return
+	 */
+	public void modifyUser(MemberDTO member) {
+		conn = null;
+		pstmt = null;
+		try {
+			conn = getConnection();
+			String query = "UPDATE member SET (userName, nickname, pwd, email) VALUES (?, ?, ?, ?)";
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, member.getUserName());
+			pstmt.setString(2, member.getNickname());
+			pstmt.setString(3, member.getPwd());
+			pstmt.setString(4, member.getEmail());
+			
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.err.println("modifyUser() ERR : " + e.getMessage());
+		} finally {
+			close(null, pstmt, conn);
+		}
+	}
+	
 //	7. 마이페이지 - 내 글 확인 (레시피테이블 select id=특정값)
 	public List<RecipeDTO> recipeSearch(String id) {
 		conn = null;
@@ -280,5 +280,31 @@ public class MemberDAO extends MySQLConnector {
 			close(rs, pstmt, conn);
 		}
 		return recipeList;
+	}
+
+	/**
+	 * 보관함에서 지우기(delete)
+	 * @param MemberDTO
+	 * @return
+	 */
+	public void deleteBox(MemberDTO member) {
+		conn = null;
+		pstmt = null;
+		try {
+			conn = getConnection();
+			String query = "UPDATE member SET (userName, nickname, pwd, email) VALUES (?, ?, ?, ?)";
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, member.getUserName());
+			pstmt.setString(2, member.getNickname());
+			pstmt.setString(3, member.getPwd());
+			pstmt.setString(4, member.getEmail());
+			
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.err.println("joinUser() ERR : " + e.getMessage());
+		} finally {
+			close(null, pstmt, conn);
+		}
 	}
 }
