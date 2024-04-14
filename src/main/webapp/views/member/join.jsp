@@ -16,7 +16,7 @@
 		이메일: <input type="text" name="email"><br>
 		<input type="submit" value="회원가입">
 		<input type="reset" value="다시 입력">
-		<input type="button" value="돌아가기" onclick="location.href='<c:url value="/views/member/login.jsp" />'">
+		<input type="button" value="돌아가기" onclick="location.href='<c:url value="/login.do" />'">
 	</form>
 </main>
 <%@ include file="/inc/footer.jsp" %>
