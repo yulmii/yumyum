@@ -101,6 +101,32 @@ public class MemberDAO extends MySQLConnector {
 			close(null, pstmt, conn);
 		}
 	}
+
+	/**
+	 * 회원정보 수정 (회원테이블에 insert)
+	 * @param MemberDTO
+	 * @return
+	 */
+	public void joinUser(MemberDTO member) {
+		conn = null;
+		pstmt = null;
+		try {
+			conn = getConnection();
+			String query = "UPDATE member SET (userName, nickname, pwd, email) VALUES (?, ?, ?, ?)";
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, member.getUserName());
+			pstmt.setString(2, member.getNickname());
+			pstmt.setString(3, member.getPwd());
+			pstmt.setString(4, member.getEmail());
+			
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.err.println("joinUser() ERR : " + e.getMessage());
+		} finally {
+			close(null, pstmt, conn);
+		}
+	}
 	
 	/**
 	 * 3-1. 회원탈퇴 시 회원 삭제 (회원테이블에서 delete)
