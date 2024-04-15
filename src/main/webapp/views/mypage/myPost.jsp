@@ -37,7 +37,7 @@
 					<td align="center"><c:out value="${ recipe.boardIdx }" />
 					</td>
 					<!-- 제목, 여기에 상세 보기 링크 -->
-					<td align="center"><a href="/recipe/detail.do?no=${ recipe.boardIdx }&amp;title=${ recipe.title }"><c:out value="${ recipe.title }" /></a>
+					<td align="center"><a href='<c:url value="/recipe/detail.do?boardIdx=${ recipe.boardIdx }"/>'><c:out value="${ recipe.title }" /></a>
 					</td>
 					<!-- 조회수 -->
 					<td align="center"><c:out value="${ recipe.hit }" /></td>
