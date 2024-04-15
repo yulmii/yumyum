@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.yum.admin.dao.AdminDAO;
 import com.yum.recipe.dto.RecipeDTO;
+import com.yum.util.PageNation;
 
 @WebServlet("/admin/recipe/list.do")
 public class AdRecipeListController extends HttpServlet {
@@ -23,8 +24,28 @@ public class AdRecipeListController extends HttpServlet {
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		RecipeDTO recipe = new RecipeDTO();
+		
+		if(request.getParameter("pageNum") != null) {
+			recipe.setPageNum(Integer.parseInt(request.getParameter("pageNum")));
+		}
+		
+		recipe.setListCount(10);
+		
+		recipe.setStartIndex(recipe.getPageNum()*recipe.getListCount() - recipe.getListCount());
+		recipe.setEndIndex(recipe.getStartIndex());
+		
+		AdminDAO adminDAO = new AdminDAO();
+		int totalCount = adminDAO.recipeTotalCount();
+		
 		List<RecipeDTO> recipeList = adminDAO.listRecipe_board();
+		
+		PageNation paging = new PageNation();
+		String pagination = paging.getPageNavigator(totalCount, recipe.getListCount(), recipe.getPagePerBlock(),recipe.getPageNum());
+		
 		request.setAttribute("recipeList", recipeList);
+		request.setAttribute("pagination", pagination);
+		request.setAttribute("listCount", recipe.getListCount());
 		
 		RequestDispatcher dispatch = request.getRequestDispatcher("/views/admin/adRecipeList.jsp");
 		dispatch.forward(request, response);

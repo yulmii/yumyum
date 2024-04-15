@@ -9,9 +9,23 @@ public class MemberDTO {
 	private String email;
 	private String joinDate;
 	private String admin;
+	private int totalCount = 0;		//게시글 전체 수
+	private int listCount = 10;		//한 페이지당 보여줄 게시글 수	
+	private int startIndex = 1;		//페이지 시작 게시글 번호
+	private int endIndex = 1;		//페이지 종료 게시글 번호
+	private int pagePerBlock = 10;	//하단 페이지 링크 개수
+	private int pageNum = 1;		//현재 페이지 번호
 	
 	public MemberDTO() {
 		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public String toString() {
+		return "MemberDTO [userId=" + userId + ", userName=" + userName + ", nickname=" + nickname + ", pwd=" + pwd
+				+ ", email=" + email + ", joinDate=" + joinDate + ", admin=" + admin + ", totalCount=" + totalCount
+				+ ", listCount=" + listCount + ", startIndex=" + startIndex + ", endIndex=" + endIndex
+				+ ", pagePerBlock=" + pagePerBlock + ", pageNum=" + pageNum + "]";
 	}
 
 	public String getUserId() {
@@ -70,10 +84,53 @@ public class MemberDTO {
 		this.admin = admin;
 	}
 
-	@Override
-	public String toString() {
-		return "MemberDTO [userId=" + userId + ", userName=" + userName + ", nickname=" + nickname + ", pwd=" + pwd
-				+ ", email=" + email + ", joinDate=" + joinDate + ", admin=" + admin + "]";
+	public int getTotalCount() {
+		return totalCount;
 	}
+
+	public void setTotalCount(int totalCount) {
+		this.totalCount = totalCount;
+	}
+
+	public int getListCount() {
+		return listCount;
+	}
+
+	public void setListCount(int listCount) {
+		this.listCount = listCount;
+	}
+
+	public int getStartIndex() {
+		return startIndex;
+	}
+
+	public void setStartIndex(int startIndex) {
+		this.startIndex = startIndex;
+	}
+
+	public int getEndIndex() {
+		return endIndex;
+	}
+
+	public void setEndIndex(int endIndex) {
+		this.endIndex = endIndex;
+	}
+
+	public int getPagePerBlock() {
+		return pagePerBlock;
+	}
+
+	public void setPagePerBlock(int pagePerBlock) {
+		this.pagePerBlock = pagePerBlock;
+	}
+
+	public int getPageNum() {
+		return pageNum;
+	}
+
+	public void setPageNum(int pageNum) {
+		this.pageNum = pageNum;
+	}
+
 
 }

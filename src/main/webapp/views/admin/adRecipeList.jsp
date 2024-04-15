@@ -13,6 +13,13 @@
 		<section class="ad-main-table">
 
 			<h1 class="ad-board-title">레시피 관리</h1>
+			<div class="ad-SelectBox">
+				<select class="ad-selectInput" id="ad-selectInput" onchange="selectListCount();">
+					<option value="10" >10개씩 보기</option>
+					<option value="20" >20개씩 보기</option>
+					<option value="30" >30개씩 보기</option>
+				</select>
+			</div>
 			<div class="ad-tbl-header">
 				<table cellpadding="0" cellspacing="0" border="0">
 					<thead>
@@ -46,7 +53,9 @@
 					</tbody>
 				</table>
 			</div>
-			
+			<div class="ad-pagingBox">
+	        	<c:out value="${ pagination }" escapeXml="false"/>
+	      	</div>
 		</section>
 	</div>
 </main>

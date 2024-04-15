@@ -20,6 +20,8 @@ public class AdMemberModifyController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String userId = request.getParameter("userId");
+        HttpSession session = request.getSession(false);
+        System.out.println(session.getAttribute("_admin"));
         
         AdminDAO adminDAO = new AdminDAO();
         MemberDTO member = adminDAO.memberInfo(userId);
@@ -31,8 +33,8 @@ public class AdMemberModifyController extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
-
+        
+        
         String contextPath = request.getContextPath();
         MemberDTO member = new MemberDTO();
         member.setUserId(request.getParameter("userId"));

@@ -353,4 +353,56 @@ public class AdminDAO extends MySQLConnector {
 		}
 	}
 	
+	/**
+	 * 유저 전체 카운트 조회
+	 * @return
+	 */
+	public int memberTotalCount() {
+		int totalCount = 0;
+		try {
+			String query = "select count(*) as count from member";
+			pstmt = conn.prepareStatement(query);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				totalCount = rs.getInt("count");
+			}
+			
+			if(totalCount < 1) {
+				return 1;
+			}
+
+		} catch(Exception e) {
+			System.err.println("memberTotalCount ======> " + e.getMessage());
+			close(rs, pstmt, conn);
+		} 
+		
+		return totalCount;
+	}
+	/**
+	 * 레시피 전체 카운트 조회
+	 * @return
+	 */
+	public int recipeTotalCount() {
+		int totalCount = 0;
+		try {
+			String query = "select count(boardIdx) as count from recipe_board";
+			pstmt = conn.prepareStatement(query);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				totalCount = rs.getInt("count");
+			}
+			
+			if(totalCount < 1) {
+				return 1;
+			}
+			
+		} catch(Exception e) {
+			System.err.println("memberTotalCount ======> " + e.getMessage());
+			close(rs, pstmt, conn);
+		} 
+		
+		return totalCount;
+	}
+	
+	
 }

@@ -4,10 +4,10 @@
 <style>
 @import
 	url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);
+	
 </style>
 <main>
-	<form action="${contextPath }/admin/member/modify.do" method="post"
-		onsubmit="modifyMember();">
+	<form action="${contextPath }/admin/member/modify.do" method="post" onsubmit="modifyMember();">
 		<input type="hidden" id="pwCheckTF" value="false" /> 
 		<input type="hidden" name="userId" value="${ member.userId }">
 		<div class="ad-main">
@@ -16,6 +16,7 @@
 				<h1 class="ad-board-title">' ${ member.userName } ' 회원 정보 수정</h1>
 				<table>
 					<caption>${ member.userName }회원님의정보를수정합니다.</caption>
+					<caption>비밀번호를 입력하셔야 정보 수정이 가능합니다.</caption>
 					<colgroup>
 						<col width="120" />
 						<col width="480" />
@@ -60,6 +61,7 @@
 
 							<tr>
 							    <td>관리자</td>
+							    
 							    <td colspan="2">
 							        <c:choose>
 							            <c:when test="${ sessionScope._admin == 'T' }">
@@ -81,10 +83,13 @@
 
 
 						<tr>
-							<td id="buttonBox" colspan="3"><input type="submit"
-								id="join" value="정보수정" disabled /> <input type="reset"
-								id="reset" value="새로작성" /> <input type="button" id="delete"
-								value="회원 정보 삭제" onclick="deleteMember();" /></td>
+							
+							<td id="buttonBox" colspan="3">
+								<input class="ad-member-mod-btn" type="submit" id="join" value="정보수정" disabled />
+								<input class="ad-member-mod-btn" type="reset" id="reset" value="새로작성" /> 
+								<input class="ad-member-mod-btn" type="button" id="delete" value="회원 정보 삭제" onclick="deleteMember();" />
+							</td>
+							
 						</tr>
 					</tbody>
 				</table>
