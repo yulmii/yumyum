@@ -1,10 +1,10 @@
 package com.yum.member.dao;
 
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.yum.member.dto.BoxDTO;
 import com.yum.member.dto.MemberDTO;
 import com.yum.recipe.dto.RecipeDTO;
 import com.yum.util.MySQLConnector;
@@ -319,15 +319,15 @@ public class MemberDAO extends MySQLConnector {
 	 * @param MemberDTO
 	 * @return
 	 */
-	public void deleteBox(String id, int no) {
+	public void deleteBox(BoxDTO box) {
 		conn = null;
 		pstmt = null;
 		try {
 			conn = getConnection();
 			String query = "DELETE FROM storage_box WHERE userId=? AND boardIdx=?";
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, id);
-			pstmt.setInt(2, no);
+			pstmt.setString(1, box.getUserId());
+			pstmt.setInt(2, box.getBoardIdx());
 			
 			pstmt.executeUpdate();
 			

@@ -1,6 +1,7 @@
 package com.yum.member.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.yum.member.dao.MemberDAO;
+import com.yum.member.dto.BoxDTO;
 
 @WebServlet("/mypage/mybox/delete.do")
 public class MyBoxDeleteController extends HttpServlet {
@@ -19,10 +21,13 @@ public class MyBoxDeleteController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
 		String id = (String) session.getAttribute("_userId");
+		int no = Integer.parseInt(request.getParameter("no").trim());
 		
-		int no = Integer.parseInt(request.getParameter("no"));
+		BoxDTO box = new BoxDTO();
+		box.setUserId(id);
+		box.setBoardIdx(no);
 		
-		this.memberDAO.deleteBox(id, no);
+		this.memberDAO.deleteBox(box);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
