@@ -35,6 +35,15 @@
       text-align: center;
     }
     
+    .no-importBox{
+    	background-color: #ffe3e4;
+    	color: #ff1d0b;
+    	border: 1px solid #ff1d0b;
+    	border-radius: 5px;
+    	padding: 5px 11px 5px 11px;
+    	font-weight: bold;
+    }
+    
     .no-noteTitle{
     	display: flex;
     	width: 100%;
@@ -114,6 +123,36 @@
 	          <th>작성자</th>
 	          <th>작성일</th>
 	        </tr>
+	        <c:if test="${ pageNum == 1 }">
+		        <tr class="no-tdBox">
+			      <td>
+		            <span class="no-importBox">공지</span>
+		          </td>
+		          <td class="no-noteTitle" onclick="pageMove(77777)">
+		            <span style="display:inline-block; color: #ff1d0b; font-weight: bold;">얌얌 지적재산권 안내</span>
+		          </td>
+		          <td>
+		            <span>관리자</span>
+		          </td>
+		          <td>
+		            <span>2024-04-08</span>
+		          </td>
+		        </tr>
+		        <tr class="no-tdBox">
+			      <td>
+		            <span class="no-importBox">공지</span>
+		          </td>
+		          <td class="no-noteTitle" onclick="pageMove(88888)">
+		            <span style="display:inline-block; color: #ff1d0b; font-weight: bold;">(100만 부 돌파 기념) 네버쿡 &lt야, 너두 할 수 있어&gt 증정 이벤트</span>
+		          </td>
+		          <td>
+		            <span>관리자</span>
+		          </td>
+		          <td>
+		            <span>2024-04-08</span>
+		          </td>
+		        </tr>
+	        </c:if>
 	        <c:forEach var="note" items="${ noteList }" >
 		        <tr class="no-tdBox">
 		          <td>

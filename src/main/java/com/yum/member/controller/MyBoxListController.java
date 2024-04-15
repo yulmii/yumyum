@@ -22,15 +22,12 @@ public class MyBoxListController extends HttpServlet {
 	private MemberDAO memberDAO = new MemberDAO();
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		HttpSession session = request.getSession(false);
-//		String id = (String) session.getAttribute("_id");
-		String id = "aaa";
+		HttpSession session = request.getSession(false);
+		String id = (String) session.getAttribute("_userId");
 //		7. 마이페이지 - 내 보관함 확인 (레시피테이블 select id=특정값)
 		List<RecipeDTO> recipeList = new ArrayList<RecipeDTO>();
 		
-		recipeList = this.memberDAO.myBoxSearch();
-//		recipeList = this.memberDAO.recipeSearch(id);
-		
+		recipeList = this.memberDAO.myBoxSearch(id);
         request.setAttribute("recipeList", recipeList);
         
         // View 보내기

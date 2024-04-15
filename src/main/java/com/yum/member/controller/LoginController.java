@@ -54,6 +54,7 @@ public class LoginController extends HttpServlet {
 		    out.print("성공");
 		    
 		}
+		out.close();
 		
 		// response.sendRedirect(nextPage);
 	    // requestDispatcher.forward(request, response); // 내글리스트로

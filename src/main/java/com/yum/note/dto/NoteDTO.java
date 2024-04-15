@@ -7,6 +7,7 @@ public class NoteDTO {
 	private String content;
 	private String createDate;
 	private String writer;
+	private int hit;
 	private int totalCount = 0;		//게시글 전체 수
 	private int listCount = 10;		//한 페이지당 보여줄 게시글 수	
 	private int startIndex = 1;		//페이지 시작 게시글 번호
@@ -64,6 +65,14 @@ public class NoteDTO {
 
 	public void setWriter(String writer) {
 		this.writer = writer;
+	}
+	
+	public int getHit() {
+		return hit;
+	}
+
+	public void setHit(int hit) {
+		this.hit = hit;
 	}
 
 	public int getTotalCount() {

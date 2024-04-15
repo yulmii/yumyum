@@ -41,6 +41,7 @@ public class NoteListController extends HttpServlet {
 		request.setAttribute("title", "공지사항");
 		request.setAttribute("pagination", pagination);
 		request.setAttribute("noteList", noteList);
+		request.setAttribute("pageNum", note.getPageNum());
 		rd.forward(request, response);
 		
 	}

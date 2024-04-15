@@ -5,9 +5,30 @@
 
 </style>
 <script type="text/javascript">
-
+	function deleteBox() {
+		var _no = $("#boardIdx").val();
+		$.ajax({
+			type : "get",
+			async : false,
+			url : "<c:url value='/mypage/mybox/delete.do'/>",
+			data : {
+				no : _no,
+			},
+	
+			success : function(data, status) {
+				location.href = "<c:url value='/mypage/mybox/list.do'/>";
+			},
+			error : function(data, status) {
+				alert("다시 시도해주세요.")
+			},
+			complete : function(data, status) {
+	
+			}
+		});
+	}
 </script>
 <main>
+	
 	<table align="center" width="750px" summary="나의 보관함 목록">
 		<colgroup>
 			<col width="5%" />
@@ -32,6 +53,7 @@
 		<!-- 글목록 데이터부분 시작-->
 		<tbody>
 			<c:forEach var="recipe" items="${recipeList}" varStatus="status">
+				<input type="hidden" id="boardIdx" value="${ recipe.boardIdx }" />
 				<tr>
 					<!-- 번호 -->
 					<td align="center"><c:out value="${ recipe.boardIdx }" />
@@ -48,7 +70,8 @@
 					<td align="center"><c:out value="${ recipe.like }" /></td>
 					<!-- 작성일자 -->
 					<td align="center">
-						<c:out value="${ recipe.createDate }" />
+						<c:out value="${ recipe.createDate }" /><br>
+						<input type="button" value="삭제" onclick="deleteBox();" >
 					</td>
 				</tr>
 			</c:forEach>
