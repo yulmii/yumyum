@@ -41,7 +41,6 @@ public class AdminLoginFilter implements Filter {
 		String contextPath = req.getContextPath();
 		
 		HttpSession session = req.getSession(false);
-		System.out.println(session.getAttribute("_admin"));
 		if(session.getAttribute("_admin").equals("F")) {
 			resp.sendRedirect(contextPath + "/main.do");
 			return;
