@@ -1,7 +1,6 @@
 package com.yum.filter;
 
 import java.io.IOException;
-
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -14,58 +13,48 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Servlet Filter implementation class LoginFilter
+ * Servlet Filter implementation class AdminLoginFilter
  */
-@WebFilter(filterName= "secondFilter")
-public class LoginFilter implements Filter {
+@WebFilter(filterName= "thirdFilter")
+public class AdminLoginFilter implements Filter {
 
     /**
      * Default constructor. 
      */
-    public LoginFilter() {
+    public AdminLoginFilter() {
         // TODO Auto-generated constructor stub
     }
-
-    /**
-	 * @see Filter#init(FilterConfig)
-	 */
-	public void init(FilterConfig fConfig) throws ServletException {
-		// TODO Auto-generated method stub
-	}
-   
-
-	/**
-	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
-	 */
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		// TODO Auto-generated method stub
-		// place your code here
-		
-		HttpServletRequest req = (HttpServletRequest)request;
-		HttpServletResponse resp = (HttpServletResponse)response;
-		String contextPath = req.getContextPath();
-		
-		String path = ((HttpServletRequest) req).getRequestURI();
-		
-		// 특정 주소 시 login 화면으로 redirect, 아니면 그냥 존재
-		if (!path.contains("join") && !path.contains("login")) {
-			System.out.println(path);
-			HttpSession session = req.getSession(false);
-			if (session == null || session.getAttribute("_userId") == null) {
-				resp.sendRedirect(contextPath + "/login.do");
-				return;
-			}
-		}
-		
-		// pass the request along the filter chain
-		chain.doFilter(request, response);
-	}
 
 	/**
 	 * @see Filter#destroy()
 	 */
 	public void destroy() {
 		// TODO Auto-generated method stub
+	}
+
+	/**
+	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
+	 */
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+		HttpServletRequest req = (HttpServletRequest)request;
+		HttpServletResponse resp = (HttpServletResponse)response;
+		String contextPath = req.getContextPath();
+		
+		HttpSession session = req.getSession(false);
+		System.out.println(session.getAttribute("_admin"));
+		if(session.getAttribute("_admin").equals("F")) {
+			resp.sendRedirect(contextPath + "/main.do");
+			return;
+		}
+		
+		chain.doFilter(request, response);
+	}
+
+	/**
+	 * @see Filter#init(FilterConfig)
+	 */
+	public void init(FilterConfig fConfig) throws ServletException {
+		
 	}
 
 }

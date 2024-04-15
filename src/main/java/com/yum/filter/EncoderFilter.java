@@ -12,7 +12,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 
-@WebFilter(description = "한글 인코딩 기능을 구현", urlPatterns= {"/*"})
+@WebFilter(description = "한글 인코딩 기능을 구현", filterName= "firstFilter")
 public class EncoderFilter implements Filter {
 	ServletContext context; //서블릿
 	
