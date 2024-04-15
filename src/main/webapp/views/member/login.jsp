@@ -3,8 +3,8 @@
     <%@ include file="/inc/top.jsp" %>
 
 <main>
-	아이디: <input type="text" id="_id"><br>
-	비밀번호: <input type="text" id="_pwd"><br>
+	아이디: <input type="text" id="_id" required><br>
+	비밀번호: <input type="text" id="_pwd" required><br>
 	<input type="button" value="로그인" onclick="login()">
 	<input type="reset" value="다시 입력">
 	<input type="button" value="회원가입" onclick="location.href='<c:url value="/join.do" />'">
