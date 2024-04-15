@@ -81,7 +81,7 @@ body {
 		<div class="ma-jo-con">
 			<div class="ma-jo-box" >
 				<div class="ma-jo-ha">
-					<h3>Yumyum 로그인 </h3> <a href="<c:url value="/login.jsp" /> "> 로그인 </a> &nbsp;&nbsp;<a href="<c:url value="/join.do" /> "> 회원가입 </a><br><br>
+					<h3>Yumyum 회원가입 </h3> <br><br>
 				</div>
 				<table class="ma-jo-table">
 					<tr>
