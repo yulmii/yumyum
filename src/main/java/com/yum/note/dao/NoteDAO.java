@@ -21,7 +21,7 @@ public class NoteDAO extends MySQLConnector {
 	public List<NoteDTO> selectNoteList(int startIndex, int listCount) {
 		List<NoteDTO> noteList = new ArrayList<NoteDTO>();
 		try {
-			String query = "select * from (select A.*, @rownum := @rownum + 1 as rnum from ( select noteIdx, title, date_format(createDate, '%Y-%m-%d') as createDate, writer from note_board order by noteIdx) A, (select @rownum := 0) r) ranking order by rnum desc limit ?, ?";
+			String query = "select * from (select A.*, @rownum := @rownum + 1 as rnum from ( select noteIdx, title, date_format(createDate, '%Y-%m-%d') as createDate, writer, hit from note_board order by noteIdx) A, (select @rownum := 0) r) ranking order by rnum desc limit ?, ?";
 			
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, startIndex);
@@ -35,6 +35,7 @@ public class NoteDAO extends MySQLConnector {
 				note.setTitle(rs.getString("title"));
 				note.setCreateDate(rs.getString("createDate"));
 				note.setWriter(rs.getString("writer"));
+				note.setHit(rs.getInt("hit"));
 				
 				noteList.add(note);
 			}
@@ -95,12 +96,33 @@ public class NoteDAO extends MySQLConnector {
 			}
 
 		} catch(Exception e) {
-			System.err.println("noteTotalCount ======> " + e.getMessage());
+			System.err.println("noteSelectOne ======> " + e.getMessage());
+			close(rs, pstmt, conn);
+		} 
+		
+		return note;
+	}
+	
+	
+	/**
+	 * 공지사항 조회수 증가
+	 * @return
+	 */
+	public void updateNoteHit(int no) {
+		try {
+			String query = "update note_board set hit = hit+1 where noteIdx=?";
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, no);
+			int result = pstmt.executeUpdate();
+			if(result < 1) {
+				System.out.println("조회수 증가 안됨!");
+			}
+
+		} catch(Exception e) {
+			System.err.println("updateNoteHit ======> " + e.getMessage());
 		} finally {
 			close(rs, pstmt, conn);
 		}
-		
-		return note;
 	}
 	
 	
