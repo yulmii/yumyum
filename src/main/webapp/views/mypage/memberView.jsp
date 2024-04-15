@@ -5,7 +5,6 @@
 
 </style>
 <script type="text/javascript">
-
 </script>
 <main>
 	<p>회원정보 조회</p><br>
@@ -14,7 +13,9 @@
 	닉네임: <c:out value="${ member.nickname }" /><br>
 	이름: <c:out value="${ member.userName }" /><br>
 	이메일: <c:out value="${ member.email }" /><br>
+	회원가입 날짜: <c:out value="${ member.joinDate }" /><br>
 	<input type="button" value="회원정보 수정" onclick="location.href='<c:url value="/mypage/modify.do" />'">
+	<input type="button" value="회원탈퇴" onclick="location.href='<c:url value="/mypage/delete.do" />'">
 </main>
 <%@ include file="/inc/footer.jsp" %>
 </body>
