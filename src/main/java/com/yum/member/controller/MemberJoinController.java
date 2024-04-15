@@ -35,8 +35,17 @@ public class MemberJoinController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // TODO Auto-generated method stub
         // 모델 (MemberDAO의 메서드에게 전달할 데이터를 하나의 객체로 )
-    	
-        MemberDTO member = new MemberDTO();
+    	RequestDispatcher rd = request.getRequestDispatcher("/views/member/join.jsp");
+		rd.forward(request, response);
+        
+     }
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		MemberDTO member = new MemberDTO();
         
         // 아이디/닉네임 중복을 확인하는 쿼리 실행 (결과값을 boolean으로 반환 받음)
         member.setUserId(request.getParameter("user_id"));
@@ -51,14 +60,6 @@ public class MemberJoinController extends HttpServlet {
         RequestDispatcher requestDispatcher =
            request.getRequestDispatcher("/views/member/login.jsp");
         requestDispatcher.forward(request, response);
-     }
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
 	}
 
 }
