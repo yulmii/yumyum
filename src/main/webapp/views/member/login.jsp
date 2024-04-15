@@ -77,7 +77,7 @@ body {
 <div class="ma-con">
 	<div class="ma-login-box" >
 		<div class="ma-login-ha">
-			<h3>Yumyum 로그인 </h3> <a href="<c:url value="/login.jsp" /> "> 로그인 </a> &nbsp;&nbsp;<a href="<c:url value="/join.do" /> "> 회원가입 </a>
+			<h3>Yumyum 로그인 </h3> <a href="<c:url value="/login.do" /> "> 로그인 </a> &nbsp;&nbsp;<a href="<c:url value="/join.do" /> "> 회원가입 </a>
 		</div>
 		<br>
 		<table class="ma-login-table">
