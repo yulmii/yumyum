@@ -43,7 +43,7 @@ public class AdMemberListController extends HttpServlet {
 		int totalCount = adminDAO.memberTotalCount();
 		
 		
-		List<MemberDTO> membersList = adminDAO.listMembers();
+		List<MemberDTO> membersList = adminDAO.listMembers(member.getStartIndex(), member.getListCount());
 		
 		PageNation paging = new PageNation();
 		String pagination = paging.getPageNavigator(totalCount, member.getListCount(), member.getPagePerBlock(), member.getPageNum());

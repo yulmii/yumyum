@@ -20,20 +20,21 @@ public class AdminDAO extends MySQLConnector {
 	 * @param String
 	 * @return
 	 */
-	public List<MemberDTO> listMembers() {
+	public List<MemberDTO> listMembers(int startIndex, int listCount) {
 		List<MemberDTO> membersList = new ArrayList<MemberDTO>();
 		try {
 			
-			String query = "select * from  member order by joinDate desc";
-			System.out.println(query);
+			String query = "SELECT *, ROW_NUMBER() OVER (ORDER BY joinDate DESC) AS rownum FROM member ORDER BY rownum LIMIT ?, ?";
+//			System.out.println(query);
 			
 			pstmt = conn.prepareStatement(query);
+	        pstmt.setInt(1, startIndex);
+	        pstmt.setInt(2, listCount);
 			rs = pstmt.executeQuery();
 			
 			
-			MemberDTO member = null;
 			while (rs.next()) {
-				member = new MemberDTO();
+				MemberDTO member = new MemberDTO();
 				member.setUserId(rs.getString("userId")); 
 				member.setUserName(rs.getString("userName"));
 				member.setNickname(rs.getString("nickname"));
@@ -43,7 +44,7 @@ public class AdminDAO extends MySQLConnector {
 				member.setAdmin(rs.getString("admin"));
 				
 				membersList.add(member);
-				System.out.println(member);
+//				System.out.println(member);
 			}
 
 		} catch (SQLException e) {
@@ -58,41 +59,42 @@ public class AdminDAO extends MySQLConnector {
 	 * @param String
 	 * @return
 	 */
-	public List<RecipeDTO> listRecipe_board() {
-		List<RecipeDTO> recipeList = new ArrayList<RecipeDTO>();
-		try {
-			
-			String query = "select * from recipe_board order by boardIdx desc";
-			System.out.println(query);
-			
-			pstmt = conn.prepareStatement(query);
-			rs = pstmt.executeQuery();
-			
-			RecipeDTO recipe = null;
-			while (rs.next()) {
-				recipe = new RecipeDTO();
-				recipe.setBoardIdx(rs.getInt("boardIdx"));
-				recipe.setUserId(rs.getString("userId"));
-				recipe.setCategory(rs.getString("category"));
-				recipe.setTitle(rs.getString("title"));
-				recipe.setContent(rs.getString("content"));
-				recipe.setCreateDate(rs.getString("createDate"));
-				recipe.setUpdateDate(rs.getString("updateDate"));
-				recipe.setHit(rs.getInt("hit"));
-				recipe.setLike(rs.getInt("like"));
-				recipe.setWriter(rs.getString("writer"));
-				recipe.setIngredient(rs.getString("ingredient"));
-				recipe.setThumbnail(rs.getString("thumbnail"));
-				
-				recipeList.add(recipe);
-				System.out.println(recipe);
-			}
+	public List<RecipeDTO> listRecipe_board(int startIndex, int listCount) {
+	    List<RecipeDTO> recipeList = new ArrayList<RecipeDTO>();
+	    try {
+	        String query = "SELECT * FROM (SELECT A.*, @rownum := @rownum + 1 AS rnum FROM (SELECT boardIdx, userId, writer, category, title, content, DATE_FORMAT(createDate, '%Y-%m-%d') AS createDate, DATE_FORMAT(updateDate, '%Y-%m-%d') AS updateDate, hit, `like`, ingredient, thumbnail FROM recipe_board ORDER BY boardIdx) A, (SELECT @rownum := 0) r) ranking ORDER BY rnum DESC LIMIT ?, ?";
+	        
+	        pstmt = conn.prepareStatement(query);
+	        pstmt.setInt(1, startIndex);
+	        pstmt.setInt(2, listCount);
+	        
+	        rs = pstmt.executeQuery();
+	        
+	        while (rs.next()) {
+	            RecipeDTO recipe = new RecipeDTO();
+	            recipe.setBoardIdx(rs.getInt("boardIdx"));
+	            recipe.setUserId(rs.getString("userId"));
+	            recipe.setWriter(rs.getString("writer"));
+	            recipe.setCategory(rs.getString("category"));
+	            recipe.setTitle(rs.getString("title"));
+	            recipe.setContent(rs.getString("content"));
+	            recipe.setCreateDate(rs.getString("createDate"));
+	            recipe.setUpdateDate(rs.getString("updateDate"));
+	            recipe.setHit(rs.getInt("hit"));
+	            recipe.setLike(rs.getInt("like"));
+	            recipe.setIngredient(rs.getString("ingredient"));
+	            recipe.setThumbnail(rs.getString("thumbnail"));
+	            
+	            recipeList.add(recipe);
+//	            System.out.println(recipe);
+	        }
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return recipeList;
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return recipeList;
 	}
+
 	
 	/**
 	 * 관리자 메인 페이지 공지사항 관리 게시판 (3개 까지 출력)
@@ -104,7 +106,7 @@ public class AdminDAO extends MySQLConnector {
 		try {
 			
 			String query = "select * from  note_board order by noteIdx desc";
-			System.out.println(query);
+//			System.out.println(query);
 			
 			pstmt = conn.prepareStatement(query);
 			rs = pstmt.executeQuery();
@@ -120,7 +122,7 @@ public class AdminDAO extends MySQLConnector {
 				note.setWriter(rs.getString("writer"));
 				
 				noteList.add(note);
-				System.out.println(note);
+//				System.out.println(note);
 			}
 
 		} catch (SQLException e) {

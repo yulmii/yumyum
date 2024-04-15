@@ -66,11 +66,9 @@
 							        <c:choose>
 							            <c:when test="${ sessionScope._admin == 'T' }">
 							                <!-- 관리자 권한이 'T'인 경우에만 보여줌 -->
-							                <input type="radio" name="admin" id="M" value="M" 
-							                    <c:if test="${ member.admin == 'M' }"> checked </c:if> />
+							                <input type="radio" name="admin" id="M" value="M" <c:if test="${ member.admin == 'M' }"> checked </c:if> />
 							                <label for="M">관리자 권한 O</label>
-							                <input type="radio" name="admin" id="F" value="F" 
-							                    <c:if test="${ member.admin == 'F' }"> checked </c:if> />
+							                <input type="radio" name="admin" id="F" value="F" <c:if test="${ member.admin == 'F' }"> checked </c:if> />
 							                <label for="F">관리자 권한 X</label>
 							            </c:when>
 							            <c:otherwise>

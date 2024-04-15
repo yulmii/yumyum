@@ -29,8 +29,10 @@ public class AdRecipeListController extends HttpServlet {
 		if(request.getParameter("pageNum") != null) {
 			recipe.setPageNum(Integer.parseInt(request.getParameter("pageNum")));
 		}
-		
 		recipe.setListCount(10);
+		if(request.getParameter("listCount") != null) {
+			recipe.setListCount(Integer.parseInt(request.getParameter("listCount")));
+		}
 		
 		recipe.setStartIndex(recipe.getPageNum()*recipe.getListCount() - recipe.getListCount());
 		recipe.setEndIndex(recipe.getStartIndex());
@@ -38,16 +40,15 @@ public class AdRecipeListController extends HttpServlet {
 		AdminDAO adminDAO = new AdminDAO();
 		int totalCount = adminDAO.recipeTotalCount();
 		
-		List<RecipeDTO> recipeList = adminDAO.listRecipe_board();
+		List<RecipeDTO> recipeList = adminDAO.listRecipe_board(recipe.getStartIndex(), recipe.getListCount());
 		
 		PageNation paging = new PageNation();
 		String pagination = paging.getPageNavigator(totalCount, recipe.getListCount(), recipe.getPagePerBlock(),recipe.getPageNum());
 		
+		RequestDispatcher dispatch = request.getRequestDispatcher("/views/admin/adRecipeList.jsp");
 		request.setAttribute("recipeList", recipeList);
 		request.setAttribute("pagination", pagination);
 		request.setAttribute("listCount", recipe.getListCount());
-		
-		RequestDispatcher dispatch = request.getRequestDispatcher("/views/admin/adRecipeList.jsp");
 		dispatch.forward(request, response);
 	}
 

@@ -4,7 +4,83 @@
 <style>
 @import
 	url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);
-
+.ad-SelectBox{
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 10px 0;
+	}
+	
+	.ad-selectInput{
+		display: inline-block;
+		height: 30px;
+		width: 150px;
+	}
+	
+	.ad-writeBut{
+		display: inline-block;
+		text-decoration: none;
+		border: 1px solid #333;
+		color: 
+	}
+	
+    .ad-pagingBox{
+	    display: flex;
+	    justify-content: end;
+	    margin-top: 10px;
+	    margin-bottom: 50px;
+	    border-collapse: collapse;
+    }
+    
+    .nextPrevBut{
+    	cursor: pointer;
+    	display: flex;
+    	align-items: center;
+    	justify-content: center;
+    	text-align: center;
+    	border:2px solid #f0f0f0;
+		line-height: 1px;
+    }
+    
+    .butActive:hover{
+		border: 2px solid #adadad;
+    }
+    
+    .pagingBut{
+    	cursor: pointer;
+    	display: flex;
+    	align-items: center;
+    	justify-content: center;
+    	font-size: 18px;
+    	border:none;
+		width: 34px;
+		height: 34px;
+    }
+    
+    .otherPage:hover{
+    	border: 2px solid #adadad;
+    }
+    
+    .pageActive{
+    	border: 2px solid #222;
+    	color: #333;
+    }
+    
+    .ad-note-btn{
+    	cursor:pointer;
+		font-weight: normal;
+		font-size: 13px;
+		line-height: 19px;
+		text-align: center;
+		letter-spacing: -0.7px;
+		border-radius: 3px;
+		border: 2px solid #f0f0f0;
+		padding: 11px 20px 10px;
+	}
+	
+	.ad-note-btn:hover{
+		border: 2px solid #adadad;
+	}
 </style>
 
 <main class="ad-main-all">
@@ -75,5 +151,25 @@
 					'padding-right' : scrollWidth
 				});
 			}).resize();
+	$(document).ready(function(){
+		var _count = <c:out value="${listCount}"/>;	
+		$("#ad-selectInput").val(_count).prop("selected",true);
+	});
+	
+	$(document).ready(function(){
+		var _count = <c:out value="${listCount}"/>;	
+		$("#ad-selectInput").val(_count).prop("selected",true);
+	});
+	
+	function paging(num){
+		var _count = <c:out value="${listCount}"/>
+		location.href = `<c:url value="/admin/member/list.do?pageNum=${ '${num}' }&listCount=${ '${_count}' }"/> `;
+	}
+
+	function selectListCount(){
+		var _value = $(".ad-selectInput").val();
+		
+		location.href = `<c:url value="/admin/member/list.do?listCount=${ '${ _value }'}"/>`;
+	}
 </script>
 

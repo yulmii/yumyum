@@ -26,8 +26,8 @@ public class AdMainController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		List<MemberDTO> membersList = adminDAO.listMembers();
-		List<RecipeDTO> recipeList = adminDAO.listRecipe_board();
+		List<MemberDTO> membersList = adminDAO.listMembers(0, 3);
+		List<RecipeDTO> recipeList = adminDAO.listRecipe_board(0, 3);
 		List<NoteDTO> noteList = adminDAO.listNote();
 
 		request.setAttribute("membersList", membersList);
