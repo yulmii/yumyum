@@ -9,7 +9,7 @@
 			<a class="h-mypage" id="mypage" href="<c:url value="/mypage/view.do" />">마이 페이지</a> &nbsp;&nbsp;
 			<a class="h-recipebox" id="logout" href="<c:url value="/logout.do" />">로그아웃</a>&nbsp;&nbsp;
 			<c:choose>
-			    <c:when test="${sessionScope._admin == 'T' || sessionScope._admin == 'M'}">
+			    <c:when test="${sessionScope._admin != 'F'}">
 			        <a class="h-adminpage" id="adminpage" href="<c:url value="/admin/main.do" />">관리자 페이지</a>&nbsp;&nbsp;
 			    </c:when>
 			</c:choose>
