@@ -8,7 +8,7 @@
 </style>
 <main>
 	<form action="${contextPath }/admin/member/modify.do" method="post" onsubmit="modifyMember();">
-		<input type="hidden" id="pwCheckTF" value="false" /> 
+		<input type="hidden" id="pwCheckTF" value="true" /> 
 		<input type="hidden" name="userId" value="${ member.userId }">
 		<div class="ad-main">
 			<%@ include file="/inc/adpage_side_bar.jsp"%>
@@ -99,6 +99,8 @@
 </main>
 <script>
 	$(document).ready(function() {
+	
+		joinButAbled();
 		$("#pwd_confirm").keyup(function() {
 			console.log("접속");
 			if ($('#pwd').val() != $('#pwd_confirm').val()) {
@@ -114,7 +116,7 @@
 		});
 
 	});
-
+	
 	function joinButAbled() {
 		if ($("#pwCheckTF").val() == "true") {
 			$("#join").attr("disabled", false);

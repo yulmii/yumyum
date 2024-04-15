@@ -52,7 +52,7 @@ public class LoginFilter implements Filter {
 			System.out.println(path);
 			HttpSession session = req.getSession(false);
 			if (session == null || session.getAttribute("_userId") == null) {
-				resp.sendRedirect(contextPath + "/views/member/login.jsp");
+				resp.sendRedirect(contextPath + "/login.do");
 				return;
 			}
 		}

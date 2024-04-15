@@ -253,7 +253,7 @@
 			<div class="recipe__detail title">
 				<div class="title__nav">
 					<label> ${ recipe.category } </label>
-					<label style="float: right;">조회수 ${ recipe.hit }</label>
+				<%-- 	<label style="float: right;">조회수 ${ recipe.hit }</label> --%>
 				</div>
 
 				<div class="title__main">
@@ -267,11 +267,8 @@
 				<div class="left__content">
 
 					<div class="subBox__down_content">
-
-
-						<label>∙</label>
-
-
+						<label>조회수 ${ recipe.hit }</label> <br>
+						<label>좋아요 ${ recipe.like }</label>
 					</div>
 				</div>
 				<div class="right__content">
@@ -282,7 +279,7 @@
 							</button>
 						</c:when>
 						<c:otherwise>
-							<button id="recipeFavoriteBtn" class="re-addBoxBtn">
+							<button id="recipeFavoriteBtn" class="re-addBoxBtn" onclick="addBox()">
 								<img alt="" src='<c:url value="/resources/images/addStorgeBoxImg.png" />'> 보관함에 추가
 							</button>
 						</c:otherwise>
@@ -336,8 +333,26 @@
 	        success: function(data) {
 				if(data == "like"){
 					$("#likeBtn").addClass("liked"); // 좋아요 누른 경우의 스타일 적용
+					
 				}else{
 					$("#likeBtn").removeClass("liked"); // 좋아요 안 누른 경우의 스타일 적용
+				}
+	        }
+	    });
+	}
+
+	// 보관 버튼 클릭 시 실행되는 함수
+	function addBox() {
+	    $.ajax({
+	        url: '<c:url value="/recipe/addbox.do" />', // 좋아요 처리하는 서버 사이드 코드
+	        type: "POST",
+	        data: { boardIdx : ${ recipe.boardIdx } }, // 상품 ID를 전달
+	        dataType: "text",
+	        success: function(data) {
+				if(data == "addBox"){
+					alert("보관되었습니다.");
+				}else{
+					alert("이미 보관된 레시피 입니다.");
 				}
 	        }
 	    });
