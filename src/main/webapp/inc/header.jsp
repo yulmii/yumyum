@@ -6,14 +6,14 @@
 			<a href="<c:url value="/main.do" />"> Yumyum</a>
 		</div>
 		<div class="h-top-menu-right">
-			<a class="h-mypage" id="mypage" name="mypage" href="<c:url value="/mypage/modify.do" />">마이 페이지</a> &nbsp;&nbsp;
-			<a class="h-recipebox" id="logout" name="logout" href="<c:url value="/logout.do" />">로그아웃</a>&nbsp;&nbsp;
-			<a class="h-adminpage" id="adminpage" neme="adminpage" href="<c:url value="/admin/main.do" />">관리자 페이지</a>&nbsp;&nbsp;
+			<a class="h-mypage" id="mypage" href="<c:url value="/mypage/modify.do" />">마이 페이지</a> &nbsp;&nbsp;
+			<a class="h-recipebox" id="logout" href="<c:url value="/logout.do" />">로그아웃</a>&nbsp;&nbsp;
+			<a class="h-adminpage" id="adminpage" href="<c:url value="/admin/main.do" />">관리자 페이지</a>&nbsp;&nbsp;
 		</div>
 	</div>	
 	<div class="h-search-box">
-	    <form class="h-search-form" action="#" method="get">
-	        <input type="text" class="h-search-input" name="search" placeholder="검색어를 입력하세요">
+	    <form class="h-search-form" action='<c:url value="/recipe/list.do" />' method="get">
+	        <input type="text" class="h-search-input" name="searchText" placeholder="검색어를 입력하세요">
 	        <button type="submit" class="h-search-button">검색</button>
 	    </form>
 	</div>
