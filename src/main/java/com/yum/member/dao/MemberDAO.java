@@ -108,7 +108,7 @@ public class MemberDAO extends MySQLConnector {
 		rs = null;
 		try {
 			conn = getConnection();
-			String query = "SELECT userId, userName, nickname, pwd, email FROM member WHERE userId = ?";
+			String query = "SELECT userId, userName, nickname, pwd, email, joinDate FROM member WHERE userId = ?";
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, member.getUserId());
 			
@@ -120,6 +120,7 @@ public class MemberDAO extends MySQLConnector {
 				member.setNickname(rs.getString("nickname"));
 				member.setPwd(rs.getString("pwd"));
 				member.setEmail(rs.getString("email"));
+				member.setJoinDate(rs.getString("joinDate"));
 			}
 		} catch (SQLException e) {
 			System.err.println("viewUser() ERR : " + e.getMessage());
@@ -134,14 +135,14 @@ public class MemberDAO extends MySQLConnector {
 	 * @param String
 	 * @return
 	 */
-	public void deleteUser(String id) {
+	public void deleteUser(MemberDTO member) {
 		conn = null;
 		pstmt = null;
 		try {
 			conn = getConnection();
 			String query = "DELETE FROM member WHERE userId=?";
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, id);
+			pstmt.setString(1, member.getUserId());
 			
 			pstmt.executeUpdate();
 			

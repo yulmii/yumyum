@@ -14,7 +14,7 @@
 		닉네임: <input type="text" name="nickname" value="<c:out value="${ member.nickname }" />"><br>
 		이름: <input type="text" name="name" value="<c:out value="${ member.userName }" />"><br>
 		이메일: <input type="text" name="email" value="<c:out value="${ member.email }" />"><br>
-		<input type="submit" value="회원정보 수정">
+		<input type="submit" value="수정">
 		<input type="reset" value="다시 입력">
 	</form>
 </main>
