@@ -1,25 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${ title }</title>
-<link href='<c:url value="/resources/css/style.css" />' rel="stylesheet">
-<script src='<c:url value="/resources/js/common.js" />'></script>
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-</head>
-<body>
+    <%@ include file="/inc/top.jsp" %>
 
 <main>
 	아이디: <input type="text" id="_id"><br>
 	비밀번호: <input type="text" id="_pwd"><br>
 	<input type="button" value="로그인" onclick="login()">
 	<input type="reset" value="다시 입력">
-	<input type="button" value="회원가입" onclick="location.href='<c:url value="/views/member/join.jsp" />'">
+	<input type="button" value="회원가입" onclick="location.href='<c:url value="/join.do" />'">
 </main>
 <script type="text/javascript">
 function login(){
