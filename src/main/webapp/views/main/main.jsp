@@ -11,12 +11,21 @@ a{
   width: 1150px;
   margin: 0 auto;
 }
+.ma-banner-arrow{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 0px;	
+	margin-bottom: 120px;
+	padding-top: 5px;
+	padding-bottom: 15px;
+	border-bottom: 2px solid #adadad;
+}
 
-.banner{
+.ma-banner{
   width: 100%;
   height: 380px;
   margin-bottom: 100px;
-  background-image: url(/yumyum/resources/images/temporary/banner.jpg);
   background-size: contain;
 }
 
@@ -106,13 +115,13 @@ a{
    align-items: center;
 }
 
-.ma-arrow-right1, .ma-arrow-right2, .ma-arrow-right3, .ma-arrow-right4{
+.ma-arrow-right0, .ma-arrow-right1, .ma-arrow-right2, .ma-arrow-right3, .ma-arrow-right4{
    display: inline-block;
    width: 40px; 
    cursor: pointer;
 }
 
-.ma-arrow-left1, .ma-arrow-left2, .ma-arrow-left3, .ma-arrow-left4{
+.ma-arrow-left0, .ma-arrow-left1, .ma-arrow-left2, .ma-arrow-left3, .ma-arrow-left4{
    margin-right: 40px;
    display: inline-block;
    width: 40px; 
@@ -123,8 +132,17 @@ a{
 <%-- 예시 헤더 이미지  --%>
 <main>
 	<div>
-	    <div class="banner">
-	
+	    <div class="ma-banner" id="banner" style="margin:0px;">
+			<img style="width: 100%; min-width:1600px; cursor:pointer;" src='<c:url value="/resources/images/temporary/banner1.jpg"/>' alt="배너" onclick="pageMove(77777);"/>
+			<img style="width: 100%; min-width:1600px; cursor:pointer;" src='<c:url value="/resources/images/temporary/banner2.jpg"/>' alt="배너" onclick="pageMove(88888);"/>
+	    </div>
+	    <div class="ma-banner-arrow">
+	  		<div class="ma-arrow-box">
+	            <img class="ma-arrow-left0" src="<c:url value="/resources/images/arrow-left.png" />" />
+	        </div>
+	 	    <div class="ma-arrow-box">
+	           <img class="ma-arrow-right0" src="<c:url value="/resources/images/arrow-right.png" />" />
+	        </div>
 	    </div>
 	    <div class="ma-wrapper" >
 	      <div class="ma-ctgWrapper">
@@ -158,7 +176,7 @@ a{
 	          	</c:choose>
               </div>
 	          <div class="ma-arrow-box">
-	            <p><img class="ma-arrow-right1" src="<c:url value="/resources/images/arrow-right.png" />" /></p>
+	            <img class="ma-arrow-right1" src="<c:url value="/resources/images/arrow-right.png" />" />
 	          </div>
 	        </div>
 	      </div>
@@ -193,7 +211,7 @@ a{
 	          	</c:choose>
 	          </div>
 	          <div class="ma-arrow-box">
-	            <p><img class="ma-arrow-right2" src="<c:url value="/resources/images/arrow-right.png" />"/></p>
+	            <img class="ma-arrow-right2" src="<c:url value="/resources/images/arrow-right.png" />"/>
 	          </div>
 	        </div>
 	      </div>
@@ -228,7 +246,7 @@ a{
          	  	</c:choose>
 	          </div>
 	          <div class="ma-arrow-box">
-	            <p><img class="ma-arrow-right3" src="<c:url value="/resources/images/arrow-right.png" />" /></p>
+	            <img class="ma-arrow-right3" src="<c:url value="/resources/images/arrow-right.png" />" />
 	          </div>
 	        </div>
 	      </div>
@@ -263,7 +281,7 @@ a{
          	  	</c:choose>
 	          </div>
 	          <div class="ma-arrow-box">
-	            <p><img class="ma-arrow-right4" src="<c:url value="/resources/images/arrow-right.png" />" /></p>
+	            <img class="ma-arrow-right4" src="<c:url value="/resources/images/arrow-right.png" />" />
 	          </div>
 	        </div>
 	      </div>
@@ -275,6 +293,15 @@ a{
 <%-- <%@ include file="/inc/footer.jsp" %>  --%>
 <script type="text/javascript">
 	$(document).ready(function() {
+		$("#banner").slick({
+		      slidesToShow: 1,
+		      slidesToScroll: 1,
+		      autoplay: true,
+		      autoplaySpeed: 3500,
+		      prevArrow:$(".ma-arrow-left0"),
+		      nextArrow:$(".ma-arrow-right0"),
+		});
+		
 	    $('#ma-imgList1').slick({
 	      slidesToShow: 5,
 	      slidesToScroll: 1,
@@ -310,7 +337,11 @@ a{
 	      prevArrow:$(".ma-arrow-left4"),
 	      nextArrow:$(".ma-arrow-right4"),
 	    });
-	  })
+	})
+	  
+	function pageMove(no){
+		location.href = `<c:url value="/note/detail.do?no=${ '${no}'}"/>`;
+	}
 </script>
 </body>
 </html>
