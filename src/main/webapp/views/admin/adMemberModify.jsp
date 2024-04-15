@@ -58,15 +58,27 @@
 								required="required" /></td>
 						</tr>
 
-						<tr>
-							<td>관리자</td>
-							<td colspan="2"><input type="radio" name="admin" id="T"
-								value="T" <c:if test="${ member.admin == 'T' }"> checked </c:if> />
-								<label for="T">관리자 권한 O</label> <input type="radio" name="admin"
-								id="F" value="F"
-								<c:if test="${ member.admin == 'F' }"> checked </c:if> /> <label
-								for="F">관리자 권한 X</label></td>
-						</tr>
+							<tr>
+							    <td>관리자</td>
+							    <td colspan="2">
+							        <c:choose>
+							            <c:when test="${ sessionScope._admin == 'T' }">
+							                <!-- 관리자 권한이 'T'인 경우에만 보여줌 -->
+							                <input type="radio" name="admin" id="M" value="M" 
+							                    <c:if test="${ member.admin == 'M' }"> checked </c:if> />
+							                <label for="M">관리자 권한 O</label>
+							                <input type="radio" name="admin" id="F" value="F" 
+							                    <c:if test="${ member.admin == 'F' }"> checked </c:if> />
+							                <label for="F">관리자 권한 X</label>
+							            </c:when>
+							            <c:otherwise>
+							                <!-- 나머지 경우는 숨김 -->
+							                <input type="hidden" name="admin" value="${ member.admin }" />
+							            </c:otherwise>
+							        </c:choose>
+							    </td>
+							</tr>
+
 
 						<tr>
 							<td id="buttonBox" colspan="3"><input type="submit"
