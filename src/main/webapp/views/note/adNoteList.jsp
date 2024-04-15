@@ -11,10 +11,15 @@
 	
 	.ad-selectInput{
 		display: inline-block;
+		height: 30px;
+		width: 150px;
 	}
 	
 	.ad-writeBut{
 		display: inline-block;
+		text-decoration: none;
+		border: 1px solid #333;
+		color: 
 	}
 	
     .ad-pagingBox{
@@ -23,6 +28,40 @@
 	    margin-top: 10px;
 	    margin-bottom: 50px;
 	    border-collapse: collapse;
+    }
+    
+    .nextPrevBut{
+    	cursor: pointer;
+    	display: flex;
+    	align-items: center;
+    	justify-content: center;
+    	text-align: center;
+    	border:2px solid #f0f0f0;
+		line-height: 1px;
+    }
+    
+    .butActive:hover{
+		border: 2px solid #adadad;
+    }
+    
+    .pagingBut{
+    	cursor: pointer;
+    	display: flex;
+    	align-items: center;
+    	justify-content: center;
+    	font-size: 18px;
+    	border:none;
+		width: 34px;
+		height: 34px;
+    }
+    
+    .otherPage:hover{
+    	border: 2px solid #adadad;
+    }
+    
+    .pageActive{
+    	border: 2px solid #222;
+    	color: #333;
     }
 </style>
 <script type="text/javascript">
@@ -40,6 +79,13 @@
 		var _value = $(".ad-selectInput").val();
 		
 		location.href = `<c:url value="/admin/note/list.do?listCount=${ '${ _value }'}"/>`;
+	}
+	
+	function deleteNote(no){
+		if(confirm("정말 삭제하시겠습니까?")){
+			location.href = `<c:url value="/admin/note/delete.do?no=${ '${ no }'}" />`;
+		}
+		
 	}
 </script>
 <main>
@@ -86,7 +132,7 @@
 				</table>
 			</div>
 			<div class="ad-tbl-content-list">
-				<table>
+				<table cellpadding="0" cellspacing="0" border="0">
 					<colgroup>
 						<col width="70" />
 						<!--  번호 -->
@@ -106,9 +152,9 @@
 							<td>${ note.no }</td>
 							<td>${ note.writer }</td>
 							<td>${ note.title }</td>
-							<td>0</td>
+							<td style="padding-left: 30px;">0</td>
 							<td><a href='<c:url value="/admin/note/modify.do?no=${note.noteIdx}" /> '>수정</a></td>
-							<td><a href='<c:url value="/admin/note/delete.do?no=${note.noteIdx}" /> '>삭제</a></td>
+							<td><a href='javascript:deleteNote(${ note.noteIdx })'>삭제</a></td>
 						</tr>
 					</c:forEach>
 				</table>
