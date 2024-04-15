@@ -54,16 +54,34 @@
 	    margin-bottom: 50px;
 	    border-collapse: collapse;
     }
+    
+    .ad-note-btn{
+    	cursor:pointer;
+		font-weight: normal;
+		font-size: 13px;
+		line-height: 19px;
+		text-align: center;
+		letter-spacing: -0.7px;
+		border-radius: 3px;
+		border: 2px solid #f0f0f0;
+		padding: 11px 20px 10px;
+	}
+	
+	.ad-note-btn:hover{
+		border: 2px solid #adadad;
+	}
 </style>
 <script type="text/javascript">
-
+	function cancelBoard(){
+		history.back();
+	}
 </script>
 <main>
 	<div>
 		<%@ include file="/inc/adpage_side_bar.jsp"%>
 		
 		<div class="ad-main-content">
-			<h1 class="ad-board-title">공지사항 관리</h1>
+			<h1 class="ad-board-title">공지사항 등록</h1>
 			<form action='<c:url value="/admin/note/write.do" />' method="post"  enctype="multipart/form-data" onsubmit="submitData();">
 				<input type="hidden" name="dummyImg" id="dummyImg"/>
 				<input type="hidden" name="deleteImg" id="deleteImg"/>
@@ -80,8 +98,8 @@
 					<textarea id="summernote" name="content"></textarea>
 				</div>
 				<div>
-					<input type="submit" value="등록">
-					<input type="button" value="취소">
+					<input type="submit" class="ad-note-btn" value="등록">
+					<input type="button" class="ad-note-btn" onclick="cancelBoard();" value="취소">
 				</div>
 			</form>
 		</div>     

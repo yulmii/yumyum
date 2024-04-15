@@ -63,12 +63,32 @@
     	border: 2px solid #222;
     	color: #333;
     }
+    
+    .ad-note-btn{
+    	cursor:pointer;
+		font-weight: normal;
+		font-size: 13px;
+		line-height: 19px;
+		text-align: center;
+		letter-spacing: -0.7px;
+		border-radius: 3px;
+		border: 2px solid #f0f0f0;
+		padding: 11px 20px 10px;
+	}
+	
+	.ad-note-btn:hover{
+		border: 2px solid #adadad;
+	}
 </style>
 <script type="text/javascript">
 	$(document).ready(function(){
 		var _count = <c:out value="${listCount}"/>;	
 		$("#ad-selectInput").val(_count).prop("selected",true);
 	});
+	
+	function writeNote(){
+		location.href = "<c:url value="/admin/note/write.do" />"
+	}
 	
 	function paging(num){
 		var _count = <c:out value="${listCount}"/>
@@ -85,7 +105,6 @@
 		if(confirm("정말 삭제하시겠습니까?")){
 			location.href = `<c:url value="/admin/note/delete.do?no=${ '${ no }'}" />`;
 		}
-		
 	}
 </script>
 <main>
@@ -100,7 +119,7 @@
 					<option value="20" >20개씩 보기</option>
 					<option value="30" >30개씩 보기</option>
 				</select>
-				<a class="ad-writeBut" href="<c:url value="/admin/note/write.do" />">공지사항 작성</a>
+				<button class="ad-note-btn" onclick="writeNote();">공지사항 등록</button>
 			</div>
 			<div class="ad-tbl-header">
 				<table align="center">
