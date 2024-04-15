@@ -359,6 +359,36 @@ public class RecipeDAO extends MySQLConnector {
 			close(null, pstmt, conn);
 		}
 	}
+	
+	/**
+	 * like 조회
+	 * @param RecipeDTO
+	 * @return
+	 */
+	public int selectLike(RecipeDTO recipe) {
+		conn = null;
+		pstmt = null;
+		rs = null;
+		int result = -1;
+		try {
+			conn = getConnection();
+			String query = "SELECT `like` FROM recipe_board WHERE boardIdx=?";
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, recipe.getBoardIdx());
+			System.out.println("selectLike :" + pstmt.toString());
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				result = rs.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			System.err.println("selectLike() ERR : " + e.getMessage());
+		} finally {
+			close(rs, pstmt, conn);
+		}
+		return result;
+	}
+	
 	/**
 	 * 레시피 삭제
 	 * @param RecipeDTO

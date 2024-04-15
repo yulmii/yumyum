@@ -26,6 +26,7 @@
 }
 
 .home_content_title p {
+	display: inline-block;
 	font-size: 2.4rem;
 	line-height: 35px;
 	font-weight: bold;
@@ -108,15 +109,53 @@ p {
 .re-btnRight{
 	text-align: right;
 }
+
+.no-pagingBox{
+	margin-top: 20px;
+	margin-bottom: 50px;
+	padding-right: 40px;
+	border-collapse: collapse;
+}
+
+.nextPrevBut{
+	cursor: pointer;
+	justify-content: center;
+	background-color: #fff;
+	border: none;
+}
+  
+.butActive:hover{
+
+}
+  
+.pagingBut{
+	font-size: 20px;
+	background-color: #fff;
+	border: none;
+	width: 37px;
+	height: 37px;
+}
+  
+.otherPage:hover{
+	border: 2px solid #adadad;
+}
+  
+.pageActive{
+	border: 2px solid #222;
+}
 </style>
-<script type="text/javascript">
-	
-</script>
 <main>
 	<div class="contain__inner search__result_box">
 		<div class="title__box">
 			<div class="home_content_title">
-				<p>레시피</p>
+				<c:choose>
+					<c:when test="${ !empty param.category }">
+						<p>${ param.category }</p>
+					</c:when>
+					<c:when test="${ !empty param.searchText }">
+						<p>${ param.searchText }</p>&nbsp;&nbsp;<span>검색결과</span>
+					</c:when>
+				</c:choose>
 			</div>
 		</div>
 		<section class="search__content_wrapper">
@@ -138,15 +177,9 @@ p {
 							</div>
 						</c:forEach>
 					</div>
-					<div class="pagination_block text-center">
-						<c:out value="${ pagination }" escapeXml="false" />
-					</div>
-					<!-- <nav id="pageNav" class="pagination_block text-center">
-				<ul class="pagination">
-					<li class="active" title="현재 페이지"><a href="#">1</a></li>
-					<li><a href="#" onclick="getList('2')" '="" title="2 페이지로 이동">2</a></li>
-				</ul>
-			</nav> -->
+					<div class="re-pagingBox">
+	        			<c:out value="${ pagination }" escapeXml="false"/>
+	      			</div>
 				</c:otherwise>
 			</c:choose>
 		</section>
@@ -157,21 +190,9 @@ p {
 </main>
 <%@ include file="/inc/footer.jsp"%>
 <script type="text/javascript">
-	$(document).ready(function(){
-		var _count = <c:out value="${listCount}"/>;	
-		$("#ad-selectInput").val(_count).prop("selected",true);
-	});
-	
-	function paging(num){
-		var _count = <c:out value="${listCount}"/>
-		location.href = `<c:url value="/admin/note/list.do?pageNum=${ '${num }' }&listCount=${ '${_count}' }"/> `;
-	}
-
-	function selectListCount(){
-		var _value = $(".ad-selectInput").val();
-		
-		location.href = `<c:url value="/admin/note/list.do?listCount=${ '${ _value }'}"/>`;
-	}
+function paging(num){
+	 location.href = "?pageNum="+num+"&category=${ param.category }&searchText=${ param.searchText }";
+}
 </script>
 </body>
 </html>

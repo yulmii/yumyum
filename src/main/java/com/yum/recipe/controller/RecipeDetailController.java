@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
+
 import com.yum.recipe.dao.RecipeDAO;
 import com.yum.recipe.dto.LikeDTO;
 import com.yum.recipe.dto.RecipeDTO;
@@ -67,17 +69,20 @@ public class RecipeDetailController extends HttpServlet {
 
 		//recipe_board 테이블 수정
 		dto.setBoardIdx(n);
-		RecipeDTO recipe = dao.recipeDetail(dto);
-		dao.updateLike(recipe, likeDto);
+		dto = dao.recipeDetail(dto);
+		dao.updateLike(dto, likeDto);
+		JSONObject likeObj = new JSONObject();
 		
 		PrintWriter out = response.getWriter();
 		
 		if(!like) {
-			out.print("like");
-		}else {
-			out.print("remove");
+			likeObj.put("like", "like");
 		}
+		likeObj.put("likeNum", dao.selectLike(dto));
+		out.print(likeObj.toJSONString());
+
 		out.close();
+		
 	}
 
 }

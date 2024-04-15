@@ -33,7 +33,10 @@ public class RecipeListController extends HttpServlet {
 				if(request.getParameter("searchText") != null) {
 					dto.setSearchText(request.getParameter("searchText"));
 				}
-						
+				
+				dto.setStartIndex(dto.getPageNum()*dto.getListCount() - dto.getListCount());
+				dto.setEndIndex(dto.getStartIndex());
+				
 				// DAO (DB의 테이블에 접속하여 쿼리를 실행할 수 있는 메서드 보유 객체 생성) 
 				RecipeDAO dao = new RecipeDAO();
 			
@@ -47,11 +50,10 @@ public class RecipeListController extends HttpServlet {
 				request.setAttribute("totalCount",totalCount);
 				
 				// 목록 하단 페이지 번호출력을 위한 객체 생성 
-				PageNation pNavigator = new PageNation();
-			
-				String p_navi = pNavigator.getPageNavigator(totalCount, dto.getListCount(), dto.getPagePerBlock(), dto.getPageNum());
+				PageNation paging = new PageNation();
+				String pagination = paging.getPageNavigator(totalCount, dto.getListCount(), dto.getPagePerBlock(), dto.getPageNum());
 				
-				request.setAttribute("pageNavigator", p_navi); 	// 페이지 번호들
+				request.setAttribute("pagination", pagination);		// 페이지 
 				request.setAttribute("recipeList", recipeList); 	// 조회 결과 리스트
 				request.setAttribute("recipe", dto); // 모델
 				
