@@ -56,7 +56,7 @@ public class PageNation {
 				}
 			}
 			
-			if(pageNum != endPage){
+			if(pageNum != totalNumOfPage){
 				if(endPage == totalNumOfPage) {
 					//페이지 블록에 마지막 페이지가 전체 마지막 페이지랑 같을 때
 					sb.append("<button class='nextPrevBut butActive' onclick=\"paging(").append(endPage + ")\">다음 ▶</button>");
