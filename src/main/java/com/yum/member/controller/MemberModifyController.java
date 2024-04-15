@@ -1,11 +1,16 @@
 package com.yum.member.controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.yum.member.dao.MemberDAO;
+import com.yum.member.dto.MemberDTO;
 
 @WebServlet("/mypage/modify.do")
 public class MemberModifyController extends HttpServlet {
@@ -15,7 +20,7 @@ public class MemberModifyController extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MemberJoinController() {
+    public MemberModifyController() {
         super();
         // TODO Auto-generated constructor stub
     }
