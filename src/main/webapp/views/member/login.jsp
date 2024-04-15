@@ -23,7 +23,7 @@ function login(){
 		success: function(data, textStatus){
 			console.log(data + "가 들어옴");
 			 if(data){
-				location.href='<c:url value="/views/main/main.jsp"/>'
+				location.href='<c:url value="/main.do"/>'
 			} else {
 				alert("아이디 혹은 비밀번호를 다시 확인하세요.");
 			}

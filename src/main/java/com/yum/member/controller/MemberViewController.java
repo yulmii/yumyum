@@ -14,15 +14,15 @@ import javax.servlet.http.HttpSession;
 import com.yum.member.dao.MemberDAO;
 import com.yum.member.dto.MemberDTO;
 
-@WebServlet("/mypage/modify.do")
-public class MemberModifyController extends HttpServlet {
+@WebServlet("/mypage/view.do")
+public class MemberViewController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	private MemberDAO memberDAO = new MemberDAO();
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MemberModifyController() {
+    public MemberViewController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -44,26 +44,12 @@ public class MemberModifyController extends HttpServlet {
 		request.setAttribute("member", member);
 
 		// View 보내기
-    	RequestDispatcher rd = request.getRequestDispatcher("/views/mypage/memberModify.jsp");
+    	RequestDispatcher rd = request.getRequestDispatcher("/views/mypage/memberView.jsp");
 		rd.forward(request, response);
         
      }
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
-		MemberDTO member = new MemberDTO();
-        
-        member.setUserId(request.getParameter("user_id"));
-        member.setNickname(request.getParameter("nickname"));
-        member.setEmail(request.getParameter("email"));
-        member.setPwd(request.getParameter("pwd"));
-        member.setUserName(request.getParameter("name"));
-        this.memberDAO.modifyUser(member);
-        request.setAttribute("member", member);
-        
-        // View 보내기
-        RequestDispatcher requestDispatcher =
-        	request.getRequestDispatcher("/views/mypage/memberModify.jsp");
-        requestDispatcher.forward(request, response);
+		doGet(request, response);
 	}
 
 }
