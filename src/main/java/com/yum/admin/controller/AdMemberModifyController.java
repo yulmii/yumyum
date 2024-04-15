@@ -45,14 +45,12 @@ public class AdMemberModifyController extends HttpServlet {
         String adminValue = request.getParameter("admin");
         member.setAdmin(adminValue);
 
+        // 수정된 사용자 정보를 데이터베이스에 저장
         AdminDAO adminDAO = new AdminDAO();
         adminDAO.memberModify(member);
 
         response.sendRedirect(contextPath + "/admin/main.do");
     }
-
-
-
-
 }
+
 

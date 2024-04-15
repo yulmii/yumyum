@@ -49,7 +49,11 @@ public class LoginController extends HttpServlet {
 		    
 		    // 세션에 아이디 정보 설정
 		    session.setAttribute("_userId", member.getUserId());
+<<<<<<< HEAD
 		    session.setAttribute("_admin", adminMember.getAdmin());
+=======
+		    session.setAttribute("_admin", member.getAdmin());
+>>>>>>> e5ddb1213e2c6624712b83b288e6f997cc7d4108
 		    
 		    out.print("성공");
 		    
