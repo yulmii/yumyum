@@ -21,13 +21,16 @@ public class NoteDetailController extends HttpServlet {
 		
 		NoteDAO noteDAO = new NoteDAO();
 		NoteDTO note = noteDAO.noteSelectOne(no);
+		noteDAO.updateNoteHit(no);
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/views/note/noteDetail.jsp");
 		request.setAttribute("note", note);
+		request.setAttribute("no", no);
 		rd.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 	}
 
 }
