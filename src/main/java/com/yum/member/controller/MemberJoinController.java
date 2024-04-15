@@ -57,9 +57,11 @@ public class MemberJoinController extends HttpServlet {
         request.setAttribute("member", member);
         
         // View 보내기
-        RequestDispatcher requestDispatcher =
-           request.getRequestDispatcher("/views/member/login.jsp");
-        requestDispatcher.forward(request, response);
+        response.sendRedirect("login.do");
+        
+//        RequestDispatcher requestDispatcher =
+//           request.getRequestDispatcher("/login.do");
+//        requestDispatcher.forward(request, response);
 	}
 
 }

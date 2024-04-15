@@ -8,13 +8,16 @@
 
 </script>
 <main>
-<form name="frmLogin" method="post" action="<c:url value='/modify.do' />">
-		아이디: <input type="text" name="user_id"><br>
-		비밀번호: <input type="text" name="user_pw"><br>
-		<input type="submit" value="로그인">
+	<form name="frmModify" method="post" action="<c:url value='/mypage/modify.do' />">
+		아이디: <input type="text" name="user_id" value="<c:out value="${ member.userId }" />" readonly><br>
+		비밀번호: <input type="text" name="pwd" value="<c:out value="${ member.pwd }" />"><br>
+		닉네임: <input type="text" name="nickname" value="<c:out value="${ member.nickname }" />"><br>
+		이름: <input type="text" name="name" value="<c:out value="${ member.userName }" />"><br>
+		이메일: <input type="text" name="email" value="<c:out value="${ member.email }" />"><br>
+		<input type="submit" value="회원정보 수정">
 		<input type="reset" value="다시 입력">
 	</form>
 </main>
-<%-- <%@ include file="/inc/footer.jsp" %> --%>
+<%@ include file="/inc/footer.jsp" %>
 </body>
 </html>

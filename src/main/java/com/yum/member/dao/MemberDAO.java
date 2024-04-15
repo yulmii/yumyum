@@ -101,6 +101,33 @@ public class MemberDAO extends MySQLConnector {
 			close(null, pstmt, conn);
 		}
 	}
+	// 로그인된 회원의 정보 얻기
+	public MemberDTO viewUser(MemberDTO member) {
+		conn = null;
+		pstmt = null;
+		rs = null;
+		try {
+			conn = getConnection();
+			String query = "SELECT userId, userName, nickname, pwd, email FROM member WHERE userId = ?";
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, member.getUserId());
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				member.setUserId(rs.getString("userId"));
+				member.setUserName(rs.getString("userName"));
+				member.setNickname(rs.getString("nickname"));
+				member.setPwd(rs.getString("pwd"));
+				member.setEmail(rs.getString("email"));
+			}
+		} catch (SQLException e) {
+			System.err.println("viewUser() ERR : " + e.getMessage());
+		} finally {
+			close(rs, pstmt, conn);
+		}
+		return member;
+	}
 	
 	/**
 	 * 3-1. 회원탈퇴 시 회원 삭제 (회원테이블에서 delete)
@@ -194,12 +221,13 @@ public class MemberDAO extends MySQLConnector {
 		pstmt = null;
 		try {
 			conn = getConnection();
-			String query = "UPDATE member SET (userName, nickname, pwd, email) VALUES (?, ?, ?, ?)";
+			String query = "UPDATE member SET userName=?, nickname=?, pwd=?, email=? WHERE userId=?";
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, member.getUserName());
 			pstmt.setString(2, member.getNickname());
 			pstmt.setString(3, member.getPwd());
 			pstmt.setString(4, member.getEmail());
+			pstmt.setString(5, member.getUserId());
 			
 			pstmt.executeUpdate();
 			
