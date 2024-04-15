@@ -275,17 +275,20 @@ public class MemberDAO extends MySQLConnector {
 	}
 	
 //	8. 마이페이지 - 보관함 확인 (보관함테이블 select)
-	public List<RecipeDTO> myBoxSearch() {
+	public List<RecipeDTO> myBoxSearch(String id) {
 		conn = null;
 		pstmt = null;
 		rs = null;
 		List<RecipeDTO> recipeList = null; 	// 리턴용 레시피 리스트
+		// 레시피 객체
 		RecipeDTO recipe = new RecipeDTO();
 		try {
 			conn = getConnection();
-			String query = "select r.boardIdx, r.writer, r.title, r.hit, r.createDate from recipe_board r, storage_box s where r.boardIdx=s.boardIdx and s.userId order by r.boardIdx desc";
-//			(select m.nickname from storage_box s, member m where s.userId=m.userId);
+			// 쿼리: storage_box 중 userId가 id 인 데이터의 boardIdx를 조회.
+			// 이 때, recipe_board 에서 일치하는 boardIdx를 찾는다.
+			String query = "SELECT r.* from recipe_board r, storage_box s where r.boardIdx=s.boardIdx and s.userId=? order by s.boxIdx desc";
 			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, id);
 			// 조회 실행
 			rs = pstmt.executeQuery();
 			
@@ -298,6 +301,7 @@ public class MemberDAO extends MySQLConnector {
 				recipe.setWriter(rs.getString("r.writer"));
 				recipe.setTitle(rs.getString("r.title"));
 				recipe.setHit(rs.getInt("r.hit"));
+				recipe.setLike(rs.getInt("r.like"));
 				recipe.setCreateDate(rs.getString("r.createDate"));
 				recipeList.add(recipe);	// ArrayList에 추가
 			}	// while() END
@@ -315,22 +319,20 @@ public class MemberDAO extends MySQLConnector {
 	 * @param MemberDTO
 	 * @return
 	 */
-	public void deleteBox(MemberDTO member) {
+	public void deleteBox(String id, int no) {
 		conn = null;
 		pstmt = null;
 		try {
 			conn = getConnection();
-			String query = "UPDATE member SET (userName, nickname, pwd, email) VALUES (?, ?, ?, ?)";
+			String query = "DELETE FROM storage_box WHERE userId=? AND boardIdx=?";
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, member.getUserName());
-			pstmt.setString(2, member.getNickname());
-			pstmt.setString(3, member.getPwd());
-			pstmt.setString(4, member.getEmail());
+			pstmt.setString(1, id);
+			pstmt.setInt(2, no);
 			
 			pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
-			System.err.println("joinUser() ERR : " + e.getMessage());
+			System.err.println("deleteBox() ERR : " + e.getMessage());
 		} finally {
 			close(null, pstmt, conn);
 		}
