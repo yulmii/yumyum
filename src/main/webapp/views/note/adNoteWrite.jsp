@@ -55,6 +55,12 @@
 	    border-collapse: collapse;
     }
     
+    .ad-note-btnBox{
+    	display: flex;
+    	align-content: center;
+    	justify-content: center;
+    }
+    
     .ad-note-btn{
     	cursor:pointer;
 		font-weight: normal;
@@ -97,9 +103,9 @@
 		    		<p class="ad-mainContent">내용</p>
 					<textarea id="summernote" name="content"></textarea>
 				</div>
-				<div>
+				<div class="ad-note-btnBox">
 					<input type="submit" class="ad-note-btn" value="등록">
-					<input type="button" class="ad-note-btn" onclick="cancelBoard();" value="취소">
+					<input type="button" class="ad-note-btn"  style="margin-left: 10px;" onclick="cancelBoard();" value="취소">
 				</div>
 			</form>
 		</div>     
