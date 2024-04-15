@@ -62,3 +62,12 @@ CREATE TABLE out_member (
     joinDate DATETIME NOT NULL COMMENT '가입일자',
     outDate DATETIME NOT NULL DEFAULT (current_Timestamp) COMMENT '탈퇴일자'
 );
+
+create table image(
+    imgIdx int PRIMARY KEY AUTO_INCREMENT COMMENT '이미지 인덱스',
+    fileName VARCHAR(255) NOT NULL COMMENT '파일 이름',
+    filePath VARCHAR(255)  COMMENT '파일 경로',
+    boardId int NOT NULL COMMENT '게시글 번호',
+    boardName VARCHAR(50) NOT NULL COMMENT '게시판 이름',
+    createDate DATETIME NOT NULL DEFAULT (current_Timestamp) COMMENT '생성일자'
+);

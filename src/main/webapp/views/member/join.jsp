@@ -89,6 +89,7 @@ body {
 					</tr>
 					<tr>
 						<td><input class="ma-jo-date" type="password" placeholder="비밀번호를 입력해주세요." name="pwd" required><br></td>
+					</tr>
 					<tr>
 						<td><input class="ma-jo-date" type="text" placeholder="별명을 입력해주세요." name="nickname" required><br></td>
 					</tr>
