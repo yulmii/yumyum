@@ -79,6 +79,10 @@
 	.ad-note-btn:hover{
 		border: 2px solid #adadad;
 	}
+	
+	.ad-list-btn:hover{
+		text-decoration: underline 4px #adadad;
+	}
 </style>
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -171,9 +175,9 @@
 							<td>${ note.no }</td>
 							<td>${ note.writer }</td>
 							<td>${ note.title }</td>
-							<td style="padding-left: 30px;">0</td>
-							<td><a href='<c:url value="/admin/note/modify.do?no=${note.noteIdx}" /> '>수정</a></td>
-							<td><a href='javascript:deleteNote(${ note.noteIdx })'>삭제</a></td>
+							<td style="padding-left: 30px;">${ note.hit }</td>
+							<td><a class="ad-list-btn" href='<c:url value="/admin/note/modify.do?no=${note.noteIdx}" /> '>수정</a></td>
+							<td><a class="ad-list-btn" href='javascript:deleteNote(${ note.noteIdx })'>삭제</a></td>
 						</tr>
 					</c:forEach>
 				</table>

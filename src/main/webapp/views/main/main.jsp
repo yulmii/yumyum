@@ -271,7 +271,7 @@ a{
   </div>
 </main>
 <%-- 예시 푸터 이미지  --%>
-<img src="<c:url value="/resources/images/temporary/footer.png"/>" />
+<%@ include file="/inc/footer.jsp" %> 
 <%-- <%@ include file="/inc/footer.jsp" %>  --%>
 <script type="text/javascript">
 	$(document).ready(function() {
