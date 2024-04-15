@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.yum.admin.dao.AdminDAO;
 import com.yum.member.dao.MemberDAO;
 import com.yum.member.dto.MemberDTO;
 
@@ -29,12 +29,18 @@ public class LoginController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
+		
+        
 		MemberDTO member = new MemberDTO();
+		MemberDTO adminMember = new MemberDTO();
+		AdminDAO adminDAO = new AdminDAO();
+		
 		member.setUserId(request.getParameter("id"));
 		member.setPwd(request.getParameter("pwd"));
 		
 		boolean result = this.memberDAO.loginUser(member); // 로그인 됨 혹은 안 됨
-		System.out.println(result);
+		adminMember = adminDAO.memberInfo(member.getUserId());
+		
 		PrintWriter out = response.getWriter();
 		if (result) { // 아이디 비밀번호 일치
 			//세션에 아이디 정보 넣기
@@ -43,7 +49,7 @@ public class LoginController extends HttpServlet {
 		    
 		    // 세션에 아이디 정보 설정
 		    session.setAttribute("_userId", member.getUserId());
-		    session.setAttribute("_admin", member.getAdmin());
+		    session.setAttribute("_admin", adminMember.getAdmin());
 		    
 		    out.print("성공");
 		    

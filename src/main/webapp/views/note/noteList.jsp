@@ -62,11 +62,11 @@
     	align-items: center;
     	justify-content: center;
 		background-color: #fff;
-		border: none;
+    	border:2px solid #fff;
     }
     
     .butActive:hover{
-
+		border: 2px solid #adadad;
     }
     
     .pagingBut{

@@ -36,13 +36,13 @@ public class PageNation {
 			if(pageNum > 1){
 				if(startPage == 1) {
 					//현재 페이지가 1 ~ 10일 때 이전 버튼
-					sb.append("<button class='nextPrevBut butActive' onclick=\"paging(").append(1 + ")\">◀ 이전</button>");
+					sb.append("<button class='nextPrevBut butActive' onclick=\"paging(").append(1 + ")\">◀ <span class='nextButText'>이전</span></button>");
 				} else {
 					//현재 페이지가 1 ~ 10이외 이전 버튼
-					sb.append("<button class='nextPrevBut butActive' onclick=\"paging(").append(startPage - 10 + ")\">◀ 이전</button>");
+					sb.append("<button class='nextPrevBut butActive' onclick=\"paging(").append(startPage - 10 + ")\">◀ <span class='nextButText'>이전</span></button>");
 				}
 			} else {
-				sb.append("<button class='nextPrevBut' onclick=\"#").append("\" disabled>◀ 이전</button>");
+				sb.append("<button class='nextPrevBut' onclick=\"#").append("\" disabled>◀ <span class='nextButText'>이전</span></button>");
 			}
 			
 
@@ -59,14 +59,14 @@ public class PageNation {
 			if(pageNum != totalNumOfPage){
 				if(endPage == totalNumOfPage) {
 					//페이지 블록에 마지막 페이지가 전체 마지막 페이지랑 같을 때
-					sb.append("<button class='nextPrevBut butActive' onclick=\"paging(").append(endPage + ")\">다음 ▶</button>");
+					sb.append("<button class='nextPrevBut butActive' onclick=\"paging(").append(endPage + ")\"><span class='nextButText'>다음</span> ▶</button>");
 				} else {
 					//페이지 블록에 마지막 페이지가 전체 마지막 페이지랑 다를 때
-					sb.append("<button class='nextPrevBut butActive' onclick=\"paging(").append(endPage + 1 + ")\">다음 ▶</button>");
+					sb.append("<button class='nextPrevBut butActive' onclick=\"paging(").append(endPage + 1 + ")\"><span class='nextButText'>다음</span> ▶</button>");
 				}
 			} else {
 				//현재 페이지가 전체 마지막 페이지랑 같을 때
-				sb.append("<button class='nextPrevBut' onclick=\"#").append("\" disabled >다음 ▶</button>");
+				sb.append("<button class='nextPrevBut' onclick=\"#").append("\" disabled ><span class='nextButText'>다음</span> ▶</button>");
 			}
 			
 		}
