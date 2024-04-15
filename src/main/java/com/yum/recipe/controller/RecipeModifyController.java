@@ -40,7 +40,7 @@ public class RecipeModifyController extends HttpServlet {
 		request.setAttribute("recipe", recipe);
 
 		// View 보내기
-		RequestDispatcher rd = request.getRequestDispatcher("/views/recipe/recipeModify2.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/views/recipe/recipeModify.jsp");
 		rd.forward(request, response);
 	}
 
@@ -52,14 +52,14 @@ public class RecipeModifyController extends HttpServlet {
 	    
 	    //파일 업로드시 필요한 정보
 	    String thumbnail = "";
+	    String title = "";
 	    FileItem thumbnailItem = null;
 	    
 	    // RecipeDTO 객체 생성 및 정보 설정
 	    RecipeDTO recipe = new RecipeDTO();
 	    DiskFileItemFactory factory = new DiskFileItemFactory();
 	    ServletFileUpload upload = new ServletFileUpload(factory);
-//		recipe.setUserId((String)session.getAttribute("_userId"));
-	    recipe.setUserId("aaa"); // 사용자 아이디 하드코딩
+		recipe.setUserId((String)session.getAttribute("_userId"));
 	 // 파일 업로드 및 파라미터 처리
 	    try {
 	        List<FileItem> items = upload.parseRequest(request);
@@ -69,30 +69,27 @@ public class RecipeModifyController extends HttpServlet {
 	                // 파일이 아닌 파라미터 처리
 	                String value = item.getString("UTF-8"); // 파라미터 값 가져오기
 	                System.out.println("1 : " +value);
-	                if (fieldName.equals("category")) {
+	                if (fieldName.equals("boardIdx")) {
+	                	recipe.setBoardIdx(Integer.parseInt(value));
+	                } else if (fieldName.equals("category")) {
 	                	recipe.setCategory(value);
 	                } else if (fieldName.equals("title")) {
 	                	recipe.setTitle(value);
+	                	title = value;
 	                } else if (fieldName.equals("content")) {
 	                	recipe.setContent(value);
-	                } else if (fieldName.equals("cookHour")) {
-	                	value = (value == null || value.isEmpty()) ? "0" : value;
-	                	recipe.setCookHour(Integer.parseInt(value));
-	                } else if (fieldName.equals("cookMinute")) {
-	                	value = (value == null || value.isEmpty()) ? "0" : value;
-	                	recipe.setCookMinute(Integer.parseInt(value));
 	                } else if (fieldName.equals("ingredient")) {
 	                	recipe.setIngredient(value);
 	                } else if (fieldName.equals("thumbnail")) {
-	                	thumbnail = value;
+	                	thumbnail = value; //원래 썸네일 파일명
 	                } 
 	            }else {
 	            	if (fieldName.equals("thumbnailModify")) {
 	            		thumbnailItem = item;
 	            	}
 	            }
-	            fileUpload(thumbnail,thumbnailItem);
 	        }
+	        thumbnail = fileUpload(thumbnail, title, thumbnailItem);
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
@@ -100,22 +97,38 @@ public class RecipeModifyController extends HttpServlet {
 	    recipe.setThumbnail(thumbnail);
 	    System.out.println(recipe.toString());
 	    dao.recipeModify(recipe);
-
+	    
+	    System.out.println("modify 보드인덱스" + recipe.getBoardIdx());
+	    response.sendRedirect(request.getContextPath() + "/recipe/detail.do?boardIdx=" + recipe.getBoardIdx());
 	}
 	
-	private void fileUpload(String thumbnail, FileItem thumbnailItem) throws IOException, ServletException {
-
+	private String fileUpload(String thumbnail, String title, FileItem thumbnailItem) throws IOException, ServletException {
+		
+		String fileName = "";
+	    String fileDir = "C:/yum_img/recipe/";
+	    UUID uuid = UUID.randomUUID(); //파일이름 난수발생
 	    // 파일 업로드 및 정보 저장
 	    try {
-	        // "thumbnail" 파일 업로드 처리
-	        if (thumbnailItem != null) {
-	            File uploadFile = new File("C:/yum_img/recipe/" + thumbnail);
+	        //파일 수정 처리
+	        if (thumbnailItem != null && thumbnailItem.getSize() != 0) {
+	        	String exp = FilenameUtils.getExtension(thumbnailItem.getName());
+	            fileName = "recipethumb-" + uuid + "-" + title + "." + exp;
+	            File uploadFile = new File(fileDir + fileName);
 	            thumbnailItem.write(uploadFile);
+	            
+	            File deleteFile = new File(fileDir + thumbnail);
+	            if(deleteFile.delete()) {
+	            	System.out.println("지우는데 성공함");
+	            }
+	        } else {
+	        	fileName = thumbnail;
 	        }
 	    } catch (Exception e) {
 	        System.out.println("FILE UPLOAD FAIL!!!" + e.getMessage());
 	        e.printStackTrace();
 	    }
+	    
+	    return fileName;
 	}
 
 }

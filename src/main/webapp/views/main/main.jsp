@@ -145,7 +145,7 @@ a{
 				              <a href="<c:url value="/recipe/detail.do?boardIdx=${ item.boardIdx }"/>" class="categoryBox">
 				                <img class="categoryImg" src="/upload/recipe/${ item.thumbnail }"/>
 				                <span class="ma-imgTitle">${ item.title }</span>
-				                <span class="ma-imgSub">${item.nickname} /  ${ item.hit }</span>
+				                <span class="ma-imgSub">${item.writer} /  ${ item.hit }</span>
 				              </a>
 				            </div>
 		            	</c:forEach>
@@ -180,7 +180,7 @@ a{
 				              <a href="<c:url value="/recipe/detail.do?boardIdx=${ item.boardIdx }"/>" class="categoryBox">
 				                <img class="categoryImg" src="/upload/recipe/${ item.thumbnail }"/>
 				                <span class="ma-imgTitle">${ item.title }</span>
-				                <span class="ma-imgSub">${item.nickname} /  ${ item.hit }</span>
+				                <span class="ma-imgSub">${item.writer} /  ${ item.hit }</span>
 				              </a>
 				            </div>
 		            	</c:forEach>
@@ -215,7 +215,7 @@ a{
 				              <a href="<c:url value="/recipe/detail.do?boardIdx=${ item.boardIdx }"/>" class="categoryBox">
 				                <img class="categoryImg" src="/upload/recipe/${ item.thumbnail }"/>
 				                <span class="ma-imgTitle">${ item.title }</span>
-				                <span class="ma-imgSub">${item.nickname} /  ${ item.hit }</span>
+				                <span class="ma-imgSub">${item.writer} /  ${ item.hit }</span>
 				              </a>
 				            </div>
 		            	</c:forEach>
@@ -250,7 +250,7 @@ a{
 				              <a href="<c:url value="/recipe/detail.do?boardIdx=${ item.boardIdx }"/>" class="categoryBox">
 				                <img class="categoryImg" src="/upload/recipe/${ item.thumbnail }"/>
 				                <span class="ma-imgTitle">${ item.title }</span>
-				                <span class="ma-imgSub">${item.nickname} /  ${ item.hit }</span>
+				                <span class="ma-imgSub">${item.writer} /  ${ item.hit }</span>
 				              </a>
 				            </div>
 		            	</c:forEach>

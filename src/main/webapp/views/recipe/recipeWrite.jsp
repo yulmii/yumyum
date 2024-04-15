@@ -1,16 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-	<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${ title }</title>
-<link href='<c:url value="/resources/css/style.css" />' rel="stylesheet">
-<script src='<c:url value="/resources/js/common.js" />'></script>
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<%@ include file="/inc/top.jsp"%>
 <style type="text/css">
 .re-container {
 	width: 1150px;
@@ -26,18 +16,24 @@
 	vertical-align: middle;
 }
 </style>
-<script src='<c:url value="/resources/js/summernote-lite.js" />'></script>
-<script src='<c:url value="/resources/js/summernote-ko-KR.js" />'></script>
-
-<link rel="stylesheet" href='<c:url value="/resources/css/summernote-lite.css" />'>
-</head>
-<body>
-<%@ include file="/inc/header.jsp"%>
+<!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+ -->
+<link
+	href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+	rel="stylesheet">
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link
+	href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css"
+	rel="stylesheet">
+<script
+	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 <main>
 	<div class="re-container">
-		<form action='<c:url value="/recipe/write.do" />' method="post"  enctype="multipart/form-data">
-			<h1 class="mt-3">레시피 등록</h1>
-			<table width="1000px" style="margin: 0 auto;">
+		<form action='<c:url value="/recipe/write.do" />' onsubmit="sendForm()" method="post" enctype="multipart/form-data">
+			<h1>레시피 등록</h1>
+			<table style="margin: 0 auto; width:1000px;">
 				<colgroup>
 					<col width="10%" />
 					<col width="40%" />
@@ -45,39 +41,38 @@
 					<col width="40%" />
 				</colgroup>			
 				<tr>
+					<th>음식 이미지</th>
+					<td>
+						<input type="file" id="thumbnail" name="thumbnail" class="re-input">
+					</td>
 					<th>제목</th>
-					<td><input type="text" id="title" name="title"
-						class="re-input"></td>
+					<td><input type="text" id="title" name="title" class="re-input"></td>
+				</tr>
+				<tr>
+					<td colspan="2" rowspan="2" class="re-center" style="height: 200px;" id="preview">
+					</td>
 					<th>카테고리</th>
-					<td><select id="category" name="category">
+					<td>
+						<select id="category" name="category">
 							<option value="한식">한식</option>
 							<option value="중식">중식</option>
 							<option value="일식">일식</option>
 							<option value="양식">양식</option>
-					</select></td>
+						</select>
+					</td>
 				</tr>
 				<tr>
-					<th>조리시간</th>
-					<td><input type="number" min="0" name="cookHour" id="cookHour">&nbsp;
-						시간 &nbsp; <input type="number" min="0" max="60" name="cookMinute"
-						id="cookMinute">&nbsp;분</td>
 					<th>재료</th>
-					<td><input type="text" id="ingredient" name="ingredient"
-						class="re-input"></td>
+					<td><input type="text" id="ingredient" name="ingredient" class="re-input"></td>
 				</tr>
 				<tr>
-					<th>음식 이미지</th>
-					<td colspan="3"><input type="file" id="thumbnail"
-						name="thumbnail" class="re-input"></td>
+					<th colspan="2">내용</th>
 				</tr>
 				<tr>
-					<td colspan="4" class="re-center" style="width: 500px; height: 300px;" id="preview"></td>
-				</tr>
-				<tr>
-					<th colspan="4">내용</th>
-				</tr>
-				<tr>
-					<td colspan="4"><textarea id="summernote" name="content">메렁</textarea></td>
+					<td colspan="4">
+						<textarea id="summernote"></textarea>
+						<input type="hidden" name="content" id="content">
+					</td>
 				</tr>
 				<tr>
 					<td colspan="4" class="re-right"><input type="submit" value="등록하기"></td>
@@ -96,12 +91,16 @@
               maxHeight: null,             // 최대 높이
               focus: false,                  // 에디터 로딩후 포커스를 맞출지 여부
               lang: "ko-KR",					// 한글 설정
-            
         });
     
-      
     });
    
+
+    function sendForm(){
+    	$("#content").val($('#summernote').summernote('code'));
+    }
+    
+    
  // 파일 입력 요소의 변경 이벤트를 처리하는 함수
     function imageChange(event) {
         // 파일 선택 여부 확인
@@ -115,7 +114,7 @@
                 let img = $("<img>");
                 // 미리보기 이미지 설정
                 img.attr("src", event.target.result);
-                img.css({"height": "300px"});
+                img.css({"height": "200px"});
 
                 // 미리보기 영역 초기화
                 let preview = $("#preview");
@@ -131,6 +130,6 @@
 
  // 파일 입력 요소의 변경 이벤트에 대한 리스너 설정
     $('#thumbnail').on('change', imageChange);
-    </script>
+   </script>
 </body>
 </html>

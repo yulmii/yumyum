@@ -11,11 +11,16 @@ public class RecipeDTO {
 	private String updateDate;
 	private int hit;
 	private int like;
-	private String nickname;
-	private int cookHour;
-	private int cookMinute;
+	private String writer;
 	private String ingredient;
 	private String thumbnail;
+	private String searchText;		//검색어
+	private int totalCount;		//게시글 전체 수
+	private int listCount = 15;		//한 페이지당 보여줄 게시글 수	
+	private int startIndex = 1;		//페이지 시작 게시글 번호
+	private int endIndex = 1;		//페이지 종료 게시글 번호
+	private int pagePerBlock = 10;	//하단 페이지 링크 개수
+	private int pageNum = 1;		//현재 페이지 번호
 
 	public RecipeDTO() {
 		// TODO Auto-generated constructor stub
@@ -93,28 +98,12 @@ public class RecipeDTO {
 		this.like = like;
 	}
 
-	public String getNickname() {
-		return nickname;
+	public String getWriter() {
+		return writer;
 	}
 
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
-	}
-
-	public int getCookHour() {
-		return cookHour;
-	}
-
-	public void setCookHour(int cookHour) {
-		this.cookHour = cookHour;
-	}
-
-	public int getCookMinute() {
-		return cookMinute;
-	}
-
-	public void setCookMinute(int cookMinute) {
-		this.cookMinute = cookMinute;
+	public void setWriter(String writer) {
+		this.writer = writer;
 	}
 
 	public String getIngredient() {
@@ -133,13 +122,70 @@ public class RecipeDTO {
 		this.thumbnail = thumbnail;
 	}
 
+	public String getSearchText() {
+		return searchText;
+	}
+
+	public void setSearchText(String searchText) {
+		this.searchText = searchText;
+	}
+
+	public int getTotalCount() {
+		return totalCount;
+	}
+
+	public void setTotalCount(int totalCount) {
+		this.totalCount = totalCount;
+	}
+
+	public int getListCount() {
+		return listCount;
+	}
+
+	public void setListCount(int listCount) {
+		this.listCount = listCount;
+	}
+
+	public int getStartIndex() {
+		return startIndex;
+	}
+
+	public void setStartIndex(int startIndex) {
+		this.startIndex = startIndex;
+	}
+
+	public int getEndIndex() {
+		return endIndex;
+	}
+
+	public void setEndIndex(int endIndex) {
+		this.endIndex = endIndex;
+	}
+
+	public int getPagePerBlock() {
+		return pagePerBlock;
+	}
+
+	public void setPagePerBlock(int pagePerBlock) {
+		this.pagePerBlock = pagePerBlock;
+	}
+
+	public int getPageNum() {
+		return pageNum;
+	}
+
+	public void setPageNum(int pageNum) {
+		this.pageNum = pageNum;
+	}
+
 	@Override
 	public String toString() {
 		return "RecipeDTO [boardIdx=" + boardIdx + ", userId=" + userId + ", category=" + category + ", title=" + title
 				+ ", content=" + content + ", createDate=" + createDate + ", updateDate=" + updateDate + ", hit=" + hit
-				+ ", like=" + like + ", nickname=" + nickname + ", cookHour=" + cookHour + ", cookMinute=" + cookMinute
-				+ ", ingredient=" + ingredient + ", thumbnail=" + thumbnail + "]";
+				+ ", like=" + like + ", writer=" + writer + ", ingredient=" + ingredient + ", thumbnail=" + thumbnail
+				+ ", searchText=" + searchText + ", totalCount=" + totalCount + ", listCount=" + listCount
+				+ ", startIndex=" + startIndex + ", endIndex=" + endIndex + ", pagePerBlock=" + pagePerBlock
+				+ ", pageNum=" + pageNum + "]";
 	}
 
-	
 }
