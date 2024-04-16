@@ -28,7 +28,7 @@
 	}
 </script>
 <main>
-	
+	<%@ include file="/inc/mypage_side_bar.jsp"%>
 	<table align="center" width="750px" summary="나의 보관함 목록">
 		<colgroup>
 			<col width="5%" />

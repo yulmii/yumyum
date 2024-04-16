@@ -7,6 +7,7 @@
 <script type="text/javascript">
 </script>
 <main>
+	<%@ include file="/inc/mypage_side_bar.jsp"%>
 	<p>회원정보 조회</p><br>
 	아이디: <c:out value="${ member.userId }" /><br>
 	비밀번호: <c:out value="${ member.pwd }" /><br>

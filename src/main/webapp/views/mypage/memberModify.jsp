@@ -8,10 +8,11 @@
 
 </script>
 <main>
+	<%@ include file="/inc/mypage_side_bar.jsp"%>
 	<form name="frmModify" method="post" action="<c:url value='/mypage/modify.do' />">
 		아이디: <input type="text" name="user_id" value="<c:out value="${ member.userId }" />" readonly><br>
 		비밀번호: <input type="text" name="pwd" value="<c:out value="${ member.pwd }" />"><br>
-		닉네임: <input type="text" name="nickname" value="<c:out value="${ member.nickname }" />"><br>
+		닉네임: <input type="text" name="nickname" value="<c:out value="${ member.nickname }" />" readonly><br>
 		이름: <input type="text" name="name" value="<c:out value="${ member.userName }" />"><br>
 		이메일: <input type="text" name="email" value="<c:out value="${ member.email }" />"><br>
 		<input type="submit" value="수정">

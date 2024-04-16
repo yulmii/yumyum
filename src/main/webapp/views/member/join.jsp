@@ -159,7 +159,7 @@ body {
 				<table class="ma-jo-table">
 					<tr>
 						<td><input class="ma-jo-date" type="text" placeholder="아이디를 입력해주세요." id="user_id" name="user_id" required>
-						<input type="button" value="ID중복확인" onclick="idCheck()" />
+						<input type="button" value="중복확인" onclick="idCheck()" />
 						<br></td>
 					</tr>
 					<tr>
@@ -172,7 +172,7 @@ body {
 					</tr>
 					<tr>
 						<td><input class="ma-jo-date" type="text" placeholder="별명을 입력해주세요." id="nickname" name="nickname" required>
-						<input type="button" value="닉네임중복확인" onclick="nickCheck()" />
+						<input type="button" value="중복확인" onclick="nickCheck()" />
 						<br></td>
 					</tr>
 					<tr>
