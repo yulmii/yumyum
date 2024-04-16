@@ -11,6 +11,7 @@
 	text-align: center;
 	vertical-align: middle;
 }
+
 .re-right {
 	text-align: right;
 	vertical-align: middle;
@@ -31,42 +32,46 @@
 	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 <main>
 	<div class="re-container">
-		<form action='<c:url value="/recipe/modify.do" />' method="post"  enctype="multipart/form-data">
+		<form action='<c:url value="/recipe/modify.do" />' method="post" onsubmit="sendForm()"
+			enctype="multipart/form-data">
 			<input type="hidden" name="boardIdx" value="${ recipe.boardIdx }">
+			<input type="hidden" name="dummyImg" id="dummyImg" /> <input
+				type="hidden" name="deleteImg" id="deleteImg" />
 			<h1>레시피 수정</h1>
-			<table style="margin: 0 auto; width:1000px;">
+			<table style="margin: 0 auto; width: 1000px;">
 				<colgroup>
 					<col width="10%" />
 					<col width="40%" />
 					<col width="10%" />
 					<col width="40%" />
-				</colgroup>			
+				</colgroup>
 				<tr>
 					<th>음식 이미지</th>
-					<td>
-						<input type="file" id="thumbnailModify" name="thumbnailModify" class="re-input">
-						<input type="hidden" name="thumbnail" value="${ recipe.thumbnail }">
+					<td><input type="file" id="thumbnailModify"
+						name="thumbnailModify" class="re-input"> <input
+						type="hidden" name="thumbnail" value="${ recipe.thumbnail }">
 					</td>
 					<th>제목</th>
-					<td><input type="text" id="title" name="title" class="re-input" value="${ recipe.title }"></td>
+					<td><input type="text" id="title" name="title"
+						class="re-input" value="${ recipe.title }"></td>
 				</tr>
 				<tr>
-					<td colspan="2" rowspan="2" class="re-center" style="height: 200px;" id="preview">
-						<img src="/upload/recipe/${ recipe.thumbnail }" style="height: 200px;">
+					<td colspan="2" rowspan="2" class="re-center"
+						style="height: 200px;" id="preview"><img
+						src="/upload/recipe/${ recipe.thumbnail }" style="height: 200px;">
 					</td>
 					<th>카테고리</th>
-					<td>
-						<select id="category" name="category">
+					<td><select id="category" name="category">
 							<option value="한식" ${recipe.category eq '한식' ? 'selected' : ''}>한식</option>
 							<option value="중식" ${recipe.category eq '중식' ? 'selected' : ''}>중식</option>
 							<option value="일식" ${recipe.category eq '일식' ? 'selected' : ''}>일식</option>
 							<option value="양식" ${recipe.category eq '양식' ? 'selected' : ''}>양식</option>
-						</select>
-					</td>
+					</select></td>
 				</tr>
 				<tr>
 					<th>재료</th>
-					<td><input type="text" id="ingredient" name="ingredient" value="${ recipe.ingredient }" class="re-input"></td>
+					<td><input type="text" id="ingredient" name="ingredient"
+						value="${ recipe.ingredient }" class="re-input"></td>
 				</tr>
 				<tr>
 					<th colspan="2">내용</th>
@@ -75,55 +80,107 @@
 					<td colspan="4"><textarea id="summernote" name="content">${ recipe.content }</textarea></td>
 				</tr>
 				<tr>
-					<td colspan="4" class="re-right"><input type="submit" value="수정하기"></td>
+					<td colspan="4" class="re-right"><input type="submit" value="수정하기"> </td>
 				</tr>
 			</table>
 		</form>
 	</div>
 
 </main>
-<%@ include file="/inc/footer.jsp" %>
+<%@ include file="/inc/footer.jsp"%>
 <script type="text/javascript">
-    $(document).ready(function() {
-        $('#summernote').summernote({
-              height: 300,                 // 에디터 높이
-              minHeight: null,             // 최소 높이
-              maxHeight: null,             // 최대 높이
-              focus: false,                  // 에디터 로딩후 포커스를 맞출지 여부
-              lang: "ko-KR",					// 한글 설정
-        });
-    
-    });
-   
- // 파일 입력 요소의 변경 이벤트를 처리하는 함수
-    function imageChange(event) {
-        // 파일 선택 여부 확인
-        if (event.target.files.length > 0) {
-            // 파일 리더 객체 생성
-            const reader = new FileReader();
+	var imgDatas = [];
+	var delDatas = [];
 
-            // 파일 리더 객체가 로드될 때 실행할 콜백 함수 설정
-            reader.onload = function(event) {
-                // 이미지 태그 생성
-                let img = $("<img>");
-                // 미리보기 이미지 설정
-                img.attr("src", event.target.result);
-                img.css({"height": "200px"});
+	$(document).ready(function() {
+		$('#summernote').summernote({
+			height : 300, // 에디터 높이
+			minHeight : null, // 최소 높이
+			maxHeight : null, // 최대 높이
+			focus : false, // 에디터 로딩후 포커스를 맞출지 여부
+			lang : "ko-KR", // 한글 설정
+			callbacks : {
+				onImageUpload : function(files, editor, welEditable) {
+					// 파일 업로드 (다중 업로드를 위해 반복문 사용)
+					for (var i = files.length - 1; i >= 0; i--) {
+						var fileName = files[i].name
+						// 이미지 alt 속성 삽일을 위한 설정
+						var caption = fileName
 
-                // 미리보기 영역 초기화
-                let preview = $("#preview");
-                preview.empty();
-                // 미리보기 영역에 이미지 추가
-                preview.append(img);
-            };
+						uploadSummernoteImageFile(files[i], this, caption)
+					}
+				},
+				onMediaDelete : function($target, editor, $editable) {
+					var deletedImageUrl = $target.attr('src');
+					filterImg(deletedImageUrl);
+					delDatas.push(deletedImageUrl);
+				},
+			},
+		});
+	});
 
-            // 파일 리더 객체로 선택된 파일 읽기
-            reader.readAsDataURL(event.target.files[0]);
-        }
-    }
+	// 이미지 업로드 함수 ajax 활용
+	function uploadSummernoteImageFile(file, el, caption) {
+		data = new FormData()
+		data.append('file', file)
+		$.ajax({
+			data : data,
+			type : 'POST',
+			url : '<c:url value="/file/tempUpload.do"/>',
+			contentType : false,
+			enctype : 'multipart/form-data',
+			processData : false,
+			success : function(data) {
+				$(el).summernote('editor.insertImage', data, function($image) {
+					$image.attr('alt', caption) // 캡션 정보를 이미지의 alt 속성에 설정
+				})
+				imgDatas.push(data);
+			},
+		})
+	}
 
- // 파일 입력 요소의 변경 이벤트에 대한 리스너 설정
-    $('#thumbnailModify').on('change', imageChange);
-   </script>
+	function filterImg(_img) {
+		imgDatas = imgDatas.filter(function(img, index) {
+			return img != _img;
+		});
+	}
+
+	function sendForm() {
+		$("#dummyImg").val(imgDatas);
+		$("#deleteImg").val(delDatas);
+	}
+
+	// 파일 입력 요소의 변경 이벤트를 처리하는 함수
+	function imageChange(event) {
+		// 파일 선택 여부 확인
+		if (event.target.files.length > 0) {
+			// 파일 리더 객체 생성
+			const reader = new FileReader();
+
+			// 파일 리더 객체가 로드될 때 실행할 콜백 함수 설정
+			reader.onload = function(event) {
+				// 이미지 태그 생성
+				let img = $("<img>");
+				// 미리보기 이미지 설정
+				img.attr("src", event.target.result);
+				img.css({
+					"height" : "200px"
+				});
+
+				// 미리보기 영역 초기화
+				let preview = $("#preview");
+				preview.empty();
+				// 미리보기 영역에 이미지 추가
+				preview.append(img);
+			};
+
+			// 파일 리더 객체로 선택된 파일 읽기
+			reader.readAsDataURL(event.target.files[0]);
+		}
+	}
+
+	// 파일 입력 요소의 변경 이벤트에 대한 리스너 설정
+	$('#thumbnailModify').on('change', imageChange);
+</script>
 </body>
 </html>

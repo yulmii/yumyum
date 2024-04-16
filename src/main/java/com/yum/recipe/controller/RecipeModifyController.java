@@ -20,6 +20,7 @@ import org.apache.commons.io.FilenameUtils;
 
 import com.yum.recipe.dao.RecipeDAO;
 import com.yum.recipe.dto.RecipeDTO;
+import com.yum.util.FileMethod;
 
 @WebServlet("/recipe/modify.do")
 public class RecipeModifyController extends HttpServlet {
@@ -51,9 +52,16 @@ public class RecipeModifyController extends HttpServlet {
 	    // 파일 업로드 처리
 	    
 	    //파일 업로드시 필요한 정보
+	    FileMethod fileMethod = new FileMethod();
+		String realPath = "C://yum_img";
 	    String thumbnail = "";
 	    String title = "";
+	    String dummyImg = "";
+		String deleteImg = "";
+		String path_folder2 = realPath + "/recipe/content";
 	    FileItem thumbnailItem = null;
+	    String content = "";
+	    int boardIdx = 0;
 	    
 	    // RecipeDTO 객체 생성 및 정보 설정
 	    RecipeDTO recipe = new RecipeDTO();
@@ -68,20 +76,23 @@ public class RecipeModifyController extends HttpServlet {
 	            if (item.isFormField()) { // 파일이 아닌 경우
 	                // 파일이 아닌 파라미터 처리
 	                String value = item.getString("UTF-8"); // 파라미터 값 가져오기
-	                System.out.println("1 : " +value);
 	                if (fieldName.equals("boardIdx")) {
-	                	recipe.setBoardIdx(Integer.parseInt(value));
+	                	boardIdx = Integer.parseInt(value);
 	                } else if (fieldName.equals("category")) {
 	                	recipe.setCategory(value);
 	                } else if (fieldName.equals("title")) {
 	                	recipe.setTitle(value);
 	                	title = value;
 	                } else if (fieldName.equals("content")) {
-	                	recipe.setContent(value);
+	                	content = value;
 	                } else if (fieldName.equals("ingredient")) {
 	                	recipe.setIngredient(value);
 	                } else if (fieldName.equals("thumbnail")) {
 	                	thumbnail = value; //원래 썸네일 파일명
+	                } else if (fieldName.equals("dummyImg")) {
+	                	dummyImg = value;
+	                } else if (fieldName.equals("deleteImg")) {
+	                	deleteImg = value;
 	                } 
 	            }else {
 	            	if (fieldName.equals("thumbnailModify")) {
@@ -94,12 +105,38 @@ public class RecipeModifyController extends HttpServlet {
 	        e.printStackTrace();
 	    }
 	    
+	    String name = "recipe";		//공지사항 게시판 약어 - no
+	    
+		if(!dummyImg.equals("")) {
+			content = content.replaceAll("/temp/", "/recipe/content/");
+			String[] imgList = dummyImg.split(",");
+			
+			for(int i=0; i<imgList.length; i++) {;
+			    String path_folder1 = imgList[i].replace("/upload", realPath);
+			    fileMethod.uploadFile(path_folder1, path_folder2, boardIdx, name);
+				fileMethod.deleteFile(imgList[i],realPath, "recipe");
+			}
+		}
+	
+		
+		if(!deleteImg.equals("")) {
+			String[] delList = deleteImg.split(",");
+			
+			for(int i=0; i<delList.length; i++) {
+				fileMethod.deleteFile(delList[i],realPath, "recipe");
+			}
+		}
+	    
+		
 	    recipe.setThumbnail(thumbnail);
+	    recipe.setContent(content);
+	    recipe.setBoardIdx(boardIdx);
+	    
 	    System.out.println(recipe.toString());
 	    dao.recipeModify(recipe);
 	    
-	    System.out.println("modify 보드인덱스" + recipe.getBoardIdx());
-	    response.sendRedirect(request.getContextPath() + "/recipe/detail.do?boardIdx=" + recipe.getBoardIdx());
+	    
+	    response.sendRedirect(request.getContextPath() + "/recipe/detail.do?boardIdx=" + boardIdx);
 	}
 	
 	private String fileUpload(String thumbnail, String title, FileItem thumbnailItem) throws IOException, ServletException {

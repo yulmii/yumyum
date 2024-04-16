@@ -199,6 +199,23 @@
 	padding: 10px 18px 9px;
 }
 
+.re-goDeleteBtn {
+	font-weight: normal;
+	font-size: 13px;
+	line-height: 19px;
+	text-align: center;
+	letter-spacing: -0.7px;
+	
+	color: #2F83F5;
+	
+	background: #FFFFFF;
+	border: 1px solid #2F83F5;
+	box-sizing: border-box;
+	border-radius: 3px;
+	
+	padding: 10px 18px 9px;
+}
+
 .re-addBoxBtn {
 	font-weight: normal;
 	font-size: 13px;
@@ -293,9 +310,8 @@
 				<div class="right__content">
 					<c:choose>
 						<c:when test="${sessionScope._userId == recipe.userId}">
-							<button class="re-goModifyBtn" onclick="location.href='<c:url value="/recipe/modify.do?boardIdx=${ recipe.boardIdx }" />'">
-							 수정
-							</button>
+							<button class="re-goModifyBtn" onclick="location.href='<c:url value="/recipe/modify.do?boardIdx=${ recipe.boardIdx }" />'">수정</button>
+							<button class="re-goDeleteBtn" onclick="fnDelete()">삭제</button>
 						</c:when>
 						<c:otherwise>
 							<button id="recipeFavoriteBtn" class="re-addBoxBtn" onclick="addBox()">
@@ -328,6 +344,8 @@
 <script type="text/javascript">
 
 // 페이지 로드 시 좋아요 상태 확인
+	var previousPageUrl = document.referrer;
+	
 	$(document).ready(function() {
 		initLikeStatus();
 	});
@@ -382,6 +400,20 @@
 				}else{
 					alert("이미 보관된 레시피 입니다.");
 				}
+	        }
+	    });
+	}
+	
+	//삭제 버튼 클릭 시 
+	function fnDelete() {
+	    $.ajax({
+	        url: '<c:url value="/recipe/delete.do" />', // 삭제 처리하는 서버 사이드 코드
+	        type: "POST",
+	        data: { boardIdx : ${ recipe.boardIdx } }, // 상품 ID를 전달
+	        success: function(data) {
+				alert("삭제하였습니다.");
+				console.log(previousPageUrl);
+				window.location.href = previousPageUrl;
 	        }
 	    });
 	}

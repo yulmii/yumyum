@@ -28,7 +28,7 @@ public class RecipeDAO extends MySQLConnector {
 			String query = "SELECT IFNULL(MAX(boardIdx), 0) FROM recipe_board WHERE userId=?";
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, recipe.getUserId());
-			System.out.println("searchWriteBoardIdx :" + pstmt.toString());
+//			System.out.println("searchWriteBoardIdx :" + pstmt.toString());
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				result = rs.getInt(1);
@@ -57,7 +57,7 @@ public class RecipeDAO extends MySQLConnector {
 			String query = "SELECT nickname  FROM member WHERE userId=? ";
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, userId);
-			System.out.println("getNickname :" + pstmt.toString());
+//			System.out.println("getNickname :" + pstmt.toString());
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				writer = rs.getString(1);
@@ -75,9 +75,10 @@ public class RecipeDAO extends MySQLConnector {
 	 * 레시피 등록
 	 * @param RecipeDTO
 	 */
-	public void recipeWrite(RecipeDTO recipe) {
+	public int recipeWrite(RecipeDTO recipe) {
 		conn = null;
 		pstmt = null;
+		rs = null;
 		try {
 			conn = getConnection();
 			String query = "INSERT INTO recipe_board (userId, writer, category, title, content, ingredient, thumbnail) values(?,?,?,?,?,?,?)";
@@ -89,13 +90,24 @@ public class RecipeDAO extends MySQLConnector {
 			pstmt.setString(5, recipe.getContent());
 			pstmt.setString(6, recipe.getIngredient());
 			pstmt.setString(7, recipe.getThumbnail());
-			System.out.println("recipeWrite :" + pstmt.toString());
-			pstmt.executeUpdate();
+//			System.out.println("recipeWrite :" + pstmt.toString());
+			int result = pstmt.executeUpdate();
+			
+			if(result == 1) {
+				query = "SELECT boardIdx FROM recipe_board ORDER BY boardIdx DESC LIMIT 0,1";
+				pstmt = conn.prepareStatement(query);
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()) {
+					return rs.getInt(1);
+				}
+			}
 		} catch (SQLException e) {
 			System.err.println("recipeWrite() ERR : " + e.getMessage());
 		} finally {
 			close(null, pstmt, conn);
 		}
+		return -1;
 	}
 
 	/**
@@ -121,7 +133,7 @@ public class RecipeDAO extends MySQLConnector {
         	pstmt.setString(4, dto.getSearchText());
         	pstmt.setInt(5, dto.getStartIndex());
         	pstmt.setInt(6, dto.getListCount());
-			System.out.println("recipeList :" + pstmt.toString());
+//			System.out.println("recipeList :" + pstmt.toString());
 	        rs = pstmt.executeQuery();
 	        while (rs.next()) {
 	            RecipeDTO recipe = new RecipeDTO();
@@ -170,16 +182,11 @@ public class RecipeDAO extends MySQLConnector {
             pstmt.setString(2, dto.getSearchText());
             pstmt.setString(3, dto.getSearchText());
             pstmt.setString(4, dto.getSearchText());
-			System.out.println("recipeTotalCount :" + pstmt.toString());
+//			System.out.println("recipeTotalCount :" + pstmt.toString());
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				totalCount = rs.getInt(1);
 			}
-			
-//			if(totalCount < 1) {
-//				return 1;
-//			}
-
 		} catch(Exception e) {
 			System.err.println("recipeTotalCount() ERR : " + e.getMessage());
 		} finally {
@@ -204,7 +211,7 @@ public class RecipeDAO extends MySQLConnector {
 			String query = "SELECT boardIdx, userId, writer, category, title, content, createDate, updateDate, hit, `like`, ingredient, thumbnail FROM recipe_board WHERE boardIdx=? ";
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, dto.getBoardIdx());
-			System.out.println("recipeDetail :" + pstmt.toString());
+//			System.out.println("recipeDetail :" + pstmt.toString());
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				recipe = new RecipeDTO();
@@ -248,7 +255,7 @@ public class RecipeDAO extends MySQLConnector {
 			pstmt.setString(4, recipe.getIngredient());
 			pstmt.setString(5, recipe.getThumbnail());
 			pstmt.setInt(6, recipe.getBoardIdx());
-			System.out.println("recipeModify :" + pstmt.toString());
+//			System.out.println("recipeModify :" + pstmt.toString());
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			System.err.println("recipeModify() ERR : " + e.getMessage());
@@ -269,7 +276,7 @@ public class RecipeDAO extends MySQLConnector {
 			String query="UPDATE recipe_board SET hit=hit+1 WHERE boardIdx=?";
 			this.pstmt = this.conn.prepareStatement(query);
 			this.pstmt.setInt(1, recipe.getBoardIdx());
-			System.out.println("updateHit :" + pstmt.toString());
+//			System.out.println("updateHit :" + pstmt.toString());
 			this.pstmt.executeUpdate();
 		} catch (SQLException e) {
 			System.err.println("updateHit() ERR : " + e.getMessage());
@@ -295,7 +302,7 @@ public class RecipeDAO extends MySQLConnector {
 			}
 			this.pstmt = this.conn.prepareStatement(query);
 			this.pstmt.setInt(1, recipe.getBoardIdx());
-			System.out.println("updateLike :" + pstmt.toString());
+//			System.out.println("updateLike :" + pstmt.toString());
 			this.pstmt.executeUpdate();
 		} catch (SQLException e) {
 			System.err.println("updateLike() ERR : " + e.getMessage());
@@ -320,8 +327,7 @@ public class RecipeDAO extends MySQLConnector {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, likeDto.getBoardIdx());
 			pstmt.setString(2, likeDto.getUserId());
-			System.out.println("isLiked :" + pstmt.toString());
-			System.out.println("isLiked :" + pstmt.toString());
+//			System.out.println("isLiked :" + pstmt.toString());
 			rs = pstmt.executeQuery();
 			result = rs.next();
 		} catch (SQLException e) {
@@ -350,7 +356,7 @@ public class RecipeDAO extends MySQLConnector {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, likeDto.getBoardIdx());
 			pstmt.setString(2, likeDto.getUserId());
-			System.out.println("updateLike :" + pstmt.toString());
+//			System.out.println("updateLike :" + pstmt.toString());
 			pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
@@ -375,7 +381,7 @@ public class RecipeDAO extends MySQLConnector {
 			String query = "SELECT `like` FROM recipe_board WHERE boardIdx=?";
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, recipe.getBoardIdx());
-			System.out.println("selectLike :" + pstmt.toString());
+//			System.out.println("selectLike :" + pstmt.toString());
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				result = rs.getInt(1);
@@ -427,7 +433,7 @@ public class RecipeDAO extends MySQLConnector {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, box.getBoardIdx());
 			pstmt.setString(2, box.getUserId());
-			System.out.println("isStored :" + pstmt.toString());
+//			System.out.println("isStored :" + pstmt.toString());
 			rs = pstmt.executeQuery();
 			result = rs.next();
 		} catch (SQLException e) {
@@ -451,7 +457,7 @@ public class RecipeDAO extends MySQLConnector {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, box.getBoardIdx());
 			pstmt.setString(2, box.getUserId());
-			System.out.println("addStorageBox :" + pstmt.toString());
+//			System.out.println("addStorageBox :" + pstmt.toString());
 			
 			pstmt.executeUpdate();
 			
@@ -461,36 +467,4 @@ public class RecipeDAO extends MySQLConnector {
 			close(null, pstmt, conn);
 		}
 	}
-
-	
-	
-
-	
-	
-//   예시
-//   /**
-//    * 아이디 중복 조회
-//    * @param String
-//    * @return
-//    */
-//   public boolean checkId(String id) {
-//      try {
-//         String query = "SELECT id FROM tblmember WHERE id = ?";
-//         pstmt = conn.prepareStatement(query);
-//         pstmt.setString(1, id);
-//         
-//         rs = pstmt.executeQuery();
-//         
-//         if(rs.next()) {
-//            return true;
-//         }
-//      } catch (SQLException e) {
-//         System.err.println("checkId() ERR : " + e.getMessage());
-//      } finally {
-//         close(rs, pstmt, conn);
-//      }
-//      
-//      return false;
-//   }
-
 }

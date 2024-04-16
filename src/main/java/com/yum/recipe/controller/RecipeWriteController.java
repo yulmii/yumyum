@@ -20,6 +20,7 @@ import org.apache.commons.io.FilenameUtils;
 
 import com.yum.recipe.dao.RecipeDAO;
 import com.yum.recipe.dto.RecipeDTO;
+import com.yum.util.FileMethod;
 
 @WebServlet("/recipe/write.do")
 public class RecipeWriteController extends HttpServlet {
@@ -37,11 +38,16 @@ public class RecipeWriteController extends HttpServlet {
 		// DAO 객체 생성
 	    RecipeDAO dao = new RecipeDAO();
 	    // 파일 업로드 처리
-	    
 	    //파라미터
+	    FileMethod fileMethod = new FileMethod();
+		String realPath = "C://yum_img";
 	    String thumbnail = "";
 	    String title = "";
+	    String dummyImg = "";
+		String deleteImg = "";
+		String path_folder2 = realPath + "/recipe/content";
 	    FileItem thumbnailItem = null;
+	    String content = "";
 	    
 	    // RecipeDTO 객체 생성 및 정보 설정
 	    RecipeDTO recipe = new RecipeDTO();
@@ -66,9 +72,13 @@ public class RecipeWriteController extends HttpServlet {
 	                	recipe.setTitle(value);
 	                	title = value;
 	                } else if (fieldName.equals("content")) {
-	                	recipe.setContent(value);
+	                	content = value;
 	                } else if (fieldName.equals("ingredient")) {
 	                	recipe.setIngredient(value);
+	                } else if (fieldName.equals("dummyImg")) {
+	                	dummyImg = value;
+	                } else if (fieldName.equals("deleteImg")) {
+	                	deleteImg = value;
 	                } 
 	            }else {
 	            	if (fieldName.equals("thumbnail")) {
@@ -82,12 +92,33 @@ public class RecipeWriteController extends HttpServlet {
 	    }
 	    
 	    
-	    recipe.setThumbnail(thumbnail);
 	    System.out.println(recipe.toString());
-	    dao.recipeWrite(recipe);
+	    if(!dummyImg.equals("")){
+	    	content = content.replaceAll("/temp/", "/recipe/content/");
+	    }
+	    recipe.setThumbnail(thumbnail);
+	    recipe.setContent(content);
 	    
-	    //자신이 쓴 레시피 인덱스 검색
-	    int boardIdx = dao.searchWriteBoardIdx(recipe);
+	    int boardIdx = dao.recipeWrite(recipe);
+	    String name = "recipe";
+	    
+	    if(!dummyImg.equals("")) {
+	    	String[] imgList = dummyImg.split(",");
+	    	for(int i=0; i<imgList.length; i++) {;
+	    	String path_folder1 = imgList[i].replace("/upload", realPath);
+	    	fileMethod.uploadFile(path_folder1, path_folder2, boardIdx, name);
+	    	fileMethod.deleteFile(imgList[i],realPath, "recipe");
+	    	}
+	    }
+	    
+	    if(!deleteImg.equals("")) {
+	    	String[] delList = deleteImg.split(",");
+	    	
+	    	for(int i=0; i<delList.length; i++) {
+	    		fileMethod.deleteFile(delList[i],realPath, "recipe");
+	    	}
+	    }
+	    
 	    
 	    response.sendRedirect(request.getContextPath() + "/recipe/detail.do?boardIdx=" + boardIdx);
 
