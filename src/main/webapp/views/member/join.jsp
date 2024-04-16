@@ -72,7 +72,80 @@ body {
 }
 </style>
 <script type="text/javascript">
-
+	$(document).ready(function(){
+		$("#pwd_confirm").keyup(function(){
+			if ($('#pwd').val() != $('#pwd_confirm').val()) {
+	            $('#pwd_message').text(''); // 클리어
+	            $('#pwd_message').html("<b style='color:red;'>비밀번호가 틀립니다.</b>");
+	        } else {
+	            $('#pwd_message').text(''); // 클리어
+	            $('#pwd_message').html("<b>비밀번호가 일치합니다.</b>");
+	        }
+		})
+	});
+	
+	function idCheck(){
+		var _id = $("#user_id").val();
+		
+		if(_id.trim().length != 0){
+			$.ajax({
+				type: "post",
+				async: false,
+				url: "<c:url value='/idcheck.do'/>",
+				data:{
+					id: _id
+				},
+				
+				success:function(data, status){
+					console.log(data);
+					if(data == "false"){
+						alert("사용 가능한 아이디입니다.");
+					} else {
+						alert("중복된 아이디입니다.");
+					}
+				},
+				error:function(data, status){
+					alert("아이디 중복 검사 오류입니다. 다시 시도해주세요.")
+				},
+				complete:function(data, status){
+					
+				}
+			});
+		} else {
+			alert("아이디를 입력해주세요!");
+		}
+	}
+	function nickCheck(){
+		var _nick = $("#nickname").val();
+		
+		if(_nick.trim().length != 0){
+			$.ajax({
+				type: "post",
+				async: false,
+				url: "<c:url value='/nickcheck.do'/>",
+				data:{
+					nick: _nick
+				},
+				
+				success:function(data, status){
+					console.log(data);
+					if(data == "false"){
+						alert("사용 가능한 닉네임입니다.");
+					} else {
+						alert("중복된 닉네임입니다.");
+					}
+				},
+				error:function(data, status){
+					alert("닉네임 중복 검사 오류입니다. 다시 시도해주세요.")
+				},
+				complete:function(data, status){
+					
+				}
+			});
+		} else {
+			alert("닉네임을 입력해주세요!");
+		}
+	}
 </script>
 </head>
 <body>
@@ -85,13 +158,22 @@ body {
 				</div>
 				<table class="ma-jo-table">
 					<tr>
-						<td><input class="ma-jo-date" type="text" placeholder="아이디를 입력해주세요." name="user_id" required><br></td>
+						<td><input class="ma-jo-date" type="text" placeholder="아이디를 입력해주세요." id="user_id" name="user_id" required>
+						<input type="button" value="ID중복확인" onclick="idCheck()" />
+						<br></td>
 					</tr>
 					<tr>
-						<td><input class="ma-jo-date" type="password" placeholder="비밀번호를 입력해주세요." name="pwd" required><br></td>
+						<td><input class="ma-jo-date" type="password" placeholder="비밀번호를 입력해주세요." id="pwd" name="pwd" required><br></td>
 					</tr>
 					<tr>
-						<td><input class="ma-jo-date" type="text" placeholder="별명을 입력해주세요." name="nickname" required><br></td>
+						<td><input class="ma-jo-date" type="password" placeholder="비밀번호를 다시 입력해주세요." id="pwd_confirm" name="pwd_confirm" required>
+						<span id="pwd_message"></span>
+						<br></td>
+					</tr>
+					<tr>
+						<td><input class="ma-jo-date" type="text" placeholder="별명을 입력해주세요." id="nickname" name="nickname" required>
+						<input type="button" value="닉네임중복확인" onclick="nickCheck()" />
+						<br></td>
 					</tr>
 					<tr>
 						<td><input class="ma-jo-date" type="text" placeholder="이름을 입력해주세요." name="name" required><br></td>

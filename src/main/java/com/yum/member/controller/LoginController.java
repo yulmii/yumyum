@@ -28,9 +28,7 @@ public class LoginController extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
 		
-        
 		MemberDTO member = new MemberDTO();
 		MemberDTO adminMember = new MemberDTO();
 		AdminDAO adminDAO = new AdminDAO();
@@ -42,6 +40,7 @@ public class LoginController extends HttpServlet {
 		adminMember = adminDAO.memberInfo(member.getUserId());
 		
 		PrintWriter out = response.getWriter();
+		
 		if (result) { // 아이디 비밀번호 일치
 			//세션에 아이디 정보 넣기
 		    // 세션 생성
@@ -55,6 +54,7 @@ public class LoginController extends HttpServlet {
 		    
 		}
 		out.close();
+		
 		
 		// response.sendRedirect(nextPage);
 	    // requestDispatcher.forward(request, response); // 내글리스트로

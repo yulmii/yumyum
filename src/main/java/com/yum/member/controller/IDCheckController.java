@@ -1,7 +1,7 @@
 package com.yum.member.controller;
 
 import java.io.IOException;
-import java.util.List;
+import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,15 +16,15 @@ import com.yum.member.dto.MemberDTO;
 /**
  * Servlet implementation class MemberInsertController
  */
-@WebServlet("/join.do")
-public class MemberJoinController extends HttpServlet {
+@WebServlet("/idcheck.do")
+public class IDCheckController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	private MemberDAO memberDAO = new MemberDAO();
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MemberJoinController() {
+    public IDCheckController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -44,25 +44,13 @@ public class MemberJoinController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		MemberDTO member = new MemberDTO();
-        
-        // 아이디/닉네임 중복을 확인하는 쿼리 실행 (결과값을 boolean으로 반환 받음)
-        member.setUserId(request.getParameter("user_id"));
-        member.setNickname(request.getParameter("nickname"));
-        member.setEmail(request.getParameter("email"));
-        member.setPwd(request.getParameter("pwd"));
-        member.setUserName(request.getParameter("name"));
-        // if 중복검사 fail then 돌아가기?
-        this.memberDAO.joinUser(member);
-        request.setAttribute("member", member);
-        
-        // View 보내기
-        response.sendRedirect("login.do");
-        
-//        RequestDispatcher requestDispatcher =
-//           request.getRequestDispatcher("/login.do");
-//        requestDispatcher.forward(request, response);
+		
+		String id = request.getParameter("id");
+		
+		boolean result = memberDAO.checkId(id);
+
+		PrintWriter out = response.getWriter();
+		out.print(result);
 	}
 
 }

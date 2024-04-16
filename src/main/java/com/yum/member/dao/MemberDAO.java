@@ -64,7 +64,7 @@ public class MemberDAO extends MySQLConnector {
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
-				return true; // 중복 아이디 존재
+				return true; // 중복 닉네임 존재
 			}
 		} catch (SQLException e) {
 			System.err.println("checkNick() ERR : " + e.getMessage());
@@ -72,7 +72,7 @@ public class MemberDAO extends MySQLConnector {
 			close(rs, pstmt, conn);
 		}
 		
-		return false; // 중복 아이디 없음
+		return false; // 중복 닉네임 없음
 	}
 	
 	/**
