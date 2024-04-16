@@ -51,7 +51,6 @@ public class LoginFilter implements Filter {
 		if (!path.contains("join") && !path.contains("login") && !path.contains("/ajax/")) {
 			System.out.println(path);
 			HttpSession session = req.getSession(false);
-			System.out.println(session.getAttribute("_userId"));
 			if (session == null || session.getAttribute("_userId") == null) {
 				resp.sendRedirect(contextPath + "/login.do");
 				System.out.println("필터");

@@ -110,6 +110,7 @@ p {
 	text-align: right;
 }
 
+
 .no-pagingBox{
 	margin-top: 20px;
 	margin-bottom: 50px;
@@ -170,7 +171,7 @@ p {
 								</div>
 								<h5 class="notranslate">${ recipe.title }</h5>
 								<p class="notranslate">${ recipe.writer }</p>
-								<input type="button" value="삭제" onclick="deleteBox();" >
+								<div class="re-btnRight"><input class="del-btn" type="button" value="삭제" onclick="deleteBox();" ></div>
 							</div>
 						</c:forEach>
 					</div>
