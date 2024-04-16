@@ -87,27 +87,29 @@
 		<%@ include file="/inc/adpage_side_bar.jsp"%>
 		
 		<div class="ad-main-content">
-			<h1 class="ad-board-title">공지사항 등록</h1>
-			<form action='<c:url value="/admin/note/write.do" />' method="post"  enctype="multipart/form-data" onsubmit="submitData();">
-				<input type="hidden" name="dummyImg" id="dummyImg"/>
-				<input type="hidden" name="deleteImg" id="deleteImg"/>
-				<div class="no-mainTitleBox">
-		    		<p class="ad-mainTitle">제목</p>
-		    		<p class="ad-mainDesc"><input type="text" name="title" required/></p>
-		    	</div>
-		    	<div class="no-mainTitleBox">
-		    		<p class="ad-mainTitle">작성자</p>
-		    		<p class="ad-mainDesc"><input type="text" name="writer" value="관리자" required/></p>
-		    	</div>
-		    	<div class="ad-mainContentBox">
-		    		<p class="ad-mainContent">내용</p>
-					<textarea id="summernote" name="content"></textarea>
-				</div>
-				<div class="ad-note-btnBox">
-					<input type="submit" class="ad-note-btn" value="등록">
-					<input type="button" class="ad-note-btn"  style="margin-left: 10px;" onclick="cancelBoard();" value="취소">
-				</div>
-			</form>
+			<div style="background-color: rgba(237,242,255,0.7); padding: 15px 30px 25px 30px;">
+				<h1 class="ad-board-title" >공지사항 등록</h1>	
+				<form action='<c:url value="/admin/note/write.do" />' method="post"  enctype="multipart/form-data" onsubmit="submitData();">
+					<input type="hidden" name="dummyImg" id="dummyImg"/>
+					<input type="hidden" name="deleteImg" id="deleteImg"/>
+					<div class="no-mainTitleBox">
+			    		<p class="ad-mainTitle">제목</p>
+			    		<p class="ad-mainDesc"><input type="text" name="title" required/></p>
+			    	</div>
+			    	<div class="no-mainTitleBox">
+			    		<p class="ad-mainTitle">작성자</p>
+			    		<p class="ad-mainDesc"><input type="text" name="writer" value="관리자" required/></p>
+			    	</div>
+			    	<div class="ad-mainContentBox">
+			    		<p class="ad-mainContent">내용</p>
+						<textarea id="summernote" name="content"></textarea>
+					</div>
+					<div class="ad-note-btnBox">
+						<input type="submit" class="ad-note-btn" value="등록">
+						<input type="button" class="ad-note-btn"  style="margin-left: 10px;" onclick="cancelBoard();" value="취소">
+					</div>
+				</form>
+			</div>
 		</div>     
 	</div>
 </main>
@@ -130,7 +132,7 @@
                         // 이미지 alt 속성 삽일을 위한 설정
                         var caption = fileName
 
-                        uploadSummernoteImageFile(files[i], this, caption)
+                        uploadSummernoteImageFile(files[i], this, caption);
                     }
                 },
                 onMediaDelete: function ($target, editor, $editable) {
@@ -141,7 +143,6 @@
             },
 	    });
 	});
-
 	
 	// 이미지 업로드 함수 ajax 활용
     function uploadSummernoteImageFile(file, el, caption) {
