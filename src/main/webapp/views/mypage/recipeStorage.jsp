@@ -144,6 +144,55 @@ p {
 .pageActive{
 	border: 2px solid #222;
 }
+.my-side-menu {
+	position: fixed; /* 측면 메뉴를 고정합니다 */
+	top: 0; /* 페이지 상단에 정렬합니다 */
+	left: 0; /* 페이지 왼쪽에 정렬합니다 */
+	bottom: 0; /* 페이지 하단까지 확장합니다 */
+	width: 300px;
+	/*   background: #0a0a0a; */
+	overflow: auto; /* 내용이 높이를 초과할 경우 스크롤을 활성화합니다 */
+}
+.my-menu-h2 {
+	color: #f9f9f9;
+	padding: 10px;
+	margin: 10px;
+}
+
+.my-side-menu-bar {
+	list-style-type: none;
+	padding: 0px;
+	margin: 0px;
+	width: 300px;
+	background: #0a0a0a;
+	height: 100%;
+	overflow: auto;
+	position: fixed;
+}
+
+.my-side-menu-bar li a {
+	text-decoration: none;
+	padding: 30px;
+	display: block;
+	color: #fff;
+	font-weight: bold;
+}
+.my-home-menu {
+	text-decoration: none;
+	padding: 5px;
+	display: block;
+	color: #fff;
+	font-weight: bold;
+}
+.my-side-menu-bar li a:hover {
+	background: #333;
+	color: #fff;
+}
+
+.my-side-menu-bar li a.home {
+	background: #333;
+	color: #fff;
+}
 </style>
 
 <main>

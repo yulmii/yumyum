@@ -2,6 +2,7 @@ package com.yum.member.controller;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,13 +22,16 @@ public class MyBoxDeleteController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
 		String id = (String) session.getAttribute("_userId");
-		int no = Integer.parseInt(request.getParameter("no").trim());
+		int no = Integer.parseInt(request.getParameter("boardIdx"));
 		
 		BoxDTO box = new BoxDTO();
 		box.setUserId(id);
 		box.setBoardIdx(no);
 		
 		this.memberDAO.deleteBox(box);
+		
+		RequestDispatcher rd = request.getRequestDispatcher("/mypage/mybox/list.do");
+		rd.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
