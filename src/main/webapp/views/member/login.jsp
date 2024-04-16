@@ -106,7 +106,6 @@ function login(){
 		data : {id : _id, pwd : _pwd},
 		dataType : "text",
 		success: function(data, textStatus){
-			console.log(data + "가 들어옴");
 			 if(data){
 				alert("로그인 되었습니다.");
 				location.href='<c:url value="/main.do"/>'

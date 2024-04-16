@@ -29,6 +29,7 @@ body {
     height: 92vh; /* 화면 전체 높이에 맞게 조정 */
     width: 1000px;
 }
+
 .ma-jo-date{
 	width: 100%; height: 40px;
 }
@@ -39,6 +40,22 @@ body {
 		line-height: 19px;
 		text-align: center;
 		letter-spacing: -0.7px;
+		
+		color: #2F83F5;
+		
+		background: #FFFFFF;
+		border: 1px solid #2F83F5;
+		box-sizing: border-box;
+		border-radius: 3px;
+		
+		padding: 10px 18px 9px;
+	}
+	.ma-jo-date-id-idnick-btn{
+		height: 40px;
+		font-weight: normal;
+		font-size: 10px;
+		line-height: 19px;
+		text-align: center;
 		
 		color: #2F83F5;
 		
@@ -68,7 +85,15 @@ body {
     }
 .ma-jo-table{
 	margin: 0 auto;
-	width: 300px;
+	width: 500px;
+}
+.ma-jo-date-id{
+	width: 81%;
+	height: 40px;
+}
+.ma-jo-date-idnick{
+	width: 77%;
+	height: 40px;
 }
 </style>
 <script type="text/javascript">
@@ -91,7 +116,7 @@ body {
 			$.ajax({
 				type: "post",
 				async: false,
-				url: "<c:url value='/idcheck.do'/>",
+				url: "<c:url value='/ajax/idcheck.do'/>",
 				data:{
 					id: _id
 				},
@@ -122,7 +147,7 @@ body {
 			$.ajax({
 				type: "post",
 				async: false,
-				url: "<c:url value='/nickcheck.do'/>",
+				url: "<c:url value='/ajax/nickcheck.do'/>",
 				data:{
 					nick: _nick
 				},
@@ -158,8 +183,8 @@ body {
 				</div>
 				<table class="ma-jo-table">
 					<tr>
-						<td><input class="ma-jo-date" type="text" placeholder="아이디를 입력해주세요." id="user_id" name="user_id" required>
-						<input type="button" value="중복확인" onclick="idCheck()" />
+						<td><input class="ma-jo-date-id" type="text" placeholder="아이디를 입력해주세요." id="user_id" name="user_id" required>
+						<input class="ma-jo-date-id-idnick-btn" type="button" value="ID중복확인" onclick="idCheck()" />
 						<br></td>
 					</tr>
 					<tr>
@@ -171,8 +196,8 @@ body {
 						<br></td>
 					</tr>
 					<tr>
-						<td><input class="ma-jo-date" type="text" placeholder="별명을 입력해주세요." id="nickname" name="nickname" required>
-						<input type="button" value="중복확인" onclick="nickCheck()" />
+						<td><input class="ma-jo-date-idnick" type="text" placeholder="별명을 입력해주세요." id="nickname" name="nickname" required>
+						<input class="ma-jo-date-id-idnick-btn" type="button" value="닉네임중복확인" onclick="nickCheck()" />
 						<br></td>
 					</tr>
 					<tr>

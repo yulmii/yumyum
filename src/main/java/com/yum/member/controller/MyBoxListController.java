@@ -13,7 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.yum.member.dao.MemberDAO;
+import com.yum.member.dto.MemberDTO;
+import com.yum.recipe.dao.RecipeDAO;
 import com.yum.recipe.dto.RecipeDTO;
+import com.yum.util.PageNation;
 
 @WebServlet("/mypage/mybox/list.do")
 public class MyBoxListController extends HttpServlet {
@@ -25,11 +28,31 @@ public class MyBoxListController extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		String id = (String) session.getAttribute("_userId");
 //		7. 마이페이지 - 내 보관함 확인 (레시피테이블 select id=특정값)
-		List<RecipeDTO> recipeList = new ArrayList<RecipeDTO>();
 		
-		recipeList = this.memberDAO.myBoxSearch(id);
+		// pagination 관련
+		RecipeDAO dao = new RecipeDAO();
+		PageNation paging = new PageNation();
+		RecipeDTO dto = new RecipeDTO();
+		if(request.getParameter("pageNum") != null) {
+			dto.setPageNum(Integer.parseInt(request.getParameter("pageNum")));
+		}
+		dto.setStartIndex(dto.getPageNum()*dto.getListCount() - dto.getListCount());
+		dto.setEndIndex(dto.getStartIndex());
+		
+		List<RecipeDTO> recipeList = new ArrayList<RecipeDTO>();
+		MemberDTO member = new MemberDTO();
+		member.setUserId(id);
+		
+		recipeList = this.memberDAO.myBoxSearch(id, dto);
+		member = this.memberDAO.viewUser(member);
+		
+		int totalCount = recipeList.size();
+		String pagination = paging.getPageNavigator(totalCount, dto.getListCount(), dto.getPagePerBlock(), dto.getPageNum());
+		
+		request.setAttribute("totalCount",totalCount);
+		request.setAttribute("pagination", pagination);
         request.setAttribute("recipeList", recipeList);
-        
+        request.setAttribute("member", member);
         // View 보내기
         RequestDispatcher requestDispatcher =
            request.getRequestDispatcher("/views/mypage/recipeStorage.jsp");

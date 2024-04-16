@@ -121,7 +121,7 @@
 									<td>${recipe.boardIdx}</td>
 									<td>${recipe.userId}</td>
 									<td>${recipe.category}</td>
-									<td>${recipe.title}</td>
+									<td >${recipe.title}</td>
 									<td>${recipe.hit}</td>
 									<td>${recipe.like}</td>
 									<td><a href='<c:url value="/admin/recipe/delete.do?boardIdx=${recipe.boardIdx}" /> ' onclick="return confirm('정말로 삭제하시겠습니까?');">삭제</a></td>

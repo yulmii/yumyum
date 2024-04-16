@@ -32,7 +32,7 @@ public class LoginController extends HttpServlet {
 		MemberDTO member = new MemberDTO();
 		MemberDTO adminMember = new MemberDTO();
 		AdminDAO adminDAO = new AdminDAO();
-		
+		System.out.println("로그인서블릿도달");
 		member.setUserId(request.getParameter("id"));
 		member.setPwd(request.getParameter("pwd"));
 		

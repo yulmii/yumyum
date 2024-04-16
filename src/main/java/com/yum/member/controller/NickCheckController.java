@@ -16,7 +16,7 @@ import com.yum.member.dto.MemberDTO;
 /**
  * Servlet implementation class MemberInsertController
  */
-@WebServlet("/nickcheck.do")
+@WebServlet("/ajax/nickcheck.do")
 public class NickCheckController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
