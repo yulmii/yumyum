@@ -240,7 +240,7 @@ public class MemberDAO extends MySQLConnector {
 	}
 	
 //	7. 마이페이지 - 내 글 확인 (레시피테이블 select id=특정값)
-	public List<RecipeDTO> recipeSearch(String id) {
+	public List<RecipeDTO> recipeSearch(String id, RecipeDTO dto) {
 		conn = null;
 		pstmt = null;
 		rs = null;
@@ -248,9 +248,12 @@ public class MemberDAO extends MySQLConnector {
 		RecipeDTO recipe = new RecipeDTO();
 		try {
 			conn = getConnection();
-			String query = "select boardIdx, title, hit, `like`, createDate from recipe_board where userId=? order by boardIdx desc";
-			pstmt = conn.prepareStatement(query);
+			String query = "select boardIdx, title, hit, thumbnail from recipe_board where userId=?";
+			String end = "ORDER BY boardIdx DESC LIMIT ?,?";
+			pstmt = conn.prepareStatement(query + end);
 			pstmt.setString(1, id);
+			pstmt.setInt(2, dto.getStartIndex());
+        	pstmt.setInt(3, dto.getListCount());
 			// 조회 실행
 			rs = pstmt.executeQuery();
 			
@@ -262,8 +265,7 @@ public class MemberDAO extends MySQLConnector {
 				recipe.setBoardIdx(rs.getInt("boardIdx"));
 				recipe.setTitle(rs.getString("title"));
 				recipe.setHit(rs.getInt("hit"));
-				recipe.setLike(rs.getInt("like"));
-				recipe.setCreateDate(rs.getString("createDate"));
+				recipe.setThumbnail(rs.getString("thumbnail"));
 				recipeList.add(recipe);	// ArrayList에 추가
 			}	// while() END
 		} catch (Exception e) {		// SQLException
@@ -276,7 +278,7 @@ public class MemberDAO extends MySQLConnector {
 	}
 	
 //	8. 마이페이지 - 보관함 확인 (보관함테이블 select)
-	public List<RecipeDTO> myBoxSearch(String id) {
+	public List<RecipeDTO> myBoxSearch(String id, RecipeDTO dto) {
 		conn = null;
 		pstmt = null;
 		rs = null;
@@ -287,9 +289,12 @@ public class MemberDAO extends MySQLConnector {
 			conn = getConnection();
 			// 쿼리: storage_box 중 userId가 id 인 데이터의 boardIdx를 조회.
 			// 이 때, recipe_board 에서 일치하는 boardIdx를 찾는다.
-			String query = "SELECT r.* from recipe_board r, storage_box s where r.boardIdx=s.boardIdx and s.userId=? order by s.boxIdx desc";
-			pstmt = conn.prepareStatement(query);
+			String query = "SELECT r.* from recipe_board r, storage_box s where r.boardIdx=s.boardIdx and s.userId=?";
+			String end = "ORDER BY s.boxIdx DESC LIMIT ?,?";
+			pstmt = conn.prepareStatement(query + end);
 			pstmt.setString(1, id);
+			pstmt.setInt(2, dto.getStartIndex());
+        	pstmt.setInt(3, dto.getListCount());
 			// 조회 실행
 			rs = pstmt.executeQuery();
 			
@@ -301,9 +306,7 @@ public class MemberDAO extends MySQLConnector {
 				recipe.setBoardIdx(rs.getInt("r.boardIdx"));
 				recipe.setWriter(rs.getString("r.writer"));
 				recipe.setTitle(rs.getString("r.title"));
-				recipe.setHit(rs.getInt("r.hit"));
-				recipe.setLike(rs.getInt("r.like"));
-				recipe.setCreateDate(rs.getString("r.createDate"));
+				recipe.setThumbnail(rs.getString("r.thumbnail"));
 				recipeList.add(recipe);	// ArrayList에 추가
 			}	// while() END
 		} catch (Exception e) {		// SQLException

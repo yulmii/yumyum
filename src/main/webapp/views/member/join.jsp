@@ -116,7 +116,7 @@ body {
 			$.ajax({
 				type: "post",
 				async: false,
-				url: "<c:url value='/idcheck.do'/>",
+				url: "<c:url value='/ajax/idcheck.do'/>",
 				data:{
 					id: _id
 				},
@@ -147,7 +147,7 @@ body {
 			$.ajax({
 				type: "post",
 				async: false,
-				url: "<c:url value='/nickcheck.do'/>",
+				url: "<c:url value='/ajax/nickcheck.do'/>",
 				data:{
 					nick: _nick
 				},
