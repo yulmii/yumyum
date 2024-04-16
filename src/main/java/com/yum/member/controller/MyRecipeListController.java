@@ -31,7 +31,6 @@ public class MyRecipeListController extends HttpServlet {
 //		7. 마이페이지 - 내 글 확인 (레시피테이블 select id=특정값)
 		
 		// pagination 관련
-		RecipeDAO dao = new RecipeDAO();
 		PageNation paging = new PageNation();
 		RecipeDTO dto = new RecipeDTO();
 		if(request.getParameter("pageNum") != null) {
