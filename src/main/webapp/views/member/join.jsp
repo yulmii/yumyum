@@ -29,6 +29,7 @@ body {
     height: 92vh; /* 화면 전체 높이에 맞게 조정 */
     width: 1000px;
 }
+
 .ma-jo-date{
 	width: 100%; height: 40px;
 }
@@ -39,6 +40,22 @@ body {
 		line-height: 19px;
 		text-align: center;
 		letter-spacing: -0.7px;
+		
+		color: #2F83F5;
+		
+		background: #FFFFFF;
+		border: 1px solid #2F83F5;
+		box-sizing: border-box;
+		border-radius: 3px;
+		
+		padding: 10px 18px 9px;
+	}
+	.ma-jo-date-id-idnick-btn{
+		height: 40px;
+		font-weight: normal;
+		font-size: 10px;
+		line-height: 19px;
+		text-align: center;
 		
 		color: #2F83F5;
 		
@@ -68,7 +85,15 @@ body {
     }
 .ma-jo-table{
 	margin: 0 auto;
-	width: 300px;
+	width: 500px;
+}
+.ma-jo-date-id{
+	width: 81%;
+	height: 40px;
+}
+.ma-jo-date-idnick{
+	width: 77%;
+	height: 40px;
 }
 </style>
 <script type="text/javascript">
@@ -83,71 +108,73 @@ body {
 	        }
 		})
 	});
-
-	   function idCheck(){
-	      var _id = $("#user_id").val();
-	      
-	      if(_id.trim().length != 0){
-	         $.ajax({
-	            type: "post",
-	            async: false,
-	            url: "<c:url value='/ajax/idcheck.do'/>",
-	            data:{
-	               id: _id
-	            },
-	            success:function(data, status){
-	               console.log(data);
-	               if(data == "false"){
-	                  alert("사용 가능한 아이디입니다.");
-	               } else {
-	                  alert("중복된 아이디입니다.");
-	               }
-	            },
-	            error:function(data, status){
-	               alert("아이디 중복 검사 오류입니다. 다시 시도해주세요.")
-	            },
-	            complete:function(data, status){
-	               
-	            }
-	         });
-	      } else {
-	         alert("아이디를 입력해주세요!");
-	      }
-	   }
-	   function nickCheck(){
-	      var _nick = $("#nickname").val();
-	      
-	      if(_nick.trim().length != 0){
-	         $.ajax({
-	            type: "post",
-	            async: false,
-	            url: "<c:url value='/ajax/nickcheck.do'/>",
-	            data:{
-	               nick: _nick
-	            },
-	            
-	            success:function(data, status){
-	            	console.log(data);
-	               if(data == "false"){
-	                  alert("사용 가능한 닉네임입니다.");
-	               } else {
-	                  alert("중복된 닉네임입니다.");
-	               }
-	            },
-	            error:function(data, status){
-	               alert("닉네임 중복 검사 오류입니다. 다시 시도해주세요.")
-	            },
-	            complete:function(data, status){
-	               
-	            }
-	         });
-	      } else {
-	         alert("닉네임을 입력해주세요!");
-	      }
-	   }
+	
+	function idCheck(){
+		var _id = $("#user_id").val();
+		
+		if(_id.trim().length != 0){
+			$.ajax({
+				type: "post",
+				async: false,
+				url: "<c:url value='/idcheck.do'/>",
+				data:{
+					id: _id
+				},
+				
+				success:function(data, status){
+					console.log(data);
+					if(data == "false"){
+						alert("사용 가능한 아이디입니다.");
+					} else {
+						alert("중복된 아이디입니다.");
+					}
+				},
+				error:function(data, status){
+					alert("아이디 중복 검사 오류입니다. 다시 시도해주세요.")
+				},
+				complete:function(data, status){
+					
+				}
+			});
+		} else {
+			alert("아이디를 입력해주세요!");
+		}
+	}
+	function nickCheck(){
+		var _nick = $("#nickname").val();
+		
+		if(_nick.trim().length != 0){
+			$.ajax({
+				type: "post",
+				async: false,
+				url: "<c:url value='/nickcheck.do'/>",
+				data:{
+					nick: _nick
+				},
+				
+				success:function(data, status){
+					console.log(data);
+					if(data == "false"){
+						alert("사용 가능한 닉네임입니다.");
+					} else {
+						alert("중복된 닉네임입니다.");
+					}
+				},
+				error:function(data, status){
+					alert("닉네임 중복 검사 오류입니다. 다시 시도해주세요.")
+				},
+				complete:function(data, status){
+					
+				}
+			});
+		} else {
+			alert("닉네임을 입력해주세요!");
+		}
+	}
 </script>
 </head>
 <body>
+<main>
 	<form name="frmJoin" method="post" action="<c:url value='/join.do' />">
 		<div class="ma-jo-con">
 			<div class="ma-jo-box" >
@@ -156,8 +183,8 @@ body {
 				</div>
 				<table class="ma-jo-table">
 					<tr>
-						<td><input class="ma-jo-date" type="text" placeholder="아이디를 입력해주세요." id="user_id" name="user_id" required>
-						<input type="button" value="중복확인" onclick="idCheck()" />
+						<td><input class="ma-jo-date-id" type="text" placeholder="아이디를 입력해주세요." id="user_id" name="user_id" required>
+						<input class="ma-jo-date-id-idnick-btn" type="button" value="ID중복확인" onclick="idCheck()" />
 						<br></td>
 					</tr>
 					<tr>
@@ -169,8 +196,8 @@ body {
 						<br></td>
 					</tr>
 					<tr>
-						<td><input class="ma-jo-date" type="text" placeholder="별명을 입력해주세요." id="nickname" name="nickname" required>
-						<input type="button" value="중복확인" onclick="nickCheck()" />
+						<td><input class="ma-jo-date-idnick" type="text" placeholder="별명을 입력해주세요." id="nickname" name="nickname" required>
+						<input class="ma-jo-date-id-idnick-btn" type="button" value="닉네임중복확인" onclick="nickCheck()" />
 						<br></td>
 					</tr>
 					<tr>
@@ -190,6 +217,7 @@ body {
 			</div>
 		</div>
 	</form>
+</main>
 
 </body>
 </html>
