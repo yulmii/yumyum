@@ -48,11 +48,12 @@ public class LoginFilter implements Filter {
 		String path = ((HttpServletRequest) req).getRequestURI();
 		
 		// 특정 주소 시 login 화면으로 redirect, 아니면 그냥 존재
-		if (!path.contains("join") && !path.contains("login")) {
+		if (!path.contains("join") && !path.contains("login") && !path.contains("/ajax/")) {
 			System.out.println(path);
 			HttpSession session = req.getSession(false);
 			if (session == null || session.getAttribute("_userId") == null) {
 				resp.sendRedirect(contextPath + "/login.do");
+				System.out.println("필터");
 				return;
 			}
 		}

@@ -83,73 +83,71 @@ body {
 	        }
 		})
 	});
-	
-	function idCheck(){
-		var _id = $("#user_id").val();
-		
-		if(_id.trim().length != 0){
-			$.ajax({
-				type: "post",
-				async: false,
-				url: "<c:url value='/idcheck.do'/>",
-				data:{
-					id: _id
-				},
-				
-				success:function(data, status){
-					console.log(data);
-					if(data == "false"){
-						alert("사용 가능한 아이디입니다.");
-					} else {
-						alert("중복된 아이디입니다.");
-					}
-				},
-				error:function(data, status){
-					alert("아이디 중복 검사 오류입니다. 다시 시도해주세요.")
-				},
-				complete:function(data, status){
-					
-				}
-			});
-		} else {
-			alert("아이디를 입력해주세요!");
-		}
-	}
-	function nickCheck(){
-		var _nick = $("#nickname").val();
-		
-		if(_nick.trim().length != 0){
-			$.ajax({
-				type: "post",
-				async: false,
-				url: "<c:url value='/nickcheck.do'/>",
-				data:{
-					nick: _nick
-				},
-				
-				success:function(data, status){
-					console.log(data);
-					if(data == "false"){
-						alert("사용 가능한 닉네임입니다.");
-					} else {
-						alert("중복된 닉네임입니다.");
-					}
-				},
-				error:function(data, status){
-					alert("닉네임 중복 검사 오류입니다. 다시 시도해주세요.")
-				},
-				complete:function(data, status){
-					
-				}
-			});
-		} else {
-			alert("닉네임을 입력해주세요!");
-		}
-	}
+
+	   function idCheck(){
+	      var _id = $("#user_id").val();
+	      
+	      if(_id.trim().length != 0){
+	         $.ajax({
+	            type: "post",
+	            async: false,
+	            url: "<c:url value='/ajax/idcheck.do'/>",
+	            data:{
+	               id: _id
+	            },
+	            success:function(data, status){
+	               console.log(data);
+	               if(data == "false"){
+	                  alert("사용 가능한 아이디입니다.");
+	               } else {
+	                  alert("중복된 아이디입니다.");
+	               }
+	            },
+	            error:function(data, status){
+	               alert("아이디 중복 검사 오류입니다. 다시 시도해주세요.")
+	            },
+	            complete:function(data, status){
+	               
+	            }
+	         });
+	      } else {
+	         alert("아이디를 입력해주세요!");
+	      }
+	   }
+	   function nickCheck(){
+	      var _nick = $("#nickname").val();
+	      
+	      if(_nick.trim().length != 0){
+	         $.ajax({
+	            type: "post",
+	            async: false,
+	            url: "<c:url value='/ajax/nickcheck.do'/>",
+	            data:{
+	               nick: _nick
+	            },
+	            
+	            success:function(data, status){
+	            	console.log(data);
+	               if(data == "false"){
+	                  alert("사용 가능한 닉네임입니다.");
+	               } else {
+	                  alert("중복된 닉네임입니다.");
+	               }
+	            },
+	            error:function(data, status){
+	               alert("닉네임 중복 검사 오류입니다. 다시 시도해주세요.")
+	            },
+	            complete:function(data, status){
+	               
+	            }
+	         });
+	      } else {
+	         alert("닉네임을 입력해주세요!");
+	      }
+	   }
 </script>
 </head>
 <body>
-<main>
 	<form name="frmJoin" method="post" action="<c:url value='/join.do' />">
 		<div class="ma-jo-con">
 			<div class="ma-jo-box" >
@@ -192,7 +190,6 @@ body {
 			</div>
 		</div>
 	</form>
-</main>
 
 </body>
 </html>

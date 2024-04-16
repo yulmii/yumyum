@@ -16,7 +16,7 @@ import com.yum.member.dto.MemberDTO;
 /**
  * Servlet implementation class MemberInsertController
  */
-@WebServlet("/idcheck.do")
+@WebServlet("/ajax/idcheck.do")
 public class IDCheckController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -44,7 +44,8 @@ public class IDCheckController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=utf-8");
 		String id = request.getParameter("id");
 		
 		boolean result = memberDAO.checkId(id);
