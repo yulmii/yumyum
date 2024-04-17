@@ -142,14 +142,14 @@ public class RecipeModifyController extends HttpServlet {
 	private String fileUpload(String thumbnail, String title, FileItem thumbnailItem) throws IOException, ServletException {
 		
 		String fileName = "";
-	    String fileDir = "C:/yum_img/recipe/";
+	    String fileDir = "C:/yum_img/recipe/thumbnail/";
 	    UUID uuid = UUID.randomUUID(); //파일이름 난수발생
 	    // 파일 업로드 및 정보 저장
 	    try {
 	        //파일 수정 처리
 	        if (thumbnailItem != null && thumbnailItem.getSize() != 0) {
 	        	String exp = FilenameUtils.getExtension(thumbnailItem.getName());
-	            fileName = "recipethumb-" + uuid + "-" + title + "." + exp;
+	            fileName = title + "-" + uuid + "." + exp;
 	            File uploadFile = new File(fileDir + fileName);
 	            thumbnailItem.write(uploadFile);
 	            
