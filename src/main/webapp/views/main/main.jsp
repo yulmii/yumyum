@@ -161,7 +161,7 @@ a{
 			          	<c:forEach var="item" items="${ hansikList }" varStatus="index">
 				            <div> 
 				              <a href="<c:url value="/recipe/detail.do?boardIdx=${ item.boardIdx }"/>" class="categoryBox">
-				                <img class="categoryImg" src="/upload/recipe/${ item.thumbnail }"/>
+				                <img class="categoryImg" src="/upload/recipe/thumbnail/${ item.thumbnail }"/>
 				                <span class="ma-imgTitle" style="width:180px;">${ item.title }</span>
 				                <span class="ma-imgSub" style="width:180px;">${item.writer} / 조회수 ${ item.hit }회</span>
 				              </a>
