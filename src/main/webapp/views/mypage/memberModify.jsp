@@ -2,16 +2,30 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/inc/top.jsp" %>
 <style type="text/css">
-.
-.my-side-menu {
-	position: fixed; /* 측면 메뉴를 고정합니다 */
-	top: 0; /* 페이지 상단에 정렬합니다 */
-	left: 0; /* 페이지 왼쪽에 정렬합니다 */
-	bottom: 0; /* 페이지 하단까지 확장합니다 */
-	width: 300px;
-	/*   background: #0a0a0a; */
-	overflow: auto; /* 내용이 높이를 초과할 경우 스크롤을 활성화합니다 */
+.my-page-main {
+	width: 800px;
+	margin: 0 auto; 
 }
+.member_info {
+    overflow: hidden;
+    margin-left: 150px; 
+    background: #afeeee30;
+    border-radius: 20px;
+    padding-left: 20px;
+}
+
+.info {
+	text-align: left;
+	margin-bottom: 7px;
+	padding: 6.5px;
+	border-bottom: 1px solid #c0c0c050;
+}
+.my-side-menu {
+    float: left; 
+    width: 300px; 
+    padding-right: 20px; 
+}
+
 .my-menu-h2 {
 	color: #f9f9f9;
 	padding: 10px;
@@ -19,22 +33,24 @@
 }
 
 .my-side-menu-bar {
-	list-style-type: none;
-	padding: 0px;
+    list-style-type: none;
+    width: 300px;
+    background: #fff;
+    overflow: auto;
+    position: fixed;
+    border-radius: 0px 20px;
+    background: #afeeee30;
+    padding: 0px;
 	margin: 0px;
-	width: 300px;
-	background: #0a0a0a;
-	height: 100%;
-	overflow: auto;
-	position: fixed;
-	
+	margin-left: -200px; 
+    
 }
 
 .my-side-menu-bar li a {
 	text-decoration: none;
 	padding: 30px;
 	display: block;
-	color: #fff;
+	color: #000;
 	font-weight: bold;
 }
 .my-home-menu {
@@ -45,19 +61,47 @@
 	font-weight: bold;
 }
 .my-side-menu-bar li a:hover {
-	background: #333;
-	color: #fff;
+	background: #afeeee50;
+	color: #000;
 }
 
 .my-side-menu-bar li a.home {
 	background: #333;
 	color: #fff;
 }
-#frmModify {
-	width: 800px;
-	margin: 0 auto;
-	text-align: left;
-	margin-bottom: 7px;
+.ma-info-btn {
+    height: 40px;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 19px;
+    text-align: center;
+    letter-spacing: -0.7px;
+    color: #2F83F5;
+    background: #FFFFFF;
+    border: 1px solid #2F83F5;
+    box-sizing: border-box;
+    border-radius: 3px;
+    padding: 8px 18px 9px;
+}
+.member_info .ma-info-btn {
+    float: right; 
+    margin-right: 30px; 
+}
+
+.ma-info-nick-btn {
+/* 	float: left; */
+	height: 40px;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 19px;
+    text-align: center;
+    letter-spacing: -0.7px;
+    color: #2F83F5;
+    background: #FFFFFF;
+    border: 1px solid #2F83F5;
+    box-sizing: border-box;
+    border-radius: 3px;
+    padding: 8px 18px 9px;
 }
 </style>
 <script type="text/javascript">
@@ -117,21 +161,33 @@
 	}
 </script>
 <main>
-	<%@ include file="/inc/mypage_side_bar.jsp"%>
+<div class="my-page-main">
+	<div class="my-side-menu">
+		<ul class="my-side-menu-bar">
+			<li><a href="<c:url value="/mypage/view.do"/> " class="menu-link">회원정보 조회</a></li>
+			<li><a href="<c:url value="/mypage/myrecipe.do"/>" class="menu-link">내 레시피</a></li>
+			<li><a href="<c:url value="/mypage/mybox/list.do"/>" class="menu-link">레시피 보관함</a></li>
+		</ul>
+	</div>
+	<div class="member_info">
 	<form id="frmModify" name="frmModify" method="post" action="<c:url value='/mypage/modify.do' />">
 		<input type="hidden" id="nickCheckTF" value="false" />
 		<input type="hidden" name="user_id" value="${ member.userId }" />
 		<input type="hidden" id="nick" value="${ member.nickname }" />
 		<h2>회원정보 수정</h2><br>
-		아이디: <span><c:out value="${ member.userId }" /></span><br>
-		비밀번호: <input type="text" id="pwd" name="pwd" value="<c:out value="${ member.pwd }" />" required><br>
-		닉네임: <input type="text" id="nickname" name="nickname" value="<c:out value="${ member.nickname }" />" required><input id="join" type="button" value="닉네임중복확인" onclick="nickCheck()" /><br>
-		이름: <input type="text" id="name" name="name" value="<c:out value="${ member.userName }" />" required><br>
-		이메일: <input type="email" id="email" name="email" value="<c:out value="${ member.email }" />" required><br>
+		<div class="info">아이디: <span><c:out value="${ member.userId }" /></span><br></div>
+		<div class="info">비밀번호: <input type="text" id="pwd" name="pwd" value="<c:out value="${ member.pwd }" />" required><br></div>
+		<div class="info">닉네임: <input type="text" id="nickname" name="nickname" value="<c:out value="${ member.nickname }" />" required>
+		<input class="ma-info-nick-btn" id="join" type="button" value="닉네임중복확인" onclick="nickCheck()" /><br></div>
+		<div class="info">이름: <input type="text" id="name" name="name" value="<c:out value="${ member.userName }" />" required><br></div>
+		<div class="info">이메일: <input type="email" id="email" name="email" value="<c:out value="${ member.email }" />" required><br></div>
 		
-		<input type="submit" value="수정">
-		<input type="reset" value="다시 입력">
+		<input class="ma-info-btn" type="submit" value="수정">
+		<input class="ma-info-btn" type="reset" value="다시 입력">
+		
 	</form>
+	</div>
+	</div>
 </main>
 <%@ include file="/inc/footer.jsp" %>
 </body>
