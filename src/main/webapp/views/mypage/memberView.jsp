@@ -2,14 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/inc/top.jsp" %>
 <style type="text/css">
-.member_info {
-	width: 800px;
-	margin: 0 auto;
-}
-.info {
-	text-align: left;
-	margin-bottom: 7px;
-}
+
 .my-side-menu {
 	position: fixed; /* 측면 메뉴를 고정합니다 */
 	top: 0; /* 페이지 상단에 정렬합니다 */
@@ -58,6 +51,14 @@
 .my-side-menu-bar li a.home {
 	background: #333;
 	color: #fff;
+}
+.member_info {
+	width: 800px;
+	margin: 0 auto;
+}
+.info {
+	text-align: left;
+	margin-bottom: 7px;
 }
 </style>
 <script type="text/javascript">
