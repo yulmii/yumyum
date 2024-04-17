@@ -49,6 +49,7 @@ public class AdNoteListController extends HttpServlet {
 		request.setAttribute("noteList", noteList);
 		request.setAttribute("pagination", pagination);
 		request.setAttribute("listCount", note.getListCount());
+		request.setAttribute("title", "관리자 공지사항");
 		rd.forward(request, response);
 	}
 

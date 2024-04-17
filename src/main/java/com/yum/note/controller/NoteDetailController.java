@@ -26,6 +26,7 @@ public class NoteDetailController extends HttpServlet {
 		RequestDispatcher rd = request.getRequestDispatcher("/views/note/noteDetail.jsp");
 		request.setAttribute("note", note);
 		request.setAttribute("no", no);
+		request.setAttribute("title", "공지사항");
 		rd.forward(request, response);
 	}
 

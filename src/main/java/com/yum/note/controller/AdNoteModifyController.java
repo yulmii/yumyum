@@ -25,6 +25,7 @@ public class AdNoteModifyController extends HttpServlet {
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/views/note/adNoteModify.jsp");
 		request.setAttribute("note", note);
+		request.setAttribute("title", "관리자 공지사항 수정");
 		rd.forward(request, response);
 	}
 

@@ -133,8 +133,8 @@ a{
 <main>
 	<div>
 	    <div class="ma-banner" id="banner" style="margin:0px;">
-			<img style="width: 100%; min-width:1600px; cursor:pointer;" src='<c:url value="/resources/images/temporary/banner1.jpg"/>' alt="배너" onclick="pageMove(77777);"/>
-			<img style="width: 100%; min-width:1600px; cursor:pointer;" src='<c:url value="/resources/images/temporary/banner2.jpg"/>' alt="배너" onclick="pageMove(88888);"/>
+			<img style="width: 100%; min-width:1600px; cursor:pointer;" src='<c:url value="/resources/images/temporary/banner1.jpg"/>' alt="배너" onclick="pageMove(0);"/>
+			<img style="width: 100%; min-width:1600px; cursor:pointer;" src='<c:url value="/resources/images/temporary/banner2.jpg"/>' alt="배너" onclick="pageMove(1);"/>
 	    </div>
 	    <div class="ma-banner-arrow">
 	  		<div class="ma-arrow-box">
@@ -162,8 +162,8 @@ a{
 				            <div> 
 				              <a href="<c:url value="/recipe/detail.do?boardIdx=${ item.boardIdx }"/>" class="categoryBox">
 				                <img class="categoryImg" src="/upload/recipe/${ item.thumbnail }"/>
-				                <span class="ma-imgTitle">${ item.title }</span>
-				                <span class="ma-imgSub">${item.writer} /  ${ item.hit }</span>
+				                <span class="ma-imgTitle" style="width:180px;">${ item.title }</span>
+				                <span class="ma-imgSub" style="width:180px;">${item.writer} / 조회수 ${ item.hit }회</span>
 				              </a>
 				            </div>
 		            	</c:forEach>
@@ -197,8 +197,8 @@ a{
 				            <div> 
 				              <a href="<c:url value="/recipe/detail.do?boardIdx=${ item.boardIdx }"/>" class="categoryBox">
 				                <img class="categoryImg" src="/upload/recipe/${ item.thumbnail }"/>
-				                <span class="ma-imgTitle">${ item.title }</span>
-				                <span class="ma-imgSub">${item.writer} /  ${ item.hit }</span>
+				                <span class="ma-imgTitle" style="width:180px;">${ item.title }</span>
+				                <span class="ma-imgSub" style="width:180px;">${item.writer} / 조회수 ${ item.hit }회</span>
 				              </a>
 				            </div>
 		            	</c:forEach>
@@ -232,8 +232,8 @@ a{
 				            <div> 
 				              <a href="<c:url value="/recipe/detail.do?boardIdx=${ item.boardIdx }"/>" class="categoryBox">
 				                <img class="categoryImg" src="/upload/recipe/${ item.thumbnail }"/>
-				                <span class="ma-imgTitle">${ item.title }</span>
-				                <span class="ma-imgSub">${item.writer} /  ${ item.hit }</span>
+				                <span class="ma-imgTitle" style="width:180px;">${ item.title }</span>
+				                <span class="ma-imgSub" style="width:180px;">${item.writer} / 조회수 ${ item.hit }회</span>
 				              </a>
 				            </div>
 		            	</c:forEach>
@@ -267,8 +267,8 @@ a{
 				            <div> 
 				              <a href="<c:url value="/recipe/detail.do?boardIdx=${ item.boardIdx }"/>" class="categoryBox">
 				                <img class="categoryImg" src="/upload/recipe/${ item.thumbnail }"/>
-				                <span class="ma-imgTitle">${ item.title }</span>
-				                <span class="ma-imgSub">${item.writer} /  ${ item.hit }</span>
+				                <span class="ma-imgTitle" style="width:180px;">${ item.title }</span>
+				                <span class="ma-imgSub" style="width:180px;">${item.writer} / 조회수 ${ item.hit }회</span>
 				              </a>
 				            </div>
 		            	</c:forEach>

@@ -19,6 +19,7 @@ public class AdNoteWriteController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = request.getRequestDispatcher("/views/note/adNoteWrite.jsp");
+		request.setAttribute("title", "관리자 공지사항 등록");
 		rd.forward(request, response);
 	}
 
