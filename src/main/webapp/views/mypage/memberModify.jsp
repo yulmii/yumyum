@@ -77,9 +77,11 @@
 	
 	function joinButAbled() {
 		if ($("#nickCheckTF").val() == "true") {
-			$("#join").attr("disabled", false); // 닉네임 바꿨을 경우
+			//$("#join").attr("disabled", false); // 닉네임 바꿨을 경우
+			$("#join").show();
 		} else {
-			$("#join").attr("disabled", true); // 닉네임 동일할 경우
+			//$("#join").attr("disabled", true); // 닉네임 동일할 경우
+			$("#join").hide();
 		}
 	}
 	function nickCheck(){
@@ -118,14 +120,15 @@
 	<%@ include file="/inc/mypage_side_bar.jsp"%>
 	<form id="frmModify" name="frmModify" method="post" action="<c:url value='/mypage/modify.do' />">
 		<input type="hidden" id="nickCheckTF" value="false" />
+		<input type="hidden" name="user_id" value="${ member.userId }" />
 		<input type="hidden" id="nick" value="${ member.nickname }" />
 		<h2>회원정보 수정</h2><br>
-		아이디: <input type="text" id="user_id" name="user_id" value="<c:out value="${ member.userId }" />" readonly><br>
+		아이디: <span><c:out value="${ member.userId }" /></span><br>
 		비밀번호: <input type="text" id="pwd" name="pwd" value="<c:out value="${ member.pwd }" />" required><br>
-		닉네임: <input type="text" id="nickname" name="nickname" value="<c:out value="${ member.nickname }" />" required><br>
+		닉네임: <input type="text" id="nickname" name="nickname" value="<c:out value="${ member.nickname }" />" required><input id="join" type="button" value="닉네임중복확인" onclick="nickCheck()" /><br>
 		이름: <input type="text" id="name" name="name" value="<c:out value="${ member.userName }" />" required><br>
-		이메일: <input type="text" id="email" name="email" value="<c:out value="${ member.email }" />" required><br>
-		<input id="join" type="button" value="닉네임중복확인" onclick="nickCheck()" />
+		이메일: <input type="email" id="email" name="email" value="<c:out value="${ member.email }" />" required><br>
+		
 		<input type="submit" value="수정">
 		<input type="reset" value="다시 입력">
 	</form>

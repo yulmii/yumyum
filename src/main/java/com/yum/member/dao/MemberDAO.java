@@ -226,12 +226,12 @@ public class MemberDAO extends MySQLConnector {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, member.getUserName());
 			pstmt.setString(2, member.getNickname());
+			System.out.println(member.getNickname());
 			pstmt.setString(3, member.getPwd());
 			pstmt.setString(4, member.getEmail());
 			pstmt.setString(5, member.getUserId());
 			
 			pstmt.executeUpdate();
-			
 		} catch (SQLException e) {
 			System.err.println("modifyUser() ERR : " + e.getMessage());
 		} finally {

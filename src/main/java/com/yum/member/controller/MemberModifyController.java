@@ -58,11 +58,13 @@ public class MemberModifyController extends HttpServlet {
         member.setPwd(request.getParameter("pwd"));
         member.setUserName(request.getParameter("name"));
         this.memberDAO.modifyUser(member);
-        request.setAttribute("member", member);
+        
         
         // View 보내기
+        // RequestDispatcher requestDispatcher =
+        //	request.getRequestDispatcher("/mypage/view.do");
         RequestDispatcher requestDispatcher =
-        	request.getRequestDispatcher("/views/mypage/memberModify.jsp");
+            	request.getRequestDispatcher("/mypage/view.do");
         requestDispatcher.forward(request, response);
 	}
 
