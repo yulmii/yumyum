@@ -17,7 +17,7 @@
 	</div>	
 	<div class="h-search-box">
 	    <form class="h-search-form" action='<c:url value="/recipe/list.do" />' method="get">
-	        <input type="text" class="h-search-input" name="searchText" placeholder="검색어를 입력하세요">
+	        <input type="text" class="h-search-input" name="searchText" placeholder="요리제목, 재료, 작성자 검색">
 	        <button type="submit" class="h-search-button">검색</button>
 	    </form>
 	</div>

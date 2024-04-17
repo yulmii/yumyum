@@ -206,7 +206,7 @@
 	text-align: center;
 	letter-spacing: -0.7px;
 	
-	color: #2F83F5;
+	color: red;
 	
 	background: #FFFFFF;
 	border: 1px solid red;
@@ -396,7 +396,10 @@
 	        dataType: "text",
 	        success: function(data) {
 				if(data == "addBox"){
-					alert("보관되었습니다.");
+					var result = confirm("보관되었습니다. 보관함으로 이동하시겠습니까?");
+					if(result){
+						window.location.href = '<c:url value="/mypage/mybox/list.do"/>'
+					}
 				}else{
 					alert("이미 보관된 레시피 입니다.");
 				}
