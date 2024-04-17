@@ -50,9 +50,15 @@ public class LoginController extends HttpServlet {
 		    session.setAttribute("_userId", member.getUserId());
 		    session.setAttribute("_admin", adminMember.getAdmin());
 		    
-		    out.print("성공");
+		    if(adminMember.getAdmin().equals("F")) {
+		    	out.print("user");
+		    } else {
+		    	out.print("admin");
+		    }
 		    
+		    //out.print("성공");
 		}
+
 		out.close();
 		
 		

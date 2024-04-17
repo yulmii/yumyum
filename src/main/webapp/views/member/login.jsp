@@ -106,9 +106,13 @@ function login(){
 		data : {id : _id, pwd : _pwd},
 		dataType : "text",
 		success: function(data, textStatus){
-			 if(data){
+			console.log(data);
+			 if(data == "user"){
 				alert("로그인 되었습니다.");
 				location.href='<c:url value="/main.do"/>'
+			} else if(data == "admin"){
+				alert("로그인 되었습니다.");
+				location.href='<c:url value="/admin/main.do"/>'
 			} else {
 				alert("아이디 혹은 비밀번호를 다시 확인하세요.");
 			}
