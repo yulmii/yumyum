@@ -91,7 +91,9 @@ p {
 }
 
 .hide-item {
-	margin-bottom: 7px;
+	font-size: 13px;
+	text-align: center;
+	padding-bottom: 300px;
 }
 
 .re-goRecipeWriteBtn{
@@ -161,6 +163,7 @@ p {
 .my-page-main {
 	width: 800px;
 	margin: 0 auto; 
+	padding-bottom: 50px;
 }
 .my-side-menu {
     float: left; 
