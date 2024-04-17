@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${ title }</title>
+<title>YumYum</title>
 <link href='<c:url value="/resources/css/style.css" />' rel="stylesheet">
 <script src='<c:url value="/resources/js/common.js" />'></script>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -102,10 +102,13 @@ body {
 			if ($('#pwd').val() != $('#pwd_confirm').val()) {
 	            $('#pwd_message').text(''); // 클리어
 	            $('#pwd_message').html("<b style='color:red;'>비밀번호가 틀립니다.</b>");
+	            $("#pwCheckTF").val(false);
 	        } else {
 	            $('#pwd_message').text(''); // 클리어
 	            $('#pwd_message').html("<b>비밀번호가 일치합니다.</b>");
+	            $("#pwCheckTF").val(true);
 	        }
+			joinButAbled();
 		})
 	});
 	
@@ -125,9 +128,12 @@ body {
 					console.log(data);
 					if(data == "false"){
 						alert("사용 가능한 아이디입니다.");
+						$("#idCheckTF").val(true);
 					} else {
 						alert("중복된 아이디입니다.");
+						$("#idCheckTF").val(false);
 					}
+					joinButAbled();
 				},
 				error:function(data, status){
 					alert("아이디 중복 검사 오류입니다. 다시 시도해주세요.")
@@ -156,9 +162,12 @@ body {
 					console.log(data);
 					if(data == "false"){
 						alert("사용 가능한 닉네임입니다.");
+						$("#nickCheckTF").val(true);
 					} else {
 						alert("중복된 닉네임입니다.");
+						$("#nickCheckTF").val(false);
 					}
+					joinButAbled();
 				},
 				error:function(data, status){
 					alert("닉네임 중복 검사 오류입니다. 다시 시도해주세요.")
@@ -171,11 +180,23 @@ body {
 			alert("닉네임을 입력해주세요!");
 		}
 	}
+	function joinButAbled(){
+		if($("#idCheckTF").val() == "true" && $("#pwCheckTF").val() =="true" && $("#nickCheckTF").val() =="true"){
+			console.log("test1");
+			$("#join").attr("disabled", false);
+		} else {
+			console.log("test2");
+			$("#join").attr("disabled", true);
+		}
+	}
 </script>
 </head>
 <body>
 <main>
 	<form name="frmJoin" method="post" action="<c:url value='/join.do' />">
+		<input type="hidden" id="idCheckTF" value="false" />
+		<input type="hidden" id="pwCheckTF" value="false" />
+		<input type="hidden" id="nickCheckTF" value="false" />
 		<div class="ma-jo-con">
 			<div class="ma-jo-box" >
 				<div class="ma-jo-ha">
@@ -208,7 +229,7 @@ body {
 					</tr>
 					<tr>
 						<td><br><br>
-							<input class="ma-jo-table-btn" type="submit" value="회원가입">
+							<input class="ma-jo-table-btn" id="join" type="submit" value="회원가입">
 							<input class="ma-jo-table-btn" type="reset" value="다시 입력">
 							<input class="ma-jo-table-btn" type="button" value="돌아가기" onclick="location.href='<c:url value="/login.do" />'">						
 						</td>
