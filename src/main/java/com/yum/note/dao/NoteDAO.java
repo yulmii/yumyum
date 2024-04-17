@@ -21,7 +21,7 @@ public class NoteDAO extends MySQLConnector {
 	public List<NoteDTO> selectNoteList(int startIndex, int listCount) {
 		List<NoteDTO> noteList = new ArrayList<NoteDTO>();
 		try {
-			String query = "select * from (select A.*, @rownum := @rownum + 1 as rnum from ( select noteIdx, title, date_format(createDate, '%Y-%m-%d') as createDate, writer, hit from note_board order by noteIdx) A, (select @rownum := 0) r) ranking order by rnum desc limit ?, ?";
+			String query = "select * from (select A.*, @rownum := @rownum + 1 as rnum from ( select noteIdx, title, date_format(createDate, '%Y-%m-%d') as createDate, writer, hit from note_board where not importance = 'T' order by noteIdx) A, (select @rownum := 0) r) ranking order by rnum desc limit ?, ?";
 			
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, startIndex);
@@ -31,6 +31,40 @@ public class NoteDAO extends MySQLConnector {
 			while(rs.next()) {
 				NoteDTO note = new NoteDTO();
 				note.setNo(rs.getInt("rnum"));
+				note.setNoteIdx(rs.getInt("noteIdx"));
+				note.setTitle(rs.getString("title"));
+				note.setCreateDate(rs.getString("createDate"));
+				note.setWriter(rs.getString("writer"));
+				note.setHit(rs.getInt("hit"));
+				
+				noteList.add(note);
+			}
+		} catch (SQLException e) {
+			System.err.println("checkId() ERR : " + e.getMessage());
+			close(rs, pstmt, conn);
+		} finally {
+
+		}
+		
+		return noteList;
+	}
+	
+	
+	/**
+	 * 중요 공지사항 조회
+	 * @param
+	 * @return
+	 */
+	public List<NoteDTO> selectImportance() {
+		List<NoteDTO> noteList = new ArrayList<NoteDTO>();
+		try {
+			String query = "select noteIdx, title, date_format(createDate, '%Y-%m-%d') as createDate, writer, hit from note_board where importance = 'T' order by noteIdx";
+			
+			pstmt = conn.prepareStatement(query);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				NoteDTO note = new NoteDTO();
 				note.setNoteIdx(rs.getInt("noteIdx"));
 				note.setTitle(rs.getString("title"));
 				note.setCreateDate(rs.getString("createDate"));
@@ -132,11 +166,12 @@ public class NoteDAO extends MySQLConnector {
 	 */
 	public int noteWrite(NoteDTO note) {
 		try {
-			String query = "insert into note_board (title, writer, content) values(?,?,?)";
+			String query = "insert into note_board (title, writer, content, importance) values(?,?,?,?)";
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, note.getTitle());
 			pstmt.setString(2, note.getWriter());
 			pstmt.setString(3, note.getContent());
+			pstmt.setString(4, note.getImportance());
 			int result = pstmt.executeUpdate();
 			
 			if(result == 1) {
@@ -163,12 +198,13 @@ public class NoteDAO extends MySQLConnector {
 	 */
 	public void noteModify(NoteDTO note) {
 		try {
-			String query = "update note_board set title=?, writer=?, content=? where noteIdx=?";
+			String query = "update note_board set title=?, writer=?, content=?, importance=? where noteIdx=?";
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, note.getTitle());
 			pstmt.setString(2, note.getWriter());
 			pstmt.setString(3, note.getContent());
-			pstmt.setInt(4, note.getNoteIdx());
+			pstmt.setString(4, note.getImportance());
+			pstmt.setInt(5, note.getNoteIdx());
 			pstmt.executeUpdate();
 
 		} catch(Exception e) {

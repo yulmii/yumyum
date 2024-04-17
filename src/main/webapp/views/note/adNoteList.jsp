@@ -22,6 +22,15 @@
 		color: 
 	}
 	
+    .ad-importBox{
+    	background-color: #ffe3e4;
+    	color: #ff1d0b;
+    	border: 1px solid #ff1d0b;
+    	border-radius: 5px;
+    	padding: 5px 11px 5px 11px;
+    	font-weight: bold;
+    }
+	
     .ad-pagingBox{
 	    display: flex;
 	    justify-content: end;
@@ -130,10 +139,10 @@
 					<colgroup>
 						<col width="70" />
 						<!--  번호 -->
-						<col width="130" />
-						<!--  작성자 -->
 						<col width="400" />
 						<!-- 제목 -->
+						<col width="130" />
+						<!--  작성자 -->
 						<col width="100" />
 						<!-- 조회수 -->
 						<col width="100" />
@@ -145,8 +154,8 @@
 						<!-- 글제목  -->
 						<tr>
 							<th>번호</th>
-							<th>작성자</th>
 							<th>제목</th>
+							<th>작성자</th>
 							<th>조회수</th>
 							<th>수정</th>
 							<th>삭제</th>
@@ -159,10 +168,10 @@
 					<colgroup>
 						<col width="70" />
 						<!--  번호 -->
-						<col width="130" />
-						<!--  작성자 -->
 						<col width="400" />
 						<!-- 제목 -->
+						<col width="130" />
+						<!--  작성자 -->
 						<col width="100" />
 						<!-- 조회수 -->
 						<col width="100" />
@@ -170,11 +179,23 @@
 						<col width="100" />
 						<!-- 삭제 -->
 					</colgroup>
+					<c:if test="${ not empty importanceNote }">
+						<c:forEach var="note" items="${ importanceNote }" >
+							<tr align="center">
+								<td style="color: #ff1d0b; font-weight: bold;">공지</td>
+								<td style="color: #ff1d0b; font-weight: bold;">${ note.title }</td>
+								<td>${ note.writer }</td>
+								<td style="padding-left: 30px;">${ note.hit }</td>
+								<td><a class="ad-list-btn" href='<c:url value="/admin/note/modify.do?no=${note.noteIdx}" /> '>수정</a></td>
+								<td><a class="ad-list-btn" href='javascript:deleteNote(${ note.noteIdx })'>삭제</a></td>
+							</tr>
+						</c:forEach>
+					</c:if>
 					<c:forEach var="note" items="${noteList}" varStatus="status">
 						<tr align="center">
 							<td>${ note.no }</td>
-							<td>${ note.writer }</td>
 							<td>${ note.title }</td>
+							<td>${ note.writer }</td>
 							<td style="padding-left: 30px;">${ note.hit }</td>
 							<td><a class="ad-list-btn" href='<c:url value="/admin/note/modify.do?no=${note.noteIdx}" /> '>수정</a></td>
 							<td><a class="ad-list-btn" href='javascript:deleteNote(${ note.noteIdx })'>삭제</a></td>

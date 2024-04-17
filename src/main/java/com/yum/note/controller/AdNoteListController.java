@@ -37,6 +37,11 @@ public class AdNoteListController extends HttpServlet {
 		int totalCount = noteDAO.noteTotalCount();
 		List<NoteDTO> noteList = noteDAO.selectNoteList(note.getStartIndex(), note.getListCount());
 		
+		if(note.getPageNum() == 1) {
+			List<NoteDTO> importanceList = noteDAO.selectImportance();
+			request.setAttribute("importanceNote", importanceList);
+		}
+		
 		PageNation paging = new PageNation();
 		String pagination = paging.getPageNavigator(totalCount, note.getListCount(), note.getPagePerBlock(), note.getPageNum());
 		

@@ -37,6 +37,7 @@ public class AdNoteModifyController extends HttpServlet {
 		String content = request.getParameter("content");
 		String dummyImg = request.getParameter("dummyImg");
 		String deleteImg = request.getParameter("deleteImg");
+		String imp = request.getParameter("importance");
 	    String path_folder2 = realPath + "/note/";
 
 		String name = "note";		//공지사항 게시판 약어 - no
@@ -66,6 +67,11 @@ public class AdNoteModifyController extends HttpServlet {
 		note.setTitle(title);
 		note.setWriter(writer);
 		note.setContent(content);
+		if(imp == null) {
+			note.setImportance("F");
+		} else {
+			note.setImportance(imp);
+		}
 		
 		//수정
 		NoteDAO noteDAO = new NoteDAO();

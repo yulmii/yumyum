@@ -7,6 +7,7 @@ public class NoteDTO {
 	private String content;
 	private String createDate;
 	private String writer;
+	private String importance;
 	private int hit;
 	private int totalCount = 0;		//게시글 전체 수
 	private int listCount = 10;		//한 페이지당 보여줄 게시글 수	
@@ -121,6 +122,14 @@ public class NoteDTO {
 
 	public void setEndIndex(int startIndex) {
 		this.endIndex = startIndex + this.listCount - 1;
+	}
+	
+	public String getImportance() {
+		return importance;
+	}
+
+	public void setImportance(String importance) {
+		this.importance = importance;
 	}
 
 	@Override

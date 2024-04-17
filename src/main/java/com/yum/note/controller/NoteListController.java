@@ -34,6 +34,11 @@ public class NoteListController extends HttpServlet {
 		totalCount = noteDAO.noteTotalCount();
 		List<NoteDTO> noteList = noteDAO.selectNoteList(note.getStartIndex(), note.getListCount());
 		
+		if(note.getPageNum() == 1) {
+			List<NoteDTO> importanceList = noteDAO.selectImportance();
+			request.setAttribute("importanceNote", importanceList);
+		}
+		
 		PageNation paging = new PageNation();
 		String pagination = paging.getPageNavigator(totalCount, note.getListCount(), note.getPagePerBlock(), note.getPageNum());
 		RequestDispatcher rd = request.getRequestDispatcher("/views/note/noteList.jsp");
@@ -41,7 +46,6 @@ public class NoteListController extends HttpServlet {
 		request.setAttribute("title", "공지사항");
 		request.setAttribute("pagination", pagination);
 		request.setAttribute("noteList", noteList);
-		request.setAttribute("pageNum", note.getPageNum());
 		rd.forward(request, response);
 		
 	}

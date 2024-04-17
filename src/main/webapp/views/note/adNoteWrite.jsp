@@ -88,8 +88,8 @@
 		
 		<div class="ad-main-content">
 			<div style="background-color: rgba(237,242,255,0.7); padding: 15px 30px 25px 30px;">
-				<h1 class="ad-board-title" >공지사항 등록</h1>	
 				<form action='<c:url value="/admin/note/write.do" />' method="post"  enctype="multipart/form-data" onsubmit="submitData();">
+					<h1 class="ad-board-title" >공지사항 등록<span style="font-size:16px; float:right; margin-right:10px;"><label for="importance" style="position:relative; top:-3px; right:3px; cursor:pointer;">중요</label><input type="checkbox" id="importance" name="importance" value="T" style="width:20px; height:20px; cursor:pointer;" /></span></h1>	
 					<input type="hidden" name="dummyImg" id="dummyImg"/>
 					<input type="hidden" name="deleteImg" id="deleteImg"/>
 					<div class="no-mainTitleBox">
