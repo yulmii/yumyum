@@ -227,7 +227,7 @@ p {
 								<input type="hidden" id="boardIdx" value="${ recipe.boardIdx }" />
 								<div class="recipe__image">
 									<img name="recipeImage" alt=""
-										src="/upload/recipe/${ recipe.thumbnail }"
+										src="/upload/recipe/thumbnail/${ recipe.thumbnail }"
 										onclick="location.href='<c:url value="/recipe/detail.do?boardIdx=${ recipe.boardIdx }"/>'" />
 								</div>
 								<h5 class="notranslate">${ recipe.title }</h5>
