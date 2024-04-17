@@ -157,7 +157,7 @@ public class AdminDAO extends MySQLConnector {
 				member.setEmail(rs.getString("email"));
 				member.setJoinDate(rs.getString("joinDate"));
 				member.setAdmin(rs.getString("admin"));
-				System.out.println("회원수정 페이지 조회 성공");
+				System.out.println("회원 조회 성공");
 			}
 
 		} catch (SQLException e) {

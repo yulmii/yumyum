@@ -9,6 +9,9 @@ main {
 	width: 1200px;
 	margin: 0 auto; /* 가운데 정렬을 위한 margin 설정 */
 }
+.header a:hover{
+	text-decoration: none;
+}
 
 .h-top-menu {
 	margin: 0 auto;
