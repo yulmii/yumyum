@@ -52,7 +52,7 @@ CREATE TABLE note_board (
     createDate DATETIME NOT NULL DEFAULT (current_Timestamp) COMMENT '작성일자',
     writer VARCHAR(100) NOT NULL COMMENT '작성자',
     hit INT not null default 0 comment '조회수',
-    impotance char(1) default 'F' comment '중요 공지사항'
+    importance char(1) default 'F' comment '중요 공지사항'
 );
 
 
