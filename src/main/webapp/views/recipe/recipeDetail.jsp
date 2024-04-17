@@ -209,7 +209,7 @@
 	color: #2F83F5;
 	
 	background: #FFFFFF;
-	border: 1px solid #2F83F5;
+	border: 1px solid red;
 	box-sizing: border-box;
 	border-radius: 3px;
 	
@@ -278,7 +278,7 @@
 
 		<div class="recipe__detail_mainImg">
 			<img style="height: 100%; width: 100%;" alt=""
-				src="/upload/recipe/${ recipe.thumbnail }">
+				src="/upload/recipe/thumbnail/${ recipe.thumbnail }">
 		</div>
 		<div
 			class="recipe__detail_left__content_up recipe__detail_common_box__border">

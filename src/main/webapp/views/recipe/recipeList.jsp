@@ -18,11 +18,12 @@
 }
 
 .title__box {
+	padding-left: 39px;
+	padding-right: 39px;
 	margin-bottom: 28px;
 }
 
 .title__box>div {
-	display: inline-block;
 }
 
 .home_content_title p {
@@ -33,6 +34,28 @@
 	letter-spacing: -1.05px;
 	margin: 0;
 	color: #171F29;
+}
+
+.re-goRecipeWriteBtn{
+	float:right;
+	display: inline-block;
+	font-weight: normal;
+	font-size: 13px;
+	line-height: 19px;
+	text-align: center;
+	letter-spacing: -0.7px;
+	
+	color: #FFFFFF;
+	background: #2F83F5;
+	border-radius: 3px;
+	border: none;
+	
+	padding: 11px 20px 10px;
+}
+
+.search__content_wrapper {
+/* 	padding-right: 10px; */
+    padding-left: 39px;
 }
 
 .search__content__flex_box {
@@ -57,7 +80,6 @@
 }
 
 .recipe__image img {
-	/*     object-fit: cover !important; */
 	width: 180px;
 	height: 180px;
 }
@@ -90,24 +112,6 @@ p {
 
 .hide-item {
 	margin-bottom: 7px;
-}
-
-.re-goRecipeWriteBtn{
-	font-weight: normal;
-	font-size: 13px;
-	line-height: 19px;
-	text-align: center;
-	letter-spacing: -0.7px;
-	
-	color: #FFFFFF;
-	background: #2F83F5;
-	border-radius: 3px;
-	border: none;
-	
-	padding: 11px 20px 10px;
-}
-.re-btnRight{
-	text-align: right;
 }
 
 .no-pagingBox{
@@ -143,6 +147,7 @@ p {
 .pageActive{
 	border: 2px solid #222;
 }
+
 </style>
 <main>
 	<div class="contain__inner search__result_box">
@@ -151,6 +156,7 @@ p {
 				<c:choose>
 					<c:when test="${ !empty param.category }">
 						<p>${ param.category }</p>
+						<input type="button" class="re-goRecipeWriteBtn" value="레시피 등록하기" onclick="location.href='<c:url value="/recipe/write.do?category=${ param.category }"/>'" />
 					</c:when>
 					<c:when test="${ !empty param.searchText }">
 						<p>${ param.searchText }</p>&nbsp;&nbsp;<span>검색결과</span>
@@ -183,9 +189,6 @@ p {
 				</c:otherwise>
 			</c:choose>
 		</section>
-		<div class="re-btnRight">
-			<input type="button" class="re-goRecipeWriteBtn" value="레시피 등록하기" onclick="location.href='<c:url value="/recipe/write.do"/>'" />
-		</div>
 	</div>
 </main>
 <%@ include file="/inc/footer.jsp"%>

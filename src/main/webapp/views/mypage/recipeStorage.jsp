@@ -7,10 +7,12 @@
 	margin: 0 auto;
 	text-align: center;
 }
-
-.contain__inner.search__result_box {
-	/* padding-top: 50px; */
-	
+.search__result_box {
+    overflow: hidden;
+    margin-left: 150px; 
+    background: #afeeee30;
+    border-radius: 20px;
+    padding-left: 20px;
 }
 
 .search__result_box .title__box {
@@ -110,7 +112,6 @@ p {
 	text-align: right;
 }
 
-
 .no-pagingBox{
 	margin-top: 20px;
 	margin-bottom: 50px;
@@ -144,39 +145,12 @@ p {
 .pageActive{
 	border: 2px solid #222;
 }
-.my-side-menu {
-	position: fixed; /* 측면 메뉴를 고정합니다 */
-	top: 0; /* 페이지 상단에 정렬합니다 */
-	left: 0; /* 페이지 왼쪽에 정렬합니다 */
-	bottom: 0; /* 페이지 하단까지 확장합니다 */
-	width: 300px;
-	/*   background: #0a0a0a; */
-	overflow: auto; /* 내용이 높이를 초과할 경우 스크롤을 활성화합니다 */
-}
 .my-menu-h2 {
 	color: #f9f9f9;
 	padding: 10px;
 	margin: 10px;
 }
 
-.my-side-menu-bar {
-	list-style-type: none;
-	padding: 0px;
-	margin: 0px;
-	width: 300px;
-	background: #0a0a0a;
-	height: 100%;
-	overflow: auto;
-	position: fixed;
-}
-
-.my-side-menu-bar li a {
-	text-decoration: none;
-	padding: 30px;
-	display: block;
-	color: #fff;
-	font-weight: bold;
-}
 .my-home-menu {
 	text-decoration: none;
 	padding: 5px;
@@ -184,9 +158,37 @@ p {
 	color: #fff;
 	font-weight: bold;
 }
+.my-page-main {
+	width: 800px;
+	margin: 0 auto; 
+}
+.my-side-menu {
+    float: left; 
+    width: 300px; 
+    padding-right: 20px; 
+}
+.my-side-menu-bar {
+    list-style-type: none;
+    width: 300px;
+    background: #fff;
+    overflow: auto;
+    position: fixed;
+    border-radius: 0px 20px;
+    background: #afeeee30;
+    padding: 0px;
+	margin: 0px;
+	margin-left: -200px;    
+}
+.my-side-menu-bar li a {
+	text-decoration: none;
+	padding: 30px;
+	display: block;
+	color: #000;
+	font-weight: bold;
+}
 .my-side-menu-bar li a:hover {
-	background: #333;
-	color: #fff;
+	background: #afeeee50;
+	color: #000;
 }
 
 .my-side-menu-bar li a.home {
@@ -196,8 +198,15 @@ p {
 </style>
 
 <main>
-	<%@ include file="/inc/mypage_side_bar.jsp"%>
-	<div class="contain__inner search__result_box">
+<div class="my-page-main">
+	<div class="my-side-menu">
+		<ul class="my-side-menu-bar">
+			<li><a href="<c:url value="/mypage/view.do"/> " class="menu-link">회원정보 조회</a></li>
+			<li><a href="<c:url value="/mypage/myrecipe.do"/>" class="menu-link">내 레시피</a></li>
+			<li><a href="<c:url value="/mypage/mybox/list.do"/>" class="menu-link">레시피 보관함</a></li>
+		</ul>
+	</div>
+	<div class="search__result_box">
 		<div class="title__box">
 			<div class="home_content_title">
 				<p>${ member.nickname }</p>&nbsp;&nbsp;<span>님의 레시피 보관함</span>
@@ -230,6 +239,7 @@ p {
 				</c:otherwise>
 			</c:choose>
 		</section>
+	</div>
 	</div>
 </main>
 <%@ include file="/inc/footer.jsp" %>

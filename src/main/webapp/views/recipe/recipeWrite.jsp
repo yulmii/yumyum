@@ -2,79 +2,153 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="/inc/top.jsp"%>
 <style type="text/css">
-.re-container {
-	width: 1150px;
-	margin: 0 auto;
+.re-main-content{    
+    margin: 0 auto;
+    width: 1100px;    
 }
 
-.re-center {
-	text-align: center;
-	vertical-align: middle;
+.re-board-title {
+	padding-bottom: 20px;
+}
+.re-SelectBox{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
 }
 
-.re-right {
+.re-mainTitleBox {
+    display: flex;
+    align-items: center;
+    height: 80px;
+}
+    
+.re-mainTitle{
+    width: 150px;
+    height: 45px;
+    text-align: center;
+    padding: 13px;
+    background-color: #F3F2F2;
+    margin:0;
+}
+    
+.re-mainDesc{
+    padding: 13px 13px 13px 20px;
+    margin:0;
+}
+
+.re-mainContentBox {
+
+}
+    
+.re-mainContent{
+    width: 150px;
+    height: 45px;
+    text-align: center;
+    padding: 13px;
+    background-color: #F3F2F2;
+    margin-bottom: 10px;
+}
+
+.re-mainContent span {
+	
+}
+    
+.re-btnBox{
 	text-align: right;
-	vertical-align: middle;
+	padding-top : 20px;
+}
+    
+.re-btn{
+    cursor:pointer;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 19px;
+    text-align: center;
+    letter-spacing: -0.7px;
+    border-radius: 3px;
+    border: 2px solid #f0f0f0;
+    padding: 11px 20px 10px;
+}
+    
+.re-btn:hover{
+    border: 2px solid #adadad;
+}
+
+.re-subBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    height: 250px;
+}
+
+.re-leftBox {
+    width: calc(40% - 15px); /* 10px는 간격 */
+}
+
+.re-rightBox {
+    width: calc(60% - 15px); /* 10px는 간격 */
+}
+
+.d-none {
+    display: none!important;
+}
+
+#preview {
+/* 	border: 1px solid gray; */
+	background-color: rgb(250, 250, 250)!important;
+	text-align: center;
 }
 </style>
-<!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
- -->
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-<script	src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-<script	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+
+
+<script src='<c:url value="/resources/js/summernote/summernote-lite.js"/>'></script>
+<script src='<c:url value="/resources/js/summernote/lang/summernote-ko-KR.js" />'></script>
+<link rel="stylesheet" href='<c:url value="/resources/css/summernote/summernote-lite.css"/>'>
+
 <main>
-	<div class="re-container">
-		<form action='<c:url value="/recipe/write.do" />'
-			onsubmit="sendForm()" method="post" enctype="multipart/form-data">
-			<input type="hidden" name="dummyImg" id="dummyImg"/>
-			<input type="hidden" name="deleteImg" id="deleteImg"/>
-			<h1>레시피 등록</h1>
-			<table style="margin: 0 auto; width: 1000px;">
-				<colgroup>
-					<col width="10%" />
-					<col width="40%" />
-					<col width="10%" />
-					<col width="40%" />
-				</colgroup>
-				<tr>
-					<th>음식 이미지</th>
-					<td><input type="file" id="thumbnail" name="thumbnail"
-						class="re-input"></td>
-					<th>제목</th>
-					<td><input type="text" id="title" name="title"
-						class="re-input"></td>
-				</tr>
-				<tr>
-					<td colspan="2" rowspan="2" class="re-center"
-						style="height: 200px;" id="preview"></td>
-					<th>카테고리</th>
-					<td><select id="category" name="category">
-							<option value="한식">한식</option>
-							<option value="중식">중식</option>
-							<option value="일식">일식</option>
-							<option value="양식">양식</option>
-					</select></td>
-				</tr>
-				<tr>
-					<th>재료</th>
-					<td><input type="text" id="ingredient" name="ingredient" class="re-input"></td>
-				</tr>
-				<tr>
-					<th colspan="2">내용</th>
-				</tr>
-				<tr>
-					<td colspan="4"><textarea id="summernote" ></textarea>
-					<input type="hidden" name="content" id="content"/>
-				</tr>
-				<tr>
-					<td colspan="4" class="re-right"><input type="submit"
-						value="등록하기"></td>
-				</tr>
-			</table>
-		</form>
-	</div>
+	<div class="re-main-content">
+				<h1 class="re-board-title" >레시피 등록</h1>	
+				<form action='<c:url value="/recipe/write.do" />' method="post"  enctype="multipart/form-data" onsubmit="sendForm();">
+					<input type="hidden" name="dummyImg" id="dummyImg"/>
+					<input type="hidden" name="deleteImg" id="deleteImg"/>
+					<div class="re-subBox">
+			    	<div class="re-leftBox">
+                       	<input type="file" id="thumbnail" name="thumbnail" accept=".png,.jpg,.jpeg,.jfif,.gif,.pdf,.webp,.bmp,.heic,.heif">
+			    		<div id="preview" style="height: 200px; margin-top: 5px;"></div>
+			    	</div>
+					<div class="re-rightBox">
+						<div class="re-mainTitleBox">
+				    		<p class="re-mainTitle">카테고리</p>
+				    		<p class="re-mainDesc">
+				    			<select id="category" name="category">
+									<option value="한식" ${param.category eq '한식' ? 'selected' : ''}>한식</option>
+									<option value="중식" ${param.category eq '중식' ? 'selected' : ''}>중식</option>
+									<option value="일식" ${param.category eq '일식' ? 'selected' : ''}>일식</option>
+									<option value="양식" ${param.category eq '양식' ? 'selected' : ''}>양식</option>
+								</select>
+							</p>
+				    	</div>
+						<div class="re-mainTitleBox">
+				    		<p class="re-mainTitle">레시피 제목</p>
+				    		<p class="re-mainDesc"><input type="text" name="title" required/></p>
+				    	</div>
+				    	<div class="re-mainTitleBox">
+				    		<p class="re-mainTitle">재료</p>
+				    		<p class="re-mainDesc"><input type="text" name="ingredient" required/></p>
+				    	</div>
+			    	</div>
+			    	</div>
+			    	<div class="re-mainContentBox">
+			    		<p class="re-mainContent"><span>조리법</span></p>
+						<textarea id="summernote" name="content"></textarea>
+					</div>
+					<div class="re-btnBox">
+						<input type="submit" class="re-btn" value="등록">
+						<!-- <input type="button" class="re-btn"  style="margin-left: 10px;" onclick="cancelBoard();" value="취소"> -->
+					</div>
+				</form>
+			</div>
 
 </main>
 <%@ include file="/inc/footer.jsp"%>
@@ -97,7 +171,9 @@
 						// 이미지 alt 속성 삽일을 위한 설정
 						var caption = fileName
 
-						uploadSummernoteImageFile(files[i], this, caption)
+						resizeImage(files[i], 700).then((resizedImage) => {
+							uploadSummernoteImageFile(resizedImage, this, caption);
+						});
 					}
 				},
 				onMediaDelete : function($target, editor, $editable) {
@@ -136,7 +212,6 @@
 	}
 
 	function sendForm() {
-		$("#content").val($('#summernote').summernote('code'));
 		$("#dummyImg").val(imgDatas);
 		$("#deleteImg").val(delDatas);
 	}
