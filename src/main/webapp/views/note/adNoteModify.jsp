@@ -107,8 +107,8 @@
 	</div>
 </main>
 <script>
-	var imgDatas = [];
-	var delDatas = [];
+	var imgDatas = [];	//저장할 이미지
+	var delDatas = [];	//삭제할 이미지
 	
 	$(document).ready(function() {
 	    $('#summernote').summernote({
@@ -124,8 +124,9 @@
                         var fileName = files[i].name
                         // 이미지 alt 속성 삽일을 위한 설정
                         var caption = fileName
-
-                        uploadSummernoteImageFile(files[i], this, caption)
+                        resizeImage(files[i], 700).then((resizedImage) => {
+							uploadSummernoteImageFile(resizedImage, this, caption);
+						});
                     }
                 },
                 onMediaDelete: function ($target, editor, $editable) {
@@ -137,6 +138,59 @@
 	    });
 	});
 
+	//이미지 리사이징
+	function resizeImage (_file, maxSize) {
+	    var file = _file;
+	    var maxSize = maxSize;
+	    var reader = new FileReader();
+	    var image = new Image();
+	    var canvas = document.createElement('canvas');
+	    var dataURItoBlob = function (dataURI) {
+	        var bytes = dataURI.split(',')[0].indexOf('base64') >= 0 ?
+	            atob(dataURI.split(',')[1]) :
+	            unescape(dataURI.split(',')[1]);
+	        var mime = dataURI.split(',')[0].split(':')[1].split(';')[0];
+	        var max = bytes.length;
+	        var ia = new Uint8Array(max);
+	        for (var i = 0; i < max; i++)
+	            ia[i] = bytes.charCodeAt(i);
+	        return new Blob([ia], { type: 'image/jpeg'});
+	    };
+	    
+	    var resize = function () {
+	        var width = image.width;
+	        var height = image.height;
+	        if (width > height) {
+	            if (width > maxSize) {
+	                height *= maxSize / width;
+	                width = maxSize;
+	            }
+	        } else {
+	            if (height > maxSize) {
+	                width *= maxSize / height;
+	                height = maxSize;
+	            }
+	        }
+	        canvas.width = width;
+	         canvas.height = height;
+	        canvas.getContext('2d').drawImage(image, 0, 0, width, height);
+	        var dataUrl = canvas.toDataURL('image/jpeg');
+	        return dataURItoBlob(dataUrl);
+	    };
+	    
+	    return new Promise(function (ok, no) {
+	    	//이미지가 아닐 시 에러 발생
+	        if (!file.type.match(/image.*/)) {
+	            no(new Error("Not an image"));
+	            return;
+	        }
+	        reader.onload = function (readerEvent) {
+	            image.onload = function () { return ok(resize()); };
+	            image.src = readerEvent.target.result;
+	        };
+	        reader.readAsDataURL(file);
+	    });
+	};
 	
 	// 이미지 업로드 함수 ajax 활용
     function uploadSummernoteImageFile(file, el, caption) {
@@ -162,6 +216,7 @@
         })
     }
 	
+	//db에 저장해야할 추가 이미지
 	function filterImg(_img){
 		imgDatas = imgDatas.filter(function(img, index){
 			return img != _img;

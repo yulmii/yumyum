@@ -46,7 +46,13 @@ public class FileMethod {
 		}
 
 		//확장자 추출
-		String extension = fileName.substring(fileName.lastIndexOf("."));
+		String extension;
+		if(fileName.equals("blob")) {
+			extension = ".jpeg";
+		} else {
+			extension = fileName.substring(fileName.lastIndexOf("."));
+		}
+
 		
 		//새로운 파일명 추출
 		String savedFileName = UUID.randomUUID() + extension;
