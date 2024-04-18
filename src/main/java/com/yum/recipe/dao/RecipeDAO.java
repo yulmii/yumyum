@@ -90,12 +90,14 @@ public class RecipeDAO extends MySQLConnector {
 			pstmt.setString(5, recipe.getContent());
 			pstmt.setString(6, recipe.getIngredient());
 			pstmt.setString(7, recipe.getThumbnail());
-//			System.out.println("recipeWrite :" + pstmt.toString());
+//			System.out.println("recipeWrite(1) :" + pstmt.toString());
 			int result = pstmt.executeUpdate();
 			
 			if(result == 1) {
-				query = "SELECT boardIdx FROM recipe_board ORDER BY boardIdx DESC LIMIT 0,1";
+				query = "SELECT IFNULL(MAX(boardIdx), 0) FROM recipe_board WHERE userId=?";
 				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, recipe.getUserId());
+//				System.out.println("recipeWrite(2) :" + pstmt.toString());
 				rs = pstmt.executeQuery();
 				
 				if(rs.next()) {
