@@ -2,7 +2,10 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath }" />
-<% response.sendRedirect("${ contextPath }/main.do"); %>
+<% 
+	String redirectURL = response.encodeRedirectURL(request.getContextPath() + "/main.do");
+	response.sendRedirect(redirectURL);
+%>
 
 <!DOCTYPE html>
 <html>

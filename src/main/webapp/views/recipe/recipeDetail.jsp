@@ -315,7 +315,7 @@
 						</c:when>
 						<c:otherwise>
 							<button id="recipeFavoriteBtn" class="re-addBoxBtn" onclick="addBox()">
-								<img alt="" src='<c:url value="/resources/images/addStorgeBoxImg.png" />'> 보관함에 추가
+								<img alt="" src='<c:url value="/resources/images/addStorgeBoxImg.png" />'> 보관함에 담기
 							</button>
 						</c:otherwise>
 					</c:choose>
